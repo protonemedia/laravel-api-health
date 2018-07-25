@@ -9,6 +9,7 @@ use Mockery;
 use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
 use Pbmedia\ApiHealth\Checkers\CheckWasUnsuccessful;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class HttpGetCheckerTest extends TestCase
@@ -41,6 +42,9 @@ class HttpGetCheckerTest extends TestCase
         $httpResponse = Mockery::mock(ResponseInterface::class)
             ->shouldReceive('getStatusCode')
             ->andReturn(404)
+            ->getMock()
+            ->shouldReceive('getReasonPhrase')
+            ->andReturn('Not Found')
             ->getMock();
 
         $httpException = Mockery::mock(ClientException::class)
@@ -62,18 +66,26 @@ class HttpGetCheckerTest extends TestCase
         try {
             $checker->isSuccessful();
             $this->fail("Checker did not throw an exception");
-        } catch (CheckWasUnsuccessful $e) {}
-
-        dd($checker);
+        } catch (CheckWasUnsuccessful $e) {
+            $this->assertEquals(
+                "GET request to \"https://pascalbaljetmedia.com/invalid-url\" failed, returned status code 404 and reason phrase: \"Not Found\"",
+                $e->getMessage()
+            );
+        }
     }
 
     /** @test */
     public function it_throws_an_exception_whenever_the_url_cannot_be_resolved()
     {
+        $httpException = new ConnectException(
+            'cURL error 6: Could not resolve host: pascalbaljetmedia.be (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)',
+            Mockery::mock(RequestInterface::class)
+        );
+
         $http = Mockery::mock(Client::class)
             ->shouldReceive('get')
             ->with('https://pascalbaljetmedia.be', [])
-            ->andThrow(Mockery::mock(ConnectException::class))
+            ->andThrow($httpException)
             ->getMock();
 
         $checker = new class($http) extends AbstractHttpGetChecker
@@ -81,7 +93,14 @@ class HttpGetCheckerTest extends TestCase
             protected $url = 'https://pascalbaljetmedia.be';
         };
 
-        $this->expectException(CheckWasUnsuccessful::class);
-        $checker->isSuccessful();
+        try {
+            $checker->isSuccessful();
+            $this->fail("Checker did not throw an exception");
+        } catch (CheckWasUnsuccessful $e) {
+            $this->assertEquals(
+                "GET request to \"https://pascalbaljetmedia.be\" failed, client message: cURL error 6: Could not resolve host: pascalbaljetmedia.be (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)",
+                $e->getMessage()
+            );
+        }
     }
 }

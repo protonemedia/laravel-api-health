@@ -1,0 +1,23 @@
+<?php
+
+namespace DummyNamespace;
+
+use Pbmedia\ApiHealth\Checkers\Checker;
+
+class DummyClass implements Checker
+{
+    public function __construct()
+    {
+
+    }
+
+    public static function create()
+    {
+
+    }
+
+    public function isSuccessful(): bool
+    {
+
+    }
+}

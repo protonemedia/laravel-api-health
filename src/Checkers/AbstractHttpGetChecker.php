@@ -28,9 +28,9 @@ abstract class AbstractHttpGetChecker implements Checker
         try {
             $response = $this->httpClient->get($this->url, $this->guzzleOptions);
         } catch (ClientException $exception) {
-            $response = $exception->getResponse();
+            $this->throwExceptionByResponse($exception->getResponse());
         } catch (ConnectException $exception) {
-            throw new CheckWasUnsuccessful($exception->getMessage());
+            $this->throwConnectException($exception);
         }
 
         $statusCode = $response->getStatusCode();
@@ -39,6 +39,16 @@ abstract class AbstractHttpGetChecker implements Checker
             return true;
         }
 
-        throw new CheckWasUnsuccessful($statusCode);
+        $this->throwExceptionByResponse($response);
+    }
+
+    private function throwConnectException($exception)
+    {
+        throw new CheckWasUnsuccessful("GET request to \"{$this->url}\" failed, client message: {$exception->getMessage()}");
+    }
+
+    private function throwExceptionByResponse($response)
+    {
+        throw new CheckWasUnsuccessful("GET request to \"{$this->url}\" failed, returned status code {$response->getStatusCode()} and reason phrase: \"{$response->getReasonPhrase()}\"");
     }
 }

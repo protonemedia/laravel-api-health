@@ -3,6 +3,8 @@
 namespace Pbmedia\ApiHealth;
 
 use Illuminate\Support\ServiceProvider;
+use Pbmedia\ApiHealth\Checkers\MakeChecker;
+use Pbmedia\ApiHealth\Checkers\MakeHttpGetChecker;
 
 class LaravelServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,13 @@ class LaravelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/api-health.php', 'api-health');
+
+        $this->app->bind('command.make:checker', MakeChecker::class);
+        $this->app->bind('command.make:http-get-checker', MakeHttpGetChecker::class);
+
+        $this->commands([
+            'command.make:checker',
+            'command.make:http-get-checker',
+        ]);
     }
 }
