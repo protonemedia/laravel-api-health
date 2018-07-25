@@ -5,7 +5,6 @@ namespace Pbmedia\ApiHealth;
 use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
@@ -76,12 +75,13 @@ class Runner
             return;
         }
 
-        $this->failed->each(function (CheckerHasFailed $exception) {
-            $notification = new CheckerHasFailedNotification($exception);
+        $notifiable = app($this->config->get('api-health.notifications.notifiable'));
 
-            $notifiable = app($this->config->get('api-health.notifications.notifiable'));
+        $this->failed()
+            ->mapInto(CheckerHasFailedNotification::class)
+            ->each(function (CheckerHasFailedNotification $notification) use ($notifiable) {
+                $notifiable->notify($notification);
+            });
 
-            $notifiable->notify($notification);
-        });
     }
 }
