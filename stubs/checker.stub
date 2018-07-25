@@ -16,7 +16,7 @@ class DummyClass implements Checker
 
     }
 
-    public function isSuccessful(): bool
+    public function run()
     {
 
     }

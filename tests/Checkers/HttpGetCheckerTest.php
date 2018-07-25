@@ -31,9 +31,12 @@ class HttpGetCheckerTest extends TestCase
         $checker = new class($http) extends AbstractHttpGetChecker
         {
             protected $url = 'https://pascalbaljetmedia.com';
+
+            public static function create()
+            {}
         };
 
-        $this->assertTrue($checker->isSuccessful());
+        $this->assertNull($checker->run());
     }
 
     /** @test */
@@ -61,10 +64,13 @@ class HttpGetCheckerTest extends TestCase
         $checker = new class($http) extends AbstractHttpGetChecker
         {
             protected $url = 'https://pascalbaljetmedia.com/invalid-url';
+
+            public static function create()
+            {}
         };
 
         try {
-            $checker->isSuccessful();
+            $checker->run();
             $this->fail("Checker did not throw an exception");
         } catch (CheckWasUnsuccessful $e) {
             $this->assertEquals(
@@ -91,10 +97,13 @@ class HttpGetCheckerTest extends TestCase
         $checker = new class($http) extends AbstractHttpGetChecker
         {
             protected $url = 'https://pascalbaljetmedia.be';
+
+            public static function create()
+            {}
         };
 
         try {
-            $checker->isSuccessful();
+            $checker->run();
             $this->fail("Checker did not throw an exception");
         } catch (CheckWasUnsuccessful $e) {
             $this->assertEquals(

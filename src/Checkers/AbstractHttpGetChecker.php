@@ -18,12 +18,7 @@ abstract class AbstractHttpGetChecker implements Checker
         $this->guzzleOptions = $guzzleOptions;
     }
 
-    public static function create()
-    {
-        return new static(new Client);
-    }
-
-    public function isSuccessful(): bool
+    public function run()
     {
         try {
             $response = $this->httpClient->get($this->url, $this->guzzleOptions);
@@ -36,7 +31,7 @@ abstract class AbstractHttpGetChecker implements Checker
         $statusCode = $response->getStatusCode();
 
         if ($statusCode >= 200 && $statusCode < 300) {
-            return true;
+            return;
         }
 
         $this->throwExceptionByResponse($response);

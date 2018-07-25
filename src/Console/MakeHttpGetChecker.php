@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace Pbmedia\ApiHealth\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
