@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Mockery;
 use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
-use Pbmedia\ApiHealth\Checkers\CheckWasUnsuccessful;
+use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -72,7 +72,7 @@ class HttpGetCheckerTest extends TestCase
         try {
             $checker->run();
             $this->fail("Checker did not throw an exception");
-        } catch (CheckWasUnsuccessful $e) {
+        } catch (CheckerHasFailed $e) {
             $this->assertEquals(
                 "GET request to \"https://pascalbaljetmedia.com/invalid-url\" failed, returned status code 404 and reason phrase: \"Not Found\"",
                 $e->getMessage()
@@ -105,7 +105,7 @@ class HttpGetCheckerTest extends TestCase
         try {
             $checker->run();
             $this->fail("Checker did not throw an exception");
-        } catch (CheckWasUnsuccessful $e) {
+        } catch (CheckerHasFailed $e) {
             $this->assertEquals(
                 "GET request to \"https://pascalbaljetmedia.be\" failed, client message: cURL error 6: Could not resolve host: pascalbaljetmedia.be (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)",
                 $e->getMessage()
