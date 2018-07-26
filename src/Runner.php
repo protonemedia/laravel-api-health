@@ -2,8 +2,6 @@
 
 namespace Pbmedia\ApiHealth;
 
-use Illuminate\Cache\Repository as CacheRepository;
-use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Support\Collection;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
@@ -11,23 +9,15 @@ use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotifica
 
 class Runner
 {
-    private $cache;
-    private $config;
-
     private $failed;
     private $passes;
 
-    public function __construct(CacheRepository $cache, ConfigRepository $config)
-    {
-        $this->cache  = $cache;
-        $this->config = $config;
-    }
-
     private function checkers(): Collection
     {
-        return Collection::make($this->config->get('api-health.checkers'))->map(function ($checker) {
-            return $checker::create();
-        });
+        return Collection::make(config('api-health.checkers'))
+            ->map(function ($checker) {
+                return $checker::create();
+            });
     }
 
     public function passes(): Collection
@@ -71,11 +61,11 @@ class Runner
 
     private function sendNotifications()
     {
-        if (empty($this->config->get('api-health.notifications.via'))) {
+        if (empty(config('api-health.notifications.via'))) {
             return;
         }
 
-        $notifiable = app($this->config->get('api-health.notifications.notifiable'));
+        $notifiable = app(config('api-health.notifications.notifiable'));
 
         $this->failed()
             ->mapInto(CheckerHasFailedNotification::class)
