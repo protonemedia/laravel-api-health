@@ -37,8 +37,8 @@ class RunCheckers extends Command
 
         if ($failed->isNotEmpty()) {
             $this->info('Failed checkers:');
-            $this->table(['Checker', 'Exception'], $failed->map(function ($exception) {
-                return [get_class($exception->getChecker()), $exception->getMessage()];
+            $this->table(['Checker', 'Exception'], $failed->map(function ($checkerAndException) {
+                return [get_class($checkerAndException[0]), $checkerAndException[1]->getMessage()];
             }));
         }
     }

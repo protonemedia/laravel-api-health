@@ -36,8 +36,8 @@ class RunnerTest extends TestCase
         $this->assertInstanceOf(PassingChecker::class, $passes->first());
 
         $this->assertCount(1, $failed = $runner->failed());
-        $this->assertInstanceOf(CheckerHasFailed::class, $failed->first());
-        $this->assertInstanceOf(FailingChecker::class, $failed->first()->getChecker());
+        $this->assertInstanceOf(FailingChecker::class, $failed->first()[0]);
+        $this->assertInstanceOf(CheckerHasFailed::class, $failed->first()[1]);
     }
 
     /** @test */

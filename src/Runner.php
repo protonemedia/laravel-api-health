@@ -48,7 +48,7 @@ class Runner
             try {
                 $checker->run();
             } catch (CheckerHasFailed $exception) {
-                return $this->failed->push($exception);
+                return $this->failed->push([$checker, $exception]);
             }
 
             $this->passes->push($checker);
@@ -68,7 +68,9 @@ class Runner
         $notifiable = app(config('api-health.notifications.notifiable'));
 
         $this->failed()
-            ->mapInto(CheckerHasFailedNotification::class)
+            ->map(function ($checkerAndException) {
+                return new CheckerHasFailedNotification($checkerAndException[0], $checkerAndException[1]);
+            })
             ->each(function (CheckerHasFailedNotification $notification) use ($notifiable) {
                 $notifiable->notify($notification);
             });

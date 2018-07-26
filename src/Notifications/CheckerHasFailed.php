@@ -13,9 +13,9 @@ class CheckerHasFailed extends Notification
     public $checker;
     public $exception;
 
-    public function __construct(CheckerHasFailedException $exception)
+    public function __construct(Checker $checker, CheckerHasFailedException $exception)
     {
-        $this->checker   = $exception->getChecker();
+        $this->checker   = $checker;
         $this->exception = $exception;
     }
 

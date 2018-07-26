@@ -9,7 +9,7 @@ class FailingChecker implements Checker
 {
     public function run()
     {
-        throw CheckerHasFailed::create($this, "TestChecker fails!");
+        throw new CheckerHasFailed("TestChecker fails!");
     }
 
     public static function create()

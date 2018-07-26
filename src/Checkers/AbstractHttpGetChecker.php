@@ -39,11 +39,11 @@ abstract class AbstractHttpGetChecker implements Checker
 
     private function throwConnectException($exception)
     {
-        throw CheckerHasFailed::create($this, "GET request to \"{$this->url}\" failed, client message: {$exception->getMessage()}");
+        throw new CheckerHasFailed("GET request to \"{$this->url}\" failed, client message: {$exception->getMessage()}");
     }
 
     private function throwExceptionByResponse($response)
     {
-        throw CheckerHasFailed::create($this, "GET request to \"{$this->url}\" failed, returned status code {$response->getStatusCode()} and reason phrase: \"{$response->getReasonPhrase()}\"");
+        throw new CheckerHasFailed("GET request to \"{$this->url}\" failed, returned status code {$response->getStatusCode()} and reason phrase: \"{$response->getReasonPhrase()}\"");
     }
 }
