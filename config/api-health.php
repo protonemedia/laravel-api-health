@@ -2,11 +2,7 @@
 
 return [
     'checkers' => [
-        [
-            'checker'             => '', // \App\Checkers\SomeServiceChecker::class,
-
-            'failed_notification' => null,
-        ],
+        // \App\Checkers\SomeServiceChecker::class,
     ],
 
     'cache_driver' => 'file',
@@ -14,6 +10,8 @@ return [
     'storage_path' => storage_path('laravel-api-checker'),
 
     'notifications' => [
+        'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
+
         'via' => [
             // 'mail', 'slack',
         ],

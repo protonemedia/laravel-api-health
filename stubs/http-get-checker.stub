@@ -3,10 +3,9 @@
 namespace DummyNamespace;
 
 use GuzzleHttp\Client;
-use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
 
-class DummyClass extends AbstractHttpGetChecker implements Checker
+class DummyClass extends AbstractHttpGetChecker
 {
     /*
      * Here you can specify the URL you want to request.

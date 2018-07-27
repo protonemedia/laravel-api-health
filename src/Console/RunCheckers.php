@@ -8,24 +8,21 @@ use Pbmedia\ApiHealth\Runner;
 
 class RunCheckers extends Command
 {
-    protected $signature = 'api-health:run-checkers';
+    protected $signature = 'api-health:run-checkers {--force}';
 
     protected $description = 'Run the checkers';
 
-    protected $runner;
-
-    public function __construct(Runner $runner)
-    {
-        parent::__construct();
-
-        $this->runner = $runner;
-    }
-
     public function handle()
     {
-        $failed = $this->runner->failed();
+        $runner = new Runner;
 
-        $passes = $this->runner->passes();
+        if ($this->option('force')) {
+            $runner->ignoreScheduling();
+        }
+
+        $failed = $runner->failed();
+
+        $passes = $runner->passes();
 
         $this->info('Total checkers run: ' . ($failed->count() + $passes->count()));
 

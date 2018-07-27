@@ -20,8 +20,8 @@ class RunnerTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('api-health.checkers', [
-            ['checker' => FailingChecker::class],
-            ['checker' => PassingChecker::class],
+            FailingChecker::class,
+            PassingChecker::class,
         ]);
 
         $app['config']->set('api-health.cache_driver', 'array');
@@ -104,7 +104,7 @@ class RunnerTest extends TestCase
 
         config()->set('api-health.notifications.via', ['mail']);
         config()->set('api-health.checkers', [
-            ['checker' => FailingAtEvenTimesChecker::class],
+            FailingAtEvenTimesChecker::class,
         ]);
 
         //
@@ -132,8 +132,8 @@ class RunnerTest extends TestCase
     public function it_can_determinate_if_a_checker_should_run()
     {
         config()->set('api-health.checkers', [
-            ['checker' => EveryMinuteChecker::class],
-            ['checker' => EveryFiveMinutesChecker::class],
+            EveryMinuteChecker::class,
+            EveryFiveMinutesChecker::class,
         ]);
 
         $runner = app(Runner::class);

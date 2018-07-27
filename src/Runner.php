@@ -3,12 +3,21 @@
 namespace Pbmedia\ApiHealth;
 
 use Illuminate\Support\Collection;
+use Pbmedia\ApiHealth\Checkers\CheckerIsScheduled;
 use Pbmedia\ApiHealth\Checkers\Executor;
 
 class Runner
 {
     private $failed;
     private $passes;
+    private $scheduling = true;
+
+    public function ignoreScheduling()
+    {
+        $this->scheduling = false;
+
+        return $this;
+    }
 
     public function passes(): Collection
     {
@@ -35,11 +44,15 @@ class Runner
         $this->passes = new Collection;
 
         Collection::make(config('api-health.checkers'))
-            ->map(function ($config): Executor {
-                return Executor::fromConfig($config);
+            ->map(function ($checker): Executor {
+                return new Executor($checker::create());
             })
             ->filter(function (Executor $executor) {
-                return $executor->getChecker()->isDue();
+                if (!$executor->getChecker() instanceof CheckerIsScheduled) {
+                    return true;
+                }
+
+                return !$this->scheduling || $executor->getChecker()->isDue();
             })
             ->each(function (Executor $executor) {
                 ($executor->failed() ? $this->failed : $this->passes)->push($executor);

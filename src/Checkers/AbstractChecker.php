@@ -6,9 +6,11 @@ use Illuminate\Console\Scheduling\CacheEventMutex;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\EventMutex;
 
-abstract class AbstractChecker implements Checker
+abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSendsNotifications
 {
     protected $event;
+
+    protected $failedNotificationClass;
 
     private function event()
     {
@@ -19,6 +21,11 @@ abstract class AbstractChecker implements Checker
         }
 
         return $this->event;
+    }
+
+    public function getFailedNotificationClass(): string
+    {
+        return $this->failedNotificationClass ?: config('api-health.notifications.default_failed_notification');
     }
 
     public function isDue(): bool

@@ -5,29 +5,22 @@ namespace Pbmedia\ApiHealth\Checkers;
 use Illuminate\Notifications\Notification;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
-use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
+use Pbmedia\ApiHealth\Checkers\CheckerSendsNotifications;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 
 class Executor
 {
     private $checker;
-    private $config;
     private $state;
     private $exception;
     private $failed;
     private $notifiable;
 
-    public function __construct(Checker $checker, array $config)
+    public function __construct(Checker $checker)
     {
         $this->checker    = $checker;
-        $this->config     = $config;
         $this->state      = new CheckerState($checker);
         $this->notifiable = app(config('api-health.notifications.notifiable'));
-    }
-
-    public static function fromConfig(array $config)
-    {
-        return new static($config['checker']::create(), $config);
     }
 
     public function passes()
@@ -98,11 +91,18 @@ class Executor
             $this->state->setToFailed();
         }
 
+        if ($this->checker instanceof CheckerSendsNotifications) {
+            $this->sendFailedNotification();
+        }
+    }
+
+    private function sendFailedNotification()
+    {
         if (!$this->state->shouldSentFailedNotification()) {
             return;
         }
 
-        $notificationClass = data_get($this->config, 'failed_notification', CheckerHasFailedNotification::class);
+        $notificationClass = $this->checker->getFailedNotificationClass();
 
         $notification = $this->sendNotification(
             new $notificationClass($this->checker, $this->exception)

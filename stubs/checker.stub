@@ -6,7 +6,7 @@ use Illuminate\Console\Scheduling\Event;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\AbstractChecker;
 
-class DummyClass extends AbstractChecker implements Checker
+class DummyClass extends AbstractChecker
 {
     public function __construct()
     {

@@ -2,10 +2,10 @@
 
 namespace Pbmedia\ApiHealth\Tests\TestCheckers;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
+use Pbmedia\ApiHealth\Checkers\AbstractChecker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 
-class FailingAtEvenTimesChecker implements Checker
+class FailingAtEvenTimesChecker extends AbstractChecker
 {
     public function run()
     {

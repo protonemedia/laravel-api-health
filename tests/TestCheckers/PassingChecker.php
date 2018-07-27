@@ -2,9 +2,9 @@
 
 namespace Pbmedia\ApiHealth\Tests\TestCheckers;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
+use Pbmedia\ApiHealth\Checkers\AbstractChecker;
 
-class PassingChecker implements Checker
+class PassingChecker extends AbstractChecker
 {
     public function run()
     {
