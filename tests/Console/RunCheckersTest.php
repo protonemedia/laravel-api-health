@@ -28,6 +28,8 @@ class RunCheckersTest extends TestCase
             FailingChecker::class,
             PassingChecker::class,
         ]);
+
+        $app['config']->set('api-health.cache_driver', 'array');
     }
 
     /** @test */

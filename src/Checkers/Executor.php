@@ -23,6 +23,11 @@ class Executor
         $this->notifiable = app(config('api-health.notifications.notifiable'));
     }
 
+    public static function make(string $checkerClass)
+    {
+        return new static($checkerClass::create());
+    }
+
     public function passes()
     {
         if (is_null($this->failed)) {
@@ -32,7 +37,7 @@ class Executor
         return !$this->failed;
     }
 
-    public function failed()
+    public function fails()
     {
         if (is_null($this->failed)) {
             $this->handle();
@@ -80,15 +85,19 @@ class Executor
 
     private function handlePassingChecker()
     {
-        if ($this->state->isFailed()) {
-            $this->state->undoFailed();
+        $currentlyFailed = $this->state->exists() && $this->state->isFailed();
+
+        $failedData = $this->state->setToPassing();
+
+        if ($currentlyFailed && $this->checker instanceof CheckerSendsNotifications) {
+            $this->sendRecoveredNotification($failedData['exception_message']);
         }
     }
 
     private function handleFailedChecker()
     {
-        if (!$this->state->isFailed()) {
-            $this->state->setToFailed();
+        if (!$this->state->exists() || $this->state->isPassing()) {
+            $this->state->setToFailed($this->exception->getMessage());
         }
 
         if ($this->checker instanceof CheckerSendsNotifications) {
@@ -109,5 +118,14 @@ class Executor
         );
 
         $notification ? $this->state->markSentFailedNotification($notification) : null;
+    }
+
+    private function sendRecoveredNotification(string $exceptionMessage)
+    {
+        $notificationClass = $this->checker->getRecoveredNotificationClass();
+
+        $this->sendNotification(
+            new $notificationClass($this->checker, $exceptionMessage)
+        );
     }
 }

@@ -12,6 +12,8 @@ return [
     'notifications' => [
         'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
 
+        'default_recovered_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasRecovered::class,
+
         'via' => [
             // 'mail', 'slack',
         ],

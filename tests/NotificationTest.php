@@ -5,9 +5,11 @@ namespace Pbmedia\ApiHealth\Tests;
 use Illuminate\Support\Facades\Notification;
 use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
+use Pbmedia\ApiHealth\Notifications\CheckerHasRecovered;
 use Pbmedia\ApiHealth\Runner;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
+use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtOddTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\NotificationlessChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
@@ -100,7 +102,57 @@ class NotificationTest extends TestCase
     }
 
     /** @test */
-    public function it_notifies_again_if_it_fails_after_it_has_been_recovered()
+    public function it_notifies_if_it_recovers_after_it_has_failed()
+    {
+        Notification::fake();
+
+        config()->set('api-health.notifications.via', ['mail']);
+        config()->set('api-health.checkers', [
+            FailingAtOddTimesChecker::class,
+        ]);
+
+        //
+
+        $state  = new CheckerState(FailingAtOddTimesChecker::create());
+        $runner = app(Runner::class);
+
+        $runner->handle();
+        $this->assertFalse($state->isFailed());
+
+        Notification::assertNotSentTo(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasRecovered::class
+        );
+
+        $runner->handle();
+        $this->assertTrue($state->isFailed());
+
+        $runner->handle();
+        $this->assertFalse($state->isFailed());
+
+        Notification::assertSentToTimes(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasFailedNotification::class,
+            1
+        );
+
+        Notification::assertSentToTimes(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasRecovered::class,
+            1
+        );
+
+        Notification::assertSentTo(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasRecovered::class,
+            function ($notification) {
+                return $notification->exceptionMessage === 'TestChecker fails!';
+            }
+        );
+    }
+
+    /** @test */
+    public function it_notifies_again_if_it_fails_after_it_has_recovered()
     {
         Notification::fake();
 

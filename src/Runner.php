@@ -59,7 +59,7 @@ class Runner
                 return $executor->getChecker()->isDue();
             })
             ->each(function (Executor $executor) {
-                ($executor->failed() ? $this->failed : $this->passes)->push($executor);
+                ($executor->fails() ? $this->failed : $this->passes)->push($executor);
             });
 
         return $this;

@@ -54,7 +54,7 @@
                 "Pbmedia\\ApiHealth\\LaravelServiceProvider"
             ],
             "aliases": {
-                "ApiHealth": "Pbmedia\\ApiHealth\\LaravelFacade"
+                "ApiHealth": "Pbmedia\\ApiHealth\\Facades\\ApiHealth"
             }
         }
     }
