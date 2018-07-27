@@ -9,6 +9,7 @@ use Pbmedia\ApiHealth\Runner;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use Pbmedia\ApiHealth\Tests\TestCheckers\NotificationlessChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 
 class NotificationTest extends TestCase
@@ -36,6 +37,24 @@ class NotificationTest extends TestCase
         config()->set('api-health.notifications.via', []);
 
         Notification::fake();
+
+        $runner = app(Runner::class)->handle();
+
+        Notification::assertNotSentTo(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasFailedNotification::class
+        );
+    }
+
+    /** @test */
+    public function it_doesnt_notify_whenever_the_checker_does_not_implement_the_notification_interface()
+    {
+        Notification::fake();
+
+        config()->set('api-health.notifications.via', ['mail']);
+        config()->set('api-health.checkers', [
+            NotificationlessChecker::class,
+        ]);
 
         $runner = app(Runner::class)->handle();
 
