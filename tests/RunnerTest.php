@@ -7,6 +7,8 @@ use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
 use Pbmedia\ApiHealth\Runner;
+use Pbmedia\ApiHealth\Storage\CheckerState;
+use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 
@@ -18,6 +20,8 @@ class RunnerTest extends TestCase
             FailingChecker::class,
             PassingChecker::class,
         ]);
+
+        $app['config']->set('api-health.cache_driver', 'array');
     }
 
     protected function getPackageProviders($app)
@@ -70,6 +74,52 @@ class RunnerTest extends TestCase
             function ($notification, $channels) {
                 return $channels === ['mail'];
             }
+        );
+    }
+
+    /** @test */
+    public function it_only_notifies_once()
+    {
+        config()->set('api-health.notifications.via', ['mail']);
+
+        Notification::fake();
+
+        $runner = app(Runner::class)->handle();
+        $runner = app(Runner::class)->handle();
+
+        Notification::assertSentToTimes(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasFailedNotification::class,
+            1
+        );
+    }
+
+    /** @test */
+    public function it_notifies_again_if_it_fails_after_it_has_been_recovered()
+    {
+        Notification::fake();
+
+        config()->set('api-health.notifications.via', ['mail']);
+        config()->set('api-health.checkers', [FailingAtEvenTimesChecker::class]);
+
+        //
+
+        $state  = new CheckerState(FailingAtEvenTimesChecker::create());
+        $runner = app(Runner::class);
+
+        $runner->handle();
+        $this->assertTrue($state->isFailed());
+
+        $runner->handle();
+        $this->assertFalse($state->isFailed());
+
+        $runner->handle();
+        $this->assertTrue($state->isFailed());
+
+        Notification::assertSentToTimes(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasFailedNotification::class,
+            2
         );
     }
 }

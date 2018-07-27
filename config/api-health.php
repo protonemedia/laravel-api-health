@@ -5,6 +5,10 @@ return [
         // \App\Checkers\SomeServiceChecker::class,
     ],
 
+    'cache_driver' => 'file',
+
+    'storage_path' => storage_path('laravel-api-checker'),
+
     'notifications' => [
         'via' => [
             // 'mail', 'slack',

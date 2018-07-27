@@ -2,15 +2,18 @@
 
 namespace Pbmedia\ApiHealth;
 
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
+use Pbmedia\ApiHealth\Storage\CheckerState;
 
 class Runner
 {
     private $failed;
     private $passes;
+    private $notifiable;
 
     private function checkers(): Collection
     {
@@ -47,33 +50,57 @@ class Runner
         $this->checkers()->each(function (Checker $checker) {
             try {
                 $checker->run();
+                $this->handlePassingChecker($checker);
             } catch (CheckerHasFailed $exception) {
-                return $this->failed->push([$checker, $exception]);
+                $this->handleFailedChecker($checker, $exception);
             }
-
-            $this->passes->push($checker);
         });
-
-        $this->sendNotifications();
 
         return $this;
     }
 
-    private function sendNotifications()
+    private function sendNotification(Notification $notification)
     {
         if (empty(config('api-health.notifications.via'))) {
             return;
         }
 
-        $notifiable = app(config('api-health.notifications.notifiable'));
+        if (!$this->notifiable) {
+            $this->notifiable = app(config('api-health.notifications.notifiable'));
+        }
 
-        $this->failed()
-            ->map(function ($checkerAndException) {
-                return new CheckerHasFailedNotification($checkerAndException[0], $checkerAndException[1]);
-            })
-            ->each(function (CheckerHasFailedNotification $notification) use ($notifiable) {
-                $notifiable->notify($notification);
-            });
+        return tap($notification, function ($notification) {
+            $this->notifiable->notify($notification);
+        });
+    }
 
+    private function handlePassingChecker(Checker $checker)
+    {
+        $this->passes->push($checker);
+
+        $state = new CheckerState($checker);
+
+        if ($state->isFailed()) {
+            $state->undoFailed();
+        }
+    }
+
+    private function handleFailedChecker(Checker $checker, CheckerHasFailed $exception)
+    {
+        $this->failed->push([$checker, $exception]);
+
+        $state = new CheckerState($checker);
+
+        if (!$state->isFailed()) {
+            $state->setToFailed();
+        }
+
+        if ($state->shouldSentFailedNotification()) {
+            $notification = $this->sendNotification(
+                new CheckerHasFailedNotification($checker, $exception)
+            );
+
+            $notification ? $state->markSentFailedNotification($notification) : null;
+        }
     }
 }
