@@ -10,11 +10,11 @@ class Runner
 {
     private $failed;
     private $passes;
-    private $scheduling = true;
+    private $scheduled = true;
 
     public function ignoreScheduling()
     {
-        $this->scheduling = false;
+        $this->scheduled = false;
 
         return $this;
     }
@@ -48,11 +48,15 @@ class Runner
                 return new Executor($checker::create());
             })
             ->filter(function (Executor $executor) {
+                if (!$this->scheduled) {
+                    return true;
+                }
+
                 if (!$executor->getChecker() instanceof CheckerIsScheduled) {
                     return true;
                 }
 
-                return !$this->scheduling || $executor->getChecker()->isDue();
+                return $executor->getChecker()->isDue();
             })
             ->each(function (Executor $executor) {
                 ($executor->failed() ? $this->failed : $this->passes)->push($executor);

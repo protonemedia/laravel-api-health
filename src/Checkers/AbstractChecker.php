@@ -12,12 +12,19 @@ abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSe
 
     protected $failedNotificationClass;
 
+    private function eventMutex(): EventMutex
+    {
+        if (app()->bound(EventMutex::class)) {
+            return app()->make(EventMutex::class);
+        }
+
+        return app()->make(CacheEventMutex::class);
+    }
+
     private function event()
     {
         if (!$this->event) {
-            $eventMutex = app()->bound(EventMutex::class) ? app()->make(EventMutex::class) : app()->make(CacheEventMutex::class);
-
-            $this->event = new Event($eventMutex, '');
+            $this->event = new Event($this->eventMutex(), '');
         }
 
         return $this->event;
