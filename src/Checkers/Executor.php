@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth;
+namespace Pbmedia\ApiHealth\Checkers;
 
 use Illuminate\Notifications\Notification;
 use Pbmedia\ApiHealth\Checkers\Checker;
@@ -8,7 +8,7 @@ use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 
-class CheckerRunner
+class Executor
 {
     private $checker;
     private $config;

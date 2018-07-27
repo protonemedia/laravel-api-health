@@ -2,19 +2,27 @@
 
 namespace Pbmedia\ApiHealth;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
+use Pbmedia\ApiHealth\Checkers\Executor;
 
 class Runner
 {
+    private $app;
     private $failed;
     private $passes;
 
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     private function checkers(): Collection
     {
-        return Collection::make(config('api-health.checkers'))->map(function ($config) {
-            return CheckerRunner::fromConfig($config);
-        })->filter(function (CheckerRunner $checkerRunner) {
-            return $checkerRunner->getChecker()->shouldRun();
+        return Collection::make(config('api-health.checkers'))->map(function ($config): Executor {
+            return Executor::fromConfig($config);
+        })->filter(function (Executor $executor) {
+            return $executor->getChecker()->isDue($this->app);
         });
     }
 
@@ -42,15 +50,15 @@ class Runner
 
         $this->passes = new Collection;
 
-        $this->checkers()->each(function (CheckerRunner $checkerRunner) {
-            if ($checkerRunner->failed()) {
+        $this->checkers()->each(function (Executor $executor) {
+            if ($executor->failed()) {
                 return $this->failed->push([
-                    $checkerRunner->getChecker(),
-                    $checkerRunner->getException(),
+                    $executor->getChecker(),
+                    $executor->getException(),
                 ]);
             }
 
-            $this->passes->push($checkerRunner->getChecker());
+            $this->passes->push($executor->getChecker());
         });
 
         return $this;

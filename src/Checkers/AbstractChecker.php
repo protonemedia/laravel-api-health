@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\CacheEventMutex;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\EventMutex;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Foundation\Application;
 
 abstract class AbstractChecker implements Checker
 {
@@ -24,7 +25,7 @@ abstract class AbstractChecker implements Checker
         return $this->event;
     }
 
-    public function shouldRun(): bool
+    public function isDue(Application $app): bool
     {
         $this->schedule($this->event());
 

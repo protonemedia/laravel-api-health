@@ -2,6 +2,7 @@
 
 namespace Pbmedia\ApiHealth\Tests\TestCheckers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Pbmedia\ApiHealth\Checkers\Checker;
 
 class PassingChecker implements Checker
@@ -11,7 +12,7 @@ class PassingChecker implements Checker
         return;
     }
 
-    public function shouldRun(): bool
+    public function isDue(Application $app): bool
     {
         return true;
     }
