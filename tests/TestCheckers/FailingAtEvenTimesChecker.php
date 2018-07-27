@@ -23,6 +23,11 @@ class FailingAtEvenTimesChecker implements Checker
         $number++;
     }
 
+    public function shouldRun(): bool
+    {
+        return true;
+    }
+
     public static function create()
     {
         return new static;

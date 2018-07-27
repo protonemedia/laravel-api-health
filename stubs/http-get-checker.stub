@@ -22,4 +22,12 @@ class DummyClass extends AbstractHttpGetChecker implements Checker
             'timeout' => 5,
         ]);
     }
+
+    public function schedule(Event $event)
+    {
+        $event->everyMinute();
+
+        // $event->evenInMaintenanceMode();
+        // $event->onOneServer();
+    }
 }

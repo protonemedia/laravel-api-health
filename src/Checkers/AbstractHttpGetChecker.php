@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 
-abstract class AbstractHttpGetChecker implements Checker
+abstract class AbstractHttpGetChecker extends AbstractChecker
 {
     private $httpClient;
     private $guzzleOptions;

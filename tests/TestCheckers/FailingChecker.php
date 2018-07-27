@@ -12,6 +12,11 @@ class FailingChecker implements Checker
         throw new CheckerHasFailed("TestChecker fails!");
     }
 
+    public function shouldRun(): bool
+    {
+        return true;
+    }
+
     public static function create()
     {
         return new static;

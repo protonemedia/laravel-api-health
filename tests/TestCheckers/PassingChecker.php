@@ -11,6 +11,11 @@ class PassingChecker implements Checker
         return;
     }
 
+    public function shouldRun(): bool
+    {
+        return true;
+    }
+
     public static function create()
     {
         return new static;

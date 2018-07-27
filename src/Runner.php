@@ -13,6 +13,8 @@ class Runner
     {
         return Collection::make(config('api-health.checkers'))->map(function ($config) {
             return CheckerRunner::fromConfig($config);
+        })->filter(function (CheckerRunner $checkerRunner) {
+            return $checkerRunner->getChecker()->shouldRun();
         });
     }
 

@@ -2,12 +2,15 @@
 
 namespace Pbmedia\ApiHealth\Tests;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
 use Pbmedia\ApiHealth\Runner;
 use Pbmedia\ApiHealth\Storage\CheckerState;
+use Pbmedia\ApiHealth\Tests\TestCheckers\EveryFiveMinutesChecker;
+use Pbmedia\ApiHealth\Tests\TestCheckers\EveryMinuteChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
@@ -123,5 +126,25 @@ class RunnerTest extends TestCase
             CheckerHasFailedNotification::class,
             2
         );
+    }
+
+    /** @test */
+    public function it_can_determinate_if_a_checker_should_run()
+    {
+        config()->set('api-health.checkers', [
+            ['checker' => EveryMinuteChecker::class],
+            ['checker' => EveryFiveMinutesChecker::class],
+        ]);
+
+        $runner = app(Runner::class);
+
+        Carbon::setTestNow('2018-07-07 10:00:00');
+        $this->assertCount(2, $runner->handle()->passes());
+
+        Carbon::setTestNow('2018-07-07 10:03:00');
+        $this->assertCount(1, $runner->handle()->passes());
+
+        Carbon::setTestNow('2018-07-07 10:05:00');
+        $this->assertCount(2, $runner->handle()->passes());
     }
 }

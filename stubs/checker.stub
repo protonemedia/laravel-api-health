@@ -2,9 +2,11 @@
 
 namespace DummyNamespace;
 
+use Illuminate\Console\Scheduling\Event;
 use Pbmedia\ApiHealth\Checkers\Checker;
+use Pbmedia\ApiHealth\Checkers\AbstractChecker;
 
-class DummyClass implements Checker
+class DummyClass extends AbstractChecker implements Checker
 {
     public function __construct()
     {
@@ -14,6 +16,14 @@ class DummyClass implements Checker
     public static function create()
     {
 
+    }
+
+    public function schedule(Event $event)
+    {
+        $event->everyMinute();
+
+        // $event->evenInMaintenanceMode();
+        // $event->onOneServer();
     }
 
     public function run()
