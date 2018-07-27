@@ -22,8 +22,8 @@ class RunCheckersTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('api-health.checkers', [
-            FailingChecker::class,
-            PassingChecker::class,
+            ['checker' => FailingChecker::class],
+            ['checker' => PassingChecker::class],
         ]);
     }
 

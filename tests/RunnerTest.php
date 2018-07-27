@@ -17,8 +17,8 @@ class RunnerTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('api-health.checkers', [
-            FailingChecker::class,
-            PassingChecker::class,
+            ['checker' => FailingChecker::class],
+            ['checker' => PassingChecker::class],
         ]);
 
         $app['config']->set('api-health.cache_driver', 'array');
@@ -100,7 +100,9 @@ class RunnerTest extends TestCase
         Notification::fake();
 
         config()->set('api-health.notifications.via', ['mail']);
-        config()->set('api-health.checkers', [FailingAtEvenTimesChecker::class]);
+        config()->set('api-health.checkers', [
+            ['checker' => FailingAtEvenTimesChecker::class],
+        ]);
 
         //
 

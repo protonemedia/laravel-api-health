@@ -2,7 +2,11 @@
 
 return [
     'checkers' => [
-        // \App\Checkers\SomeServiceChecker::class,
+        [
+            'checker'             => '', // \App\Checkers\SomeServiceChecker::class,
+
+            'failed_notification' => null,
+        ],
     ],
 
     'cache_driver' => 'file',
