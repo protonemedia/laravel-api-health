@@ -45,7 +45,7 @@ class Runner
 
         Collection::make(config('api-health.checkers'))
             ->map(function ($checker): Executor {
-                return new Executor($checker::create());
+                return Executor::make($checker);
             })
             ->filter(function (Executor $executor) {
                 if (!$this->scheduled) {

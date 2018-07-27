@@ -40,7 +40,7 @@ class CheckerState
 
     public function setToFailed(string $exceptionMessage)
     {
-        return $this->cache->forever($this->key(), [
+        $this->cache->forever($this->key(), [
             'exception_message'  => $exceptionMessage,
             'passed_at'          => null,
             'failed_at'          => now()->getTimestamp(),
@@ -50,14 +50,12 @@ class CheckerState
 
     public function setToPassing()
     {
-        return tap($this->cache->pull($this->key()), function () {
-            $this->cache->forever($this->key(), [
-                'exception_message'  => null,
-                'passed_at'          => now()->getTimestamp(),
-                'failed_at'          => null,
-                'notifications_sent' => [],
-            ]);
-        });
+        $this->cache->forever($this->key(), [
+            'exception_message'  => null,
+            'passed_at'          => now()->getTimestamp(),
+            'failed_at'          => null,
+            'notifications_sent' => [],
+        ]);
     }
 
     public function markSentFailedNotification(Notification $notification)

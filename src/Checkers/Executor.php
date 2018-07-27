@@ -87,9 +87,11 @@ class Executor
     {
         $currentlyFailed = $this->state->exists() && $this->state->isFailed();
 
-        $failedData = $this->state->setToPassing();
+        $failedData = $currentlyFailed ? $this->state->data() : null;
 
-        if ($currentlyFailed && $this->checker instanceof CheckerSendsNotifications) {
+        $this->state->setToPassing();
+
+        if ($failedData && $this->checker instanceof CheckerSendsNotifications) {
             $this->sendRecoveredNotification($failedData['exception_message']);
         }
     }

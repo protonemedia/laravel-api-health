@@ -24,6 +24,7 @@ class NotificationTest extends TestCase
         ]);
 
         $app['config']->set('api-health.cache_driver', 'array');
+        $app['config']->set('api-health.notifications.via', ['mail']);
     }
 
     protected function getPackageProviders($app)
@@ -53,7 +54,6 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        config()->set('api-health.notifications.via', ['mail']);
         config()->set('api-health.checkers', [
             NotificationlessChecker::class,
         ]);
@@ -69,8 +69,6 @@ class NotificationTest extends TestCase
     /** @test */
     public function it_can_notify_whenever_a_checker_fails()
     {
-        config()->set('api-health.notifications.via', ['mail']);
-
         Notification::fake();
 
         $runner = app(Runner::class)->handle();
@@ -87,12 +85,10 @@ class NotificationTest extends TestCase
     /** @test */
     public function it_only_notifies_once()
     {
-        config()->set('api-health.notifications.via', ['mail']);
-
         Notification::fake();
 
-        $runner = app(Runner::class)->handle();
-        $runner = app(Runner::class)->handle();
+        app(Runner::class)->handle();
+        app(Runner::class)->handle();
 
         Notification::assertSentToTimes(
             app(config('api-health.notifications.notifiable')),
@@ -106,17 +102,15 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        config()->set('api-health.notifications.via', ['mail']);
         config()->set('api-health.checkers', [
             FailingAtOddTimesChecker::class,
         ]);
 
         //
 
-        $state  = new CheckerState(FailingAtOddTimesChecker::create());
-        $runner = app(Runner::class);
+        $runner = app(Runner::class)->handle();
 
-        $runner->handle();
+        $state = new CheckerState(FailingAtOddTimesChecker::create());
         $this->assertFalse($state->isFailed());
 
         Notification::assertNotSentTo(
@@ -156,7 +150,6 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        config()->set('api-health.notifications.via', ['mail']);
         config()->set('api-health.checkers', [
             FailingAtEvenTimesChecker::class,
         ]);
