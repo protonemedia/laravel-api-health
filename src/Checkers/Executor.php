@@ -28,7 +28,7 @@ class Executor
         return new static($checkerClass::create());
     }
 
-    public function passes()
+    public function passes(): bool
     {
         if (is_null($this->failed)) {
             $this->handle();
@@ -37,21 +37,17 @@ class Executor
         return !$this->failed;
     }
 
-    public function fails()
+    public function fails(): bool
     {
-        if (is_null($this->failed)) {
-            $this->handle();
-        }
-
-        return $this->failed;
+        return !$this->passes();
     }
 
-    public function getChecker()
+    public function getChecker(): Checker
     {
         return $this->checker;
     }
 
-    public function getException()
+    public function getException(): CheckerHasFailed
     {
         return $this->exception;
     }
@@ -113,7 +109,7 @@ class Executor
             return;
         }
 
-        $notificationClass = $this->checker->getFailedNotificationClass();
+        $notificationClass = $this->checker->failedNotificationClass();
 
         $notification = $this->sendNotification(
             new $notificationClass($this->checker, $this->exception)
@@ -124,7 +120,7 @@ class Executor
 
     private function sendRecoveredNotification(string $exceptionMessage)
     {
-        $notificationClass = $this->checker->getRecoveredNotificationClass();
+        $notificationClass = $this->checker->recoveredNotificationClass();
 
         $this->sendNotification(
             new $notificationClass($this->checker, $exceptionMessage)

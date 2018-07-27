@@ -2,6 +2,7 @@
 
 namespace Pbmedia\ApiHealth\Tests;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
@@ -80,6 +81,38 @@ class NotificationTest extends TestCase
                 return $channels === ['mail'];
             }
         );
+    }
+
+    /** @test */
+    public function it_notifies_again_after_60_minutes()
+    {
+        Notification::fake();
+
+        Carbon::setTestNow('2018-07-01 10:00:00');
+
+        $runner = app(Runner::class)->handle();
+
+        Notification::assertSentToTimes(
+            $notifiable = app(config('api-health.notifications.notifiable')),
+            $checker = CheckerHasFailedNotification::class,
+            1
+        );
+
+        Carbon::setTestNow('2018-07-01 10:59:00');
+        $runner = app(Runner::class)->handle();
+        Notification::assertSentToTimes($notifiable, $checker, 1);
+
+        Carbon::setTestNow('2018-07-01 11:00:00');
+        $runner = app(Runner::class)->handle();
+        Notification::assertSentToTimes($notifiable, $checker, 2);
+
+        Carbon::setTestNow('2018-07-01 11:59:59');
+        $runner = app(Runner::class)->handle();
+        Notification::assertSentToTimes($notifiable, $checker, 2);
+
+        Carbon::setTestNow('2018-07-01 12:00:00');
+        $runner = app(Runner::class)->handle();
+        Notification::assertSentToTimes($notifiable, $checker, 3);
     }
 
     /** @test */

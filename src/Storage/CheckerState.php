@@ -35,7 +35,15 @@ class CheckerState
 
     public function shouldSentFailedNotification(): bool
     {
-        return $this->data()['notifications_sent'] == [];
+        $sentNotifications = collect($this->data()['notifications_sent']);
+
+        if ($sentNotifications->isEmpty()) {
+            return true;
+        }
+
+        $diffInSeconds = now()->getTimestamp() - $sentNotifications->last()['sent_at'];
+
+        return $diffInSeconds >= ($this->checker->resendFailedNotificationAfterMinutes() * 60);
     }
 
     public function setToFailed(string $exceptionMessage)

@@ -10,6 +10,8 @@ return [
     'storage_path' => storage_path('laravel-api-checker'),
 
     'notifications' => [
+        'resend_failed_notification_after_minutes' => 60,
+
         'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
 
         'default_recovered_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasRecovered::class,

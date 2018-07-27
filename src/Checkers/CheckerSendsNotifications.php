@@ -4,7 +4,9 @@ namespace Pbmedia\ApiHealth\Checkers;
 
 interface CheckerSendsNotifications
 {
-    public function getFailedNotificationClass(): string;
+    public function resendFailedNotificationAfterMinutes(): int;
 
-    public function getRecoveredNotificationClass(): string;
+    public function failedNotificationClass(): string;
+
+    public function recoveredNotificationClass(): string;
 }
