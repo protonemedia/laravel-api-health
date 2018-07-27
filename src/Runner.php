@@ -50,10 +50,11 @@ class Runner
         $this->checkers()->each(function (Checker $checker) {
             try {
                 $checker->run();
-                $this->handlePassingChecker($checker);
             } catch (CheckerHasFailed $exception) {
-                $this->handleFailedChecker($checker, $exception);
+                return $this->handleFailedChecker($checker, $exception);
             }
+
+            $this->handlePassingChecker($checker);
         });
 
         return $this;
@@ -79,10 +80,7 @@ class Runner
         $this->passes->push($checker);
 
         $state = new CheckerState($checker);
-
-        if ($state->isFailed()) {
-            $state->undoFailed();
-        }
+        $state->isFailed() ? $state->undoFailed() : null;
     }
 
     private function handleFailedChecker(Checker $checker, CheckerHasFailed $exception)
@@ -90,17 +88,16 @@ class Runner
         $this->failed->push([$checker, $exception]);
 
         $state = new CheckerState($checker);
+        $state->isFailed() ? null : $state->setToFailed();
 
-        if (!$state->isFailed()) {
-            $state->setToFailed();
+        if (!$state->shouldSentFailedNotification()) {
+            return;
         }
 
-        if ($state->shouldSentFailedNotification()) {
-            $notification = $this->sendNotification(
-                new CheckerHasFailedNotification($checker, $exception)
-            );
+        $notification = $this->sendNotification(
+            new CheckerHasFailedNotification($checker, $exception)
+        );
 
-            $notification ? $state->markSentFailedNotification($notification) : null;
-        }
+        $notification ? $state->markSentFailedNotification($notification) : null;
     }
 }
