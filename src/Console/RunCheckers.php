@@ -3,6 +3,7 @@
 namespace Pbmedia\ApiHealth\Console;
 
 use Illuminate\Console\Command;
+use Pbmedia\ApiHealth\Checkers\Executor;
 use Pbmedia\ApiHealth\Runner;
 
 class RunCheckers extends Command
@@ -30,15 +31,18 @@ class RunCheckers extends Command
 
         if ($passes->isNotEmpty()) {
             $this->info('Passing checkers:');
-            $this->table(['Checker'], $passes->map(function ($checker) {
-                return [get_class($checker)];
+            $this->table(['Checker'], $passes->map(function (Executor $executor) {
+                return [get_class($executor->getChecker())];
             }));
         }
 
         if ($failed->isNotEmpty()) {
             $this->info('Failed checkers:');
-            $this->table(['Checker', 'Exception'], $failed->map(function ($checkerAndException) {
-                return [get_class($checkerAndException[0]), $checkerAndException[1]->getMessage()];
+            $this->table(['Checker', 'Exception'], $failed->map(function (Executor $executor) {
+                return [
+                    get_class($executor->getChecker()),
+                    $executor->getException()->getMessage(),
+                ];
             }));
         }
     }

@@ -40,11 +40,11 @@ class RunnerTest extends TestCase
         $runner = app(Runner::class)->handle();
 
         $this->assertCount(1, $passes = $runner->passes());
-        $this->assertInstanceOf(PassingChecker::class, $passes->first());
+        $this->assertInstanceOf(PassingChecker::class, $passes->first()->getChecker());
 
         $this->assertCount(1, $failed = $runner->failed());
-        $this->assertInstanceOf(FailingChecker::class, $failed->first()[0]);
-        $this->assertInstanceOf(CheckerHasFailed::class, $failed->first()[1]);
+        $this->assertInstanceOf(FailingChecker::class, $failed->first()->getChecker());
+        $this->assertInstanceOf(CheckerHasFailed::class, $failed->first()->getException());
     }
 
     /** @test */

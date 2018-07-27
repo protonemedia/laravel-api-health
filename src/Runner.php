@@ -17,15 +17,6 @@ class Runner
         $this->app = $app;
     }
 
-    private function checkers(): Collection
-    {
-        return Collection::make(config('api-health.checkers'))->map(function ($config): Executor {
-            return Executor::fromConfig($config);
-        })->filter(function (Executor $executor) {
-            return $executor->getChecker()->isDue($this->app);
-        });
-    }
-
     public function passes(): Collection
     {
         if (!$this->passes) {
@@ -50,16 +41,16 @@ class Runner
 
         $this->passes = new Collection;
 
-        $this->checkers()->each(function (Executor $executor) {
-            if ($executor->failed()) {
-                return $this->failed->push([
-                    $executor->getChecker(),
-                    $executor->getException(),
-                ]);
-            }
-
-            $this->passes->push($executor->getChecker());
-        });
+        Collection::make(config('api-health.checkers'))
+            ->map(function ($config): Executor {
+                return Executor::fromConfig($config);
+            })
+            ->filter(function (Executor $executor) {
+                return $executor->getChecker()->isDue($this->app);
+            })
+            ->each(function (Executor $executor) {
+                ($executor->failed() ? $this->failed : $this->passes)->push($executor);
+            });
 
         return $this;
     }
