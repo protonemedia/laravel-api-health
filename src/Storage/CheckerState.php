@@ -41,9 +41,15 @@ class CheckerState
             return true;
         }
 
+        $resendAfterMinutes = $this->checker->resendFailedNotificationAfterMinutes();
+
+        if (!$resendAfterMinutes) {
+            return false;
+        }
+
         $diffInSeconds = now()->getTimestamp() - $sentNotifications->last()['sent_at'];
 
-        return $diffInSeconds >= ($this->checker->resendFailedNotificationAfterMinutes() * 60);
+        return $diffInSeconds >= ($resendAfterMinutes * 60);
     }
 
     public function setToFailed(string $exceptionMessage)

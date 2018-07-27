@@ -131,6 +131,23 @@ class NotificationTest extends TestCase
     }
 
     /** @test */
+    public function it_only_notifies_once_if_the_resend_minutes_is_set_to_zero()
+    {
+        Notification::fake();
+
+        config()->set('api-health.notifications.resend_failed_notification_after_minutes', 0);
+
+        app(Runner::class)->handle();
+        app(Runner::class)->handle();
+
+        Notification::assertSentToTimes(
+            app(config('api-health.notifications.notifiable')),
+            CheckerHasFailedNotification::class,
+            1
+        );
+    }
+
+    /** @test */
     public function it_notifies_if_it_recovers_after_it_has_failed()
     {
         Notification::fake();
