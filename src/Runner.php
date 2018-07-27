@@ -2,20 +2,13 @@
 
 namespace Pbmedia\ApiHealth;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
 use Pbmedia\ApiHealth\Checkers\Executor;
 
 class Runner
 {
-    private $app;
     private $failed;
     private $passes;
-
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
 
     public function passes(): Collection
     {
@@ -46,7 +39,7 @@ class Runner
                 return Executor::fromConfig($config);
             })
             ->filter(function (Executor $executor) {
-                return $executor->getChecker()->isDue($this->app);
+                return $executor->getChecker()->isDue();
             })
             ->each(function (Executor $executor) {
                 ($executor->failed() ? $this->failed : $this->passes)->push($executor);

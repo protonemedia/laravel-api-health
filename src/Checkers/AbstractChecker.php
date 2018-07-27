@@ -5,8 +5,6 @@ namespace Pbmedia\ApiHealth\Checkers;
 use Illuminate\Console\Scheduling\CacheEventMutex;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\EventMutex;
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Foundation\Application;
 
 abstract class AbstractChecker implements Checker
 {
@@ -15,9 +13,7 @@ abstract class AbstractChecker implements Checker
     private function event()
     {
         if (!$this->event) {
-            $container = Container::getInstance();
-
-            $eventMutex = $container->bound(EventMutex::class) ? $container->make(EventMutex::class) : $container->make(CacheEventMutex::class);
+            $eventMutex = app()->bound(EventMutex::class) ? app()->make(EventMutex::class) : app()->make(CacheEventMutex::class);
 
             $this->event = new Event($eventMutex, '');
         }
@@ -25,7 +21,7 @@ abstract class AbstractChecker implements Checker
         return $this->event;
     }
 
-    public function isDue(Application $app): bool
+    public function isDue(): bool
     {
         $this->schedule($this->event());
 
