@@ -4,6 +4,7 @@ namespace Pbmedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Facades\ApiHealth;
+use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailOnceChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassOnceChecker;
 
@@ -35,5 +36,15 @@ class ApiHealthTest extends TestCase
         $this->assertTrue(ApiHealth::isFailing(FailOnceChecker::class));
 
         $this->assertFalse(ApiHealth::withoutCache()->isFailing(FailOnceChecker::class));
+    }
+
+    /** @test */
+    public function it_restores_the_cache_setting()
+    {
+        // two times without cache, third with cache...
+
+        $this->assertTrue(ApiHealth::isFailing(FailingAtEvenTimesChecker::class));
+        $this->assertFalse(ApiHealth::withoutCache()->isFailing(FailingAtEvenTimesChecker::class));
+        $this->assertFalse(ApiHealth::isFailing(FailingAtEvenTimesChecker::class));
     }
 }

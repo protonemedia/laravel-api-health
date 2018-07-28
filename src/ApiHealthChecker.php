@@ -24,6 +24,8 @@ class ApiHealthChecker
             if ($storage->exists()) {
                 return $storage->isFailing();
             }
+        } else {
+            $this->useCache = true;
         }
 
         return Executor::make($checkerClass)->fails();
