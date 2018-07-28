@@ -31,14 +31,6 @@ class ApiHealthChecker
 
     public function isPassing(string $checkerClass): bool
     {
-        if ($this->useCache) {
-            $storage = CheckerState::make($checkerClass);
-
-            if ($storage->exists()) {
-                return $storage->isPassing();
-            }
-        }
-
-        return Executor::make($checkerClass)->passes();
+        return !$this->isFailing($checkerClass);
     }
 }
