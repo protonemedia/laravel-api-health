@@ -9,7 +9,7 @@ class ApiHealthChecker
 {
     private $useCache = true;
 
-    public function withoutCache()
+    public function fresh()
     {
         $this->useCache = false;
 
@@ -24,9 +24,9 @@ class ApiHealthChecker
             if ($storage->exists()) {
                 return $storage->isFailing();
             }
-        } else {
-            $this->useCache = true;
         }
+
+        $this->useCache = true;
 
         return Executor::make($checkerClass)->fails();
     }

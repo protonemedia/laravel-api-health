@@ -35,7 +35,7 @@ class ApiHealthTest extends TestCase
         $this->assertTrue(ApiHealth::isFailing(FailOnceChecker::class));
         $this->assertTrue(ApiHealth::isFailing(FailOnceChecker::class));
 
-        $this->assertFalse(ApiHealth::withoutCache()->isFailing(FailOnceChecker::class));
+        $this->assertFalse(ApiHealth::fresh()->isFailing(FailOnceChecker::class));
     }
 
     /** @test */
@@ -44,7 +44,7 @@ class ApiHealthTest extends TestCase
         // two times without cache, third with cache...
 
         $this->assertTrue(ApiHealth::isFailing(FailingAtEvenTimesChecker::class));
-        $this->assertFalse(ApiHealth::withoutCache()->isFailing(FailingAtEvenTimesChecker::class));
+        $this->assertFalse(ApiHealth::fresh()->isFailing(FailingAtEvenTimesChecker::class));
         $this->assertFalse(ApiHealth::isFailing(FailingAtEvenTimesChecker::class));
     }
 }
