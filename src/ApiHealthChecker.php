@@ -28,7 +28,7 @@ class ApiHealthChecker
 
     /**
      * Returns if the stored state is set to failed or runs the checker
-     * of nothing is stored and returns wether the checker fails.
+     * if nothing is stored and returns wether the checker fails.
      *
      * @param  string $checkerClass
      * @return bool
