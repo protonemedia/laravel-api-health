@@ -30,7 +30,7 @@ class RunnerTest extends TestCase
     /** @test */
     public function it_runs_the_configured_checkers_and_returns_the_failed_and_passed_checkers()
     {
-        $runner = app(Runner::class)->handle();
+        $runner = app(Runner::class);
 
         $this->assertCount(1, $passes = $runner->passes());
         $this->assertInstanceOf(PassingChecker::class, $passes->first()->getChecker());

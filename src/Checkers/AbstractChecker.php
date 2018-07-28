@@ -12,6 +12,8 @@ abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSe
 
     protected $resendFailedNotificationAfterMinutes;
 
+    protected $sendFailedNotificationAfterSuccessiveFailures;
+
     protected $failedNotificationClass;
 
     protected $recoveredNotificationClass;
@@ -37,6 +39,11 @@ abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSe
     public function resendFailedNotificationAfterMinutes(): int
     {
         return $this->resendFailedNotificationAfterMinutes ?: config('api-health.notifications.resend_failed_notification_after_minutes');
+    }
+
+    public function sendFailedNotificationAfterSuccessiveFailures(): int
+    {
+        return $this->sendFailedNotificationAfterSuccessiveFailures ?: config('api-health.notifications.send_failed_notification_after_successive_failures');
     }
 
     public function failedNotificationClass(): string

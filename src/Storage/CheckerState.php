@@ -35,15 +35,21 @@ class CheckerState
 
     public function shouldSentFailedNotification(): bool
     {
+        $successiveFailuresRequired = $this->checker->sendFailedNotificationAfterSuccessiveFailures();
+
+        $failures = collect($this->data()['failed_at']);
+
+        if ($failures->count() < $successiveFailuresRequired) {
+            return false;
+        }
+
         $sentNotifications = collect($this->data()['notifications_sent']);
 
         if ($sentNotifications->isEmpty()) {
             return true;
         }
 
-        $resendAfterMinutes = $this->checker->resendFailedNotificationAfterMinutes();
-
-        if (!$resendAfterMinutes) {
+        if (!$resendAfterMinutes = $this->checker->resendFailedNotificationAfterMinutes()) {
             return false;
         }
 
@@ -57,9 +63,18 @@ class CheckerState
         $this->cache([
             'exception_message'  => $exceptionMessage,
             'passed_at'          => null,
-            'failed_at'          => now()->getTimestamp(),
+            'failed_at'          => [now()->getTimestamp()],
             'notifications_sent' => [],
         ]);
+    }
+
+    public function addFailedTimestamp()
+    {
+        $data = $this->data();
+
+        $data['failed_at'][] = now()->getTimestamp();
+
+        $this->cache($data);
     }
 
     public function setToPassing()
@@ -86,7 +101,7 @@ class CheckerState
             'sent_at'           => now()->getTimestamp(),
         ];
 
-        $this->cache->forever($this->key(), $data);
+        $this->cache($data);
     }
 
     public function exists(): bool

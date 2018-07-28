@@ -96,6 +96,8 @@ class Executor
     {
         if (!$this->state->exists() || $this->state->isPassing()) {
             $this->state->setToFailed($this->exception->getMessage());
+        } elseif ($this->state->exists() && $this->state->isFailing()) {
+            $this->state->addFailedTimestamp();
         }
 
         if ($this->checker instanceof CheckerSendsNotifications) {
