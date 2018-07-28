@@ -8,12 +8,14 @@ use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
 class DummyClass extends AbstractHttpGetChecker
 {
     /*
-     * Here you can specify the URL you want to request.
+     * The URL you want to request.
      */
     protected $url = 'https://yourwebsite.com';
 
     /*
      * Here you can specify the Guzzle HTTP options.
+     *
+     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker
      */
     public static function create()
     {
@@ -22,6 +24,12 @@ class DummyClass extends AbstractHttpGetChecker
         ]);
     }
 
+    /**
+     * Defines the checker's schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Event  $event
+     * @return null
+     */
     public function schedule(Event $event)
     {
         $event->everyMinute();

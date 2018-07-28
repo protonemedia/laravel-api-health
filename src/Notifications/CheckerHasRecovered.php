@@ -18,11 +18,22 @@ class CheckerHasRecovered extends Notification
         $this->exceptionMessage = $exceptionMessage;
     }
 
+    /**
+     * Get the notification's channels from the configuration file.
+     *
+     * @param  mixed  $notifiable
+     * @return array|string
+     */
     public function via(): array
     {
         return config('api-health.notifications.via');
     }
 
+    /**
+     * Returns an array of all relevant data for the notification.
+     *
+     * @return array
+     */
     private function data(): array
     {
         return [
@@ -32,6 +43,11 @@ class CheckerHasRecovered extends Notification
         ];
     }
 
+    /**
+     * Build the mail representation of the notification.
+     *
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
     public function toMail(): MailMessage
     {
         $replace = $this->data();
@@ -41,6 +57,11 @@ class CheckerHasRecovered extends Notification
             ->line(trans('api-health::notifications.checker_recovered_body', $replace));
     }
 
+    /**
+     * Build the Slack representation of the notification.
+     *
+     * @return \Illuminate\Notifications\Messages\SlackMessage
+     */
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage)

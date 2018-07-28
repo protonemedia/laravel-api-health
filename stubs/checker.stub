@@ -8,16 +8,30 @@ use Pbmedia\ApiHealth\Checkers\AbstractChecker;
 
 class DummyClass extends AbstractChecker
 {
+    /**
+     * [__construct description]
+     */
     public function __construct()
     {
 
     }
 
+    /**
+     * Returns a fresh configured instance of the checker.
+     *
+     * @return \Pbmedia\ApiHealth\Checkers\Checker
+     */
     public static function create()
     {
 
     }
 
+    /**
+     * Defines the checker's schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Event  $event
+     * @return null
+     */
     public function schedule(Event $event)
     {
         $event->everyMinute();
@@ -26,6 +40,12 @@ class DummyClass extends AbstractChecker
         // $event->onOneServer();
     }
 
+    /**
+     * Execute the checker.
+     *
+     * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @return mixed
+     */
     public function run()
     {
 
