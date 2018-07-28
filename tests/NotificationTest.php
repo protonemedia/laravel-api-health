@@ -161,7 +161,7 @@ class NotificationTest extends TestCase
         $runner = app(Runner::class)->handle();
 
         $state = new CheckerState(FailingAtOddTimesChecker::create());
-        $this->assertFalse($state->isFailed());
+        $this->assertFalse($state->isFailing());
 
         Notification::assertNotSentTo(
             app(config('api-health.notifications.notifiable')),
@@ -169,10 +169,10 @@ class NotificationTest extends TestCase
         );
 
         $runner->handle();
-        $this->assertTrue($state->isFailed());
+        $this->assertTrue($state->isFailing());
 
         $runner->handle();
-        $this->assertFalse($state->isFailed());
+        $this->assertFalse($state->isFailing());
 
         Notification::assertSentToTimes(
             app(config('api-health.notifications.notifiable')),
@@ -210,13 +210,13 @@ class NotificationTest extends TestCase
         $runner = app(Runner::class);
 
         $runner->handle();
-        $this->assertTrue($state->isFailed());
+        $this->assertTrue($state->isFailing());
 
         $runner->handle();
-        $this->assertFalse($state->isFailed());
+        $this->assertFalse($state->isFailing());
 
         $runner->handle();
-        $this->assertTrue($state->isFailed());
+        $this->assertTrue($state->isFailing());
 
         Notification::assertSentToTimes(
             app(config('api-health.notifications.notifiable')),

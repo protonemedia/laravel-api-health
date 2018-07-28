@@ -81,7 +81,7 @@ class Executor
 
     private function handlePassingChecker()
     {
-        $currentlyFailed = $this->state->exists() && $this->state->isFailed();
+        $currentlyFailed = $this->state->exists() && $this->state->isFailing();
 
         $failedData = $currentlyFailed ? $this->state->data() : null;
 

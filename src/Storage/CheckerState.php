@@ -89,7 +89,7 @@ class CheckerState
         return $this->cache->has($this->key());
     }
 
-    public function isFailed(): bool
+    public function isFailing(): bool
     {
         return $this->data()['failed_at'] ? true : false;
     }

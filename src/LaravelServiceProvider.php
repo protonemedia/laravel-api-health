@@ -3,6 +3,7 @@
 namespace Pbmedia\ApiHealth;
 
 use Illuminate\Support\ServiceProvider;
+use Pbmedia\ApiHealth\ApiHealthChecker;
 use Pbmedia\ApiHealth\Console\MakeChecker;
 use Pbmedia\ApiHealth\Console\MakeHttpGetChecker;
 use Pbmedia\ApiHealth\Console\RunCheckers;
@@ -49,5 +50,9 @@ class LaravelServiceProvider extends ServiceProvider
             'command.make:checker',
             'command.make:http-get-checker',
         ]);
+
+        $this->app->singleton('laravel-api-health', function ($app) {
+            return $app->make(ApiHealthChecker::class);
+        });
     }
 }
