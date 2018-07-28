@@ -8,10 +8,32 @@ use Pbmedia\ApiHealth\Checkers\Executor;
 
 class Runner
 {
+    /**
+     * A collection of failed checkers.
+     *
+     * @var \Illuminate\Support\Collection
+     */
     private $failed;
+
+    /**
+     * A collection of passing checkers.
+     *
+     * @var \Illuminate\Support\Collection
+     */
     private $passes;
+
+    /**
+     * Boolean wether to use the scheduling.
+     *
+     * @var bool
+     */
     private $scheduled = true;
 
+    /**
+     * Disables the scheduling.
+     *
+     * @return $this
+     */
     public function ignoreScheduling()
     {
         $this->scheduled = false;
@@ -19,6 +41,12 @@ class Runner
         return $this;
     }
 
+    /**
+     * Handles all the checkers if that has not been done yet and
+     * returns the collection of passing checkers.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function passes(): Collection
     {
         if (!$this->passes) {
@@ -28,6 +56,12 @@ class Runner
         return $this->passes;
     }
 
+    /**
+     * Handles all the checkers if that has not been done yet and
+     * returns the collection of failed checkers.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function failed(): Collection
     {
         if (!$this->failed) {
@@ -37,6 +71,11 @@ class Runner
         return $this->failed;
     }
 
+    /**
+     * Clears both collections and runs through all the configured checkers.
+     *
+     * @return $this
+     */
     public function handle()
     {
         $this->failed = new Collection;

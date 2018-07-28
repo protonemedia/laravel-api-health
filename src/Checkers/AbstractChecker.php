@@ -24,7 +24,7 @@ abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSe
 
     /**
      * Number of times the checker must fail in succession before
-     * the first notification is send.
+     * the first notification is sent.
      *
      * @var int
      */
@@ -56,7 +56,7 @@ abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSe
 
     /**
      * Number of times the checker must fail in succession before
-     * the first notification is send.
+     * the first notification is sent.
      *
      * @return int
      */

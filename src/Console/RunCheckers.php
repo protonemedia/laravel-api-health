@@ -8,14 +8,29 @@ use Pbmedia\ApiHealth\Runner;
 
 class RunCheckers extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'api-health:run-checkers {--force}';
 
-    protected $description = 'Run the checkers';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Run the configured checkers';
 
-    public function handle()
+    /**
+     * Gets the passing and failing checkers from the Runner
+     * and presents them in a table.
+     *
+     * @param  \Pbmedia\ApiHealth\Runner $runner
+     * @return null
+     */
+    public function handle(Runner $runner)
     {
-        $runner = new Runner;
-
         if ($this->option('force')) {
             $runner->ignoreScheduling();
         }

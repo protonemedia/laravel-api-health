@@ -13,7 +13,7 @@ interface CheckerSendsNotifications
 
     /**
      * Number of times the checker must fail in succession before
-     * the first notification is send.
+     * the first notification is sent.
      *
      * @return int
      */

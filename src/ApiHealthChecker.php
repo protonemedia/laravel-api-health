@@ -7,18 +7,35 @@ use Pbmedia\ApiHealth\Storage\CheckerState;
 
 class ApiHealthChecker
 {
-    private $useCache = true;
+    /**
+     * Boolean wether the use the state storage.
+     *
+     * @var bool
+     */
+    private $useStateStorage = true;
 
+    /**
+     * Disables the use of the state storage.
+     *
+     * @return $this
+     */
     public function fresh()
     {
-        $this->useCache = false;
+        $this->useStateStorage = false;
 
         return $this;
     }
 
+    /**
+     * Returns if the stored state is set to failed or runs the checker
+     * of nothing is stored and returns wether the checker fails.
+     *
+     * @param  string $checkerClass
+     * @return bool
+     */
     public function isFailing(string $checkerClass): bool
     {
-        if ($this->useCache) {
+        if ($this->useStateStorage) {
             $storage = CheckerState::make($checkerClass);
 
             if ($storage->exists()) {
@@ -26,11 +43,17 @@ class ApiHealthChecker
             }
         }
 
-        $this->useCache = true;
+        $this->useStateStorage = true;
 
         return Executor::make($checkerClass)->fails();
     }
 
+    /**
+     * The opposite of the 'isFailing' method.
+     *
+     * @param  string $checkerClass
+     * @return bool
+     */
     public function isPassing(string $checkerClass): bool
     {
         return !$this->isFailing($checkerClass);
