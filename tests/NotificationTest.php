@@ -196,7 +196,7 @@ class NotificationTest extends TestCase
             app(config('api-health.notifications.notifiable')),
             CheckerHasRecovered::class,
             function ($notification) {
-                return $notification->exceptionMessage === 'TestChecker fails!';
+                return $notification->failedData['exception_message'] === 'TestChecker fails!';
             }
         );
     }

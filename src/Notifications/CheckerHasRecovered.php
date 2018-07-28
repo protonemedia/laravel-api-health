@@ -10,12 +10,12 @@ use Pbmedia\ApiHealth\Checkers\Checker;
 class CheckerHasRecovered extends Notification
 {
     public $checker;
-    public $exceptionMessage;
+    public $failedData;
 
-    public function __construct(Checker $checker, string $exceptionMessage)
+    public function __construct(Checker $checker, array $failedData)
     {
-        $this->checker          = $checker;
-        $this->exceptionMessage = $exceptionMessage;
+        $this->checker    = $checker;
+        $this->failedData = $failedData;
     }
 
     /**
@@ -39,7 +39,7 @@ class CheckerHasRecovered extends Notification
         return [
             'application_name'  => config('app.name') ?: 'Your application',
             'checker_name'      => get_class($this->checker),
-            'exception_message' => $this->exceptionMessage,
+            'exception_message' => $this->failedData['exception_message'],
         ];
     }
 

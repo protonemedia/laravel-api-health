@@ -12,11 +12,13 @@ class CheckerHasFailed extends Notification
 {
     public $checker;
     public $exception;
+    public $failedData;
 
-    public function __construct(Checker $checker, CheckerHasFailedException $exception)
+    public function __construct(Checker $checker, CheckerHasFailedException $exception, array $failedData)
     {
-        $this->checker   = $checker;
-        $this->exception = $exception;
+        $this->checker    = $checker;
+        $this->exception  = $exception;
+        $this->failedData = $failedData;
     }
 
     /**

@@ -166,7 +166,7 @@ class Executor
         $this->state->setToPassing();
 
         if ($failedData && $this->checker instanceof CheckerSendsNotifications) {
-            $this->sendRecoveredNotification($failedData['exception_message']);
+            $this->sendRecoveredNotification($failedData);
         }
     }
 
@@ -205,7 +205,7 @@ class Executor
         $notificationClass = $this->checker->failedNotificationClass();
 
         $notification = $this->sendNotification(
-            new $notificationClass($this->checker, $this->exception)
+            new $notificationClass($this->checker, $this->exception, $this->state->data())
         );
 
         $notification ? $this->state->markSentFailedNotification($notification) : null;
@@ -214,15 +214,15 @@ class Executor
     /**
      * Creates the recoved notification and sends it to the notifiable.
      *
-     * @param  string $exceptionMessage
+     * @param  array $failedData
      * @return null
      */
-    private function sendRecoveredNotification(string $exceptionMessage)
+    private function sendRecoveredNotification(array $failedData)
     {
         $notificationClass = $this->checker->recoveredNotificationClass();
 
         $this->sendNotification(
-            new $notificationClass($this->checker, $exceptionMessage)
+            new $notificationClass($this->checker, $failedData)
         );
     }
 }
