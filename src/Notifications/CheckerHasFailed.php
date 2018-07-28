@@ -5,6 +5,7 @@ namespace Pbmedia\ApiHealth\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed as CheckerHasFailedException;
 
@@ -37,11 +38,13 @@ class CheckerHasFailed extends Notification
      *
      * @return array
      */
-    private function data(): array
+    protected function data(): array
     {
         return [
             'application_name'  => config('app.name') ?: 'Your application',
-            'checker_name'      => get_class($this->checker),
+            'checker_type'      => get_class($this->checker),
+            'failure_count'     => count($this->failedData['failed_at']),
+            'failed_at'         => Carbon::createFromTimestamp($this->failedData['failed_at'][0]),
             'exception_message' => $this->exception->getMessage(),
         ];
     }
@@ -56,8 +59,11 @@ class CheckerHasFailed extends Notification
         $replace = $this->data();
 
         return (new MailMessage)
+            ->error()
             ->subject(trans('api-health::notifications.checker_failed_subject', $replace))
-            ->line(trans('api-health::notifications.checker_failed_body', $replace));
+            ->line(trans('api-health::notifications.checker_failed_type', $replace))
+            ->line(trans('api-health::notifications.checker_failed_at', $replace))
+            ->line(trans('api-health::notifications.checker_failed_exception', $replace));
     }
 
     /**
@@ -67,10 +73,16 @@ class CheckerHasFailed extends Notification
      */
     public function toSlack(): SlackMessage
     {
+        $replace = $this->data();
+
         return (new SlackMessage)
-            ->success()
+            ->error()
             ->from(config('api-health.notifications.slack.username'), config('api-health.notifications.slack.icon'))
             ->to(config('api-health.notifications.slack.channel'))
-            ->content(trans('api-health::notifications.checker_failed_body', $this->data()));
+            ->content(implode([
+                trans('api-health::notifications.checker_failed_type', $replace),
+                trans('api-health::notifications.checker_failed_at', $replace),
+                trans('api-health::notifications.checker_failed_exception', $replace),
+            ], PHP_EOL));
     }
 }

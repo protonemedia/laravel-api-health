@@ -5,6 +5,7 @@ namespace Pbmedia\ApiHealth\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 use Pbmedia\ApiHealth\Checkers\Checker;
 
 class CheckerHasRecovered extends Notification
@@ -34,11 +35,12 @@ class CheckerHasRecovered extends Notification
      *
      * @return array
      */
-    private function data(): array
+    protected function data(): array
     {
         return [
             'application_name'  => config('app.name') ?: 'Your application',
-            'checker_name'      => get_class($this->checker),
+            'checker_type'      => get_class($this->checker),
+            'failed_at'         => Carbon::createFromTimestamp($this->failedData['failed_at'][0]),
             'exception_message' => $this->failedData['exception_message'],
         ];
     }
@@ -54,7 +56,9 @@ class CheckerHasRecovered extends Notification
 
         return (new MailMessage)
             ->subject(trans('api-health::notifications.checker_recovered_subject', $replace))
-            ->line(trans('api-health::notifications.checker_recovered_body', $replace));
+            ->line(trans('api-health::notifications.checker_recovered_type', $replace))
+            ->line(trans('api-health::notifications.checker_recovered_failed_at', $replace))
+            ->line(trans('api-health::notifications.checker_recovered_exception', $replace));
     }
 
     /**
@@ -64,10 +68,16 @@ class CheckerHasRecovered extends Notification
      */
     public function toSlack(): SlackMessage
     {
+        $replace = $this->data();
+
         return (new SlackMessage)
             ->success()
             ->from(config('api-health.notifications.slack.username'), config('api-health.notifications.slack.icon'))
             ->to(config('api-health.notifications.slack.channel'))
-            ->content(trans('api-health::notifications.checker_recovered_body', $this->data()));
+            ->content(implode([
+                trans('api-health::notifications.checker_recovered_type', $replace),
+                trans('api-health::notifications.checker_recovered_failed_at', $replace),
+                trans('api-health::notifications.checker_recovered_exception', $replace),
+            ], PHP_EOL));
     }
 }

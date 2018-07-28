@@ -14,9 +14,12 @@ use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtOddTimesChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\NotificationlessChecker;
 use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class NotificationTest extends TestCase
 {
+    use MatchesSnapshots;
+
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('api-health.checkers', [
@@ -77,19 +80,32 @@ class NotificationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_notify_whenever_a_checker_fails()
+    public function it_can_notify_through_mail_and_slack_whenever_a_checker_fails()
     {
         Notification::fake();
 
+        config()->set('api-health.notifications.via', ['mail', 'slack']);
+
+        Carbon::setTestNow('2018-07-01 14:00:00');
+
         app(Runner::class)->handle();
+
+        $failedNotification = null;
 
         Notification::assertSentTo(
             app(config('api-health.notifications.notifiable')),
             CheckerHasFailedNotification::class,
-            function ($notification, $channels) {
-                return $channels === ['mail'];
+            function ($notification, $channels) use (&$failedNotification) {
+                $failedNotification = $notification;
+                return $channels === ['mail', 'slack'];
             }
         );
+
+        $mailData = $failedNotification->toMail()->toArray();
+
+        $this->assertEquals('Failed checker at Laravel', $mailData['subject']);
+        $this->assertMatchesSnapshot($mailData['introLines']);
+        $this->assertMatchesSnapshot($failedNotification->toSlack()->content);
     }
 
     /** @test */
@@ -168,6 +184,9 @@ class NotificationTest extends TestCase
         Notification::fake();
 
         config()->set('api-health.checkers', [FailingAtOddTimesChecker::class]);
+        config()->set('api-health.notifications.via', ['mail', 'slack']);
+
+        Carbon::setTestNow('2018-07-01 14:00:00');
 
         $runner = app(Runner::class)->handle();
 
@@ -192,13 +211,22 @@ class NotificationTest extends TestCase
             1
         );
 
+        $recoveredNotification = null;
+
         Notification::assertSentTo(
             app(config('api-health.notifications.notifiable')),
             CheckerHasRecovered::class,
-            function ($notification) {
+            function ($notification) use (&$recoveredNotification) {
+                $recoveredNotification = $notification;
                 return $notification->failedData['exception_message'] === 'TestChecker fails!';
             }
         );
+
+        $mailData = $recoveredNotification->toMail()->toArray();
+
+        $this->assertEquals('Recovered checker at Laravel', $mailData['subject']);
+        $this->assertMatchesSnapshot($mailData['introLines']);
+        $this->assertMatchesSnapshot($recoveredNotification->toSlack()->content);
     }
 
     /** @test */
