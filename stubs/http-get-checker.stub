@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use GuzzleHttp\Client;
+use Illuminate\Console\Scheduling\Event;
 use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
 
 class DummyClass extends AbstractHttpGetChecker

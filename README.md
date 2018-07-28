@@ -1,4 +1,4 @@
-# Laravel API Health
+# [WIP] Laravel API Health
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
 [![Build Status](https://img.shields.io/travis/pbmedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/pbmedia/laravel-api-health)
@@ -42,6 +42,7 @@ In your `app` folder you'll find a new `Checkers` folder with the newly created 
 namespace App\Checkers;
 
 use GuzzleHttp\Client;
+use Illuminate\Console\Scheduling\Event;
 use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
 
 class LaravelDocumentationChecker extends AbstractHttpGetChecker
@@ -83,6 +84,62 @@ Now we can run this checker in the console with the following command:
 ```bash
 php artisan api-health:check App\Checkers\LaravelDocumentationChecker
 ```
+
+## Schedule your checkers
+
+You can fill the `checkers` array in the `config/api-health.php` file with all the checker you want to schedule. By default every checker will run every minute. The `schedule` method allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
+
+```php
+<?php
+
+return [
+    'checkers' => [
+        \App\Checkers\LaravelDocumentationChecker::class,
+    ],
+
+    //
+];
+```
+
+Open the `App\Console\Kernel` class in your editor and add the `api-health:run-checkers` command and set it to `everyMinute()`. If you don't use Laravel's Task Scheduler you could also manually create a cronjob that runs every minute:
+
+```php
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
+{
+    //
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('api-health:run-checkers')->everyMinute();
+    }
+
+    //
+}
+```
+
+
+## Usage
+
+You can also run the checker in your PHP code. The state of the checker will be pulled from the cache
+```php
+use App\Checkers\LaravelDocumentationChecker;
+use Pbmedia\ApiHealth\Facades\ApiHealth;
+
+ApiHealth::isFailing(LaravelDocumentationChecker::class);
+ApiHealth::isPassing(LaravelDocumentationChecker::class);
+
+ApiHealth::fresh()->isFailing(LaravelDocumentationChecker::class);
+ApiHealth::fresh()->isPassing(LaravelDocumentationChecker::class);
+```
+
+
 
 ### Testing
 
