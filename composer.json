@@ -1,9 +1,11 @@
 {
     "name": "pbmedia/laravel-api-health",
-    "description": ":package_description",
+    "description": "Monitor first and third party services and get notified when something goed wrong!",
     "keywords": [
         "pascalbaljetmedia",
-        "laravel-api-health"
+        "laravel-api-health",
+        "laravel",
+        "api-health"
     ],
     "homepage": "https://github.com/pascalbaljetmedia/laravel-api-health",
     "license": "MIT",
