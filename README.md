@@ -87,7 +87,7 @@ php artisan api-health:check App\Checkers\LaravelDocumentationChecker
 
 ## Schedule your checkers
 
-You can fill the `checkers` array in the `config/api-health.php` file with all the checker you want to schedule. By default every checker will run every minute. The `schedule` method allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
+You can fill the `checkers` array in the `config/api-health.php` file with all the checker you want to schedule. By default every checker will run every minute. The `schedule` method on the checker allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
 
 ```php
 <?php
@@ -101,7 +101,7 @@ return [
 ];
 ```
 
-Open the `App\Console\Kernel` class in your editor and add the `api-health:run-checkers` command and set it to `everyMinute()`. If you don't use Laravel's Task Scheduler you could also manually create a cronjob that runs every minute:
+Open the `App\Console\Kernel` class in your editor and add the `api-health:run-checkers` command and set it to `everyMinute()`. If you don't use Laravel's Task Scheduler you could also manually create a cronjob that runs every minute.
 
 ```php
 <?php
@@ -124,8 +124,7 @@ class Kernel extends ConsoleKernel
 }
 ```
 
-
-## Usage
+The result of the checker will be cached but it refreshes every time you run a checker in the console. This way you can fetch the cached result in your PHP code. This is great for checking wether a service is online without having to wait for the result. For example, you might use a payment gateway in your app. If you check the status of the gateway every minute through the scheduler, you can respond on that status pretty accurately.
 
 You can also run the checker in your PHP code. The state of the checker will be pulled from the cache
 ```php
