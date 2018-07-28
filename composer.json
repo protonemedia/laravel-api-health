@@ -51,7 +51,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Pbmedia\\ApiHealth\\LaravelServiceProvider"
+                "Pbmedia\\ApiHealth\\ApiHealthServiceProvider"
             ],
             "aliases": {
                 "ApiHealth": "Pbmedia\\ApiHealth\\Facades\\ApiHealth"

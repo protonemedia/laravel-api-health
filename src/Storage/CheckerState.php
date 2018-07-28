@@ -35,7 +35,7 @@ class CheckerState
 
     public function shouldSentFailedNotification(): bool
     {
-        $successiveFailuresRequired = $this->checker->sendFailedNotificationAfterSuccessiveFailures();
+        $successiveFailuresRequired = $this->checker->onlySendFailedNotificationAfterSuccessiveFailures();
 
         $failures = collect($this->data()['failed_at']);
 

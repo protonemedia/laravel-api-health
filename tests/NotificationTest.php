@@ -31,7 +31,7 @@ class NotificationTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\LaravelServiceProvider::class,
+            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 
@@ -81,7 +81,7 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        $runner = app(Runner::class)->handle();
+        app(Runner::class)->handle();
 
         Notification::assertSentTo(
             app(config('api-health.notifications.notifiable')),
@@ -147,7 +147,7 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        config()->set('api-health.notifications.send_failed_notification_after_successive_failures', 3);
+        config()->set('api-health.notifications.only_send_failed_notification_after_successive_failures', 3);
 
         app(Runner::class)->handle();
         $this->assertNotSent();

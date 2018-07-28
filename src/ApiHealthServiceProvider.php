@@ -8,7 +8,7 @@ use Pbmedia\ApiHealth\Console\MakeChecker;
 use Pbmedia\ApiHealth\Console\MakeHttpGetChecker;
 use Pbmedia\ApiHealth\Console\RunCheckers;
 
-class LaravelServiceProvider extends ServiceProvider
+class ApiHealthServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -23,14 +23,6 @@ class LaravelServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/lang' => resource_path('lang/vendor/api-health'),
             ]);
-
-            /*
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'api-health');
-
-        $this->publishes([
-        __DIR__.'/../resources/views' => base_path('resources/views/vendor/api-health'),
-        ], 'views');
-         */
         }
     }
 

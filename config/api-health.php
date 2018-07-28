@@ -12,7 +12,7 @@ return [
     'notifications' => [
         'resend_failed_notification_after_minutes' => 60,
 
-        'send_failed_notification_after_successive_failures' => 0,
+        'only_send_failed_notification_after_successive_failures' => 0,
 
         'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
 

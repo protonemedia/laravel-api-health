@@ -24,7 +24,7 @@ class SchedulerTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\LaravelServiceProvider::class,
+            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 
