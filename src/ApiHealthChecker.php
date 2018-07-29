@@ -8,7 +8,7 @@ use Pbmedia\ApiHealth\Storage\CheckerState;
 class ApiHealthChecker
 {
     /**
-     * Boolean wether the use the state storage.
+     * Boolean wether to use the state storage.
      *
      * @var bool
      */

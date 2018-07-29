@@ -24,7 +24,9 @@ class ApiHealthServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/lang' => resource_path('lang/vendor/api-health'),
         ]);
 
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang/', 'api-health');
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../resources/lang/', 'api-health'
+        );
     }
 
     /**

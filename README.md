@@ -101,7 +101,7 @@ return [
 ];
 ```
 
-Open the `App\Console\Kernel` class in your editor and add the `api-health:run-checkers` command and set it to `everyMinute()`. If you don't use Laravel's Task Scheduler you could also manually create a cronjob that runs every minute.
+Open the `App\Console\Kernel` class in your editor and add the `api-health:run-checkers` command and set it to `everyMinute()`. If you don't use Laravel's Task Scheduler you could also manually create a cronjob that runs every minute. The `api-health:run-checkers` command will figure out what checker should run or not based on the configured schedules, if you want to ignore the scheduling and run all checkers, just run the command with the `--force` option.
 
 ```php
 <?php
@@ -124,9 +124,10 @@ class Kernel extends ConsoleKernel
 }
 ```
 
-The result of the checker will be cached but it refreshes every time you run a checker in the console. This way you can fetch the cached result in your PHP code. This is great for checking wether a service is online without having to wait for the result. For example, you might use a payment gateway in your app. If you check the status of the gateway every minute through the scheduler, you can respond on that status pretty accurately.
+The result of the checker will be cached but it refreshes every time you run a checker in the console. This way you can fetch the cached result in your PHP code. This is great for checking wether a service is online without having to wait for the result.
 
-You can also run the checker in your PHP code. The state of the checker will be pulled from the cache
+For example, you might use a payment gateway in your app. If you check the status of the gateway every minute through the scheduler, you can respond to that status pretty accurately in your UI. You can use the `ApiHealth` facade to obtain the status of a checker. If you don't want to use the cache you can use the `fresh` method to ignore the stored state.
+
 ```php
 use App\Checkers\LaravelDocumentationChecker;
 use Pbmedia\ApiHealth\Facades\ApiHealth;
@@ -137,8 +138,6 @@ ApiHealth::isPassing(LaravelDocumentationChecker::class);
 ApiHealth::fresh()->isFailing(LaravelDocumentationChecker::class);
 ApiHealth::fresh()->isPassing(LaravelDocumentationChecker::class);
 ```
-
-
 
 ### Testing
 
