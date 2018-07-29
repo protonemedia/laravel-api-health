@@ -1,7 +1,7 @@
 # [WIP] Laravel API Health
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
-[![Build Status](https://img.shields.io/travis/pbmedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/pbmedia/laravel-api-health)
+[![Build Status](https://img.shields.io/travis/pascalbaljetmedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/pascalbaljetmedia/laravel-api-health)
 [![Quality Score](https://img.shields.io/scrutinizer/g/pbmedia/laravel-api-health.svg?style=flat-square)](https://scrutinizer-ci.com/g/pbmedia/laravel-api-health)
 [![Total Downloads](https://img.shields.io/packagist/dt/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
 
@@ -87,7 +87,7 @@ php artisan api-health:check App\Checkers\LaravelDocumentationChecker
 
 ## Schedule your checkers
 
-You can fill the `checkers` array in the `config/api-health.php` file with all the checker you want to schedule. By default every checker will run every minute. The `schedule` method on the checker allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
+You can fill the `checkers` array in the `config/api-health.php` file with all the checkers you want to schedule. By default every checker will run every minute. The `schedule` method on the checker allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
 
 ```php
 <?php
