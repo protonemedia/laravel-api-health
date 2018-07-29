@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 class HttpGetCheckerTest extends TestCase
 {
     /** @test */
-    public function it_returns_true_whenever_the_status_code_is_in_the_200_range()
+    public function it_doesnt_throw_an_exception_whenever_the_status_code_is_in_the_200_range()
     {
         $httpResponse = Mockery::mock(ResponseInterface::class)
             ->shouldReceive('getStatusCode')
