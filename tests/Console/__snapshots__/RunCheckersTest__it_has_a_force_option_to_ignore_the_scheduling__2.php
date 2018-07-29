@@ -1,4 +1,5 @@
 <?php return 'Total checkers run: 2
+
 Passing checkers:
 +--------------------------------------------------------------+
 | Checker                                                      |

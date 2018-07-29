@@ -42,6 +42,7 @@ class RunCheckers extends Command
         $this->info('Total checkers run: ' . ($failed->count() + $passes->count()));
 
         if ($passes->isNotEmpty()) {
+            $this->line('');
             $this->info('Passing checkers:');
             $this->table(['Checker'], $passes->map(function (Executor $executor) {
                 return [get_class($executor->getChecker())];
@@ -49,7 +50,8 @@ class RunCheckers extends Command
         }
 
         if ($failed->isNotEmpty()) {
-            $this->info('Failed checkers:');
+            $this->line('');
+            $this->error('Failed checkers:');
             $this->table(['Checker', 'Exception'], $failed->map(function (Executor $executor) {
                 return [
                     get_class($executor->getChecker()),
