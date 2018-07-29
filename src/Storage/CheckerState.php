@@ -5,6 +5,10 @@ namespace Pbmedia\ApiHealth\Storage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 use Pbmedia\ApiHealth\Checkers\Checker;
+use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use Pbmedia\ApiHealth\Events\CheckerHasFailed as CheckerHasFailedEvent;
+use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
+use Pbmedia\ApiHealth\Events\CheckerIsStillFailing;
 
 class CheckerState
 {
@@ -126,30 +130,34 @@ class CheckerState
     /**
      * Set the state to failed with the given exception message.
      *
-     * @param string $exceptionMessage
+     * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed $exception
      */
-    public function setToFailed(string $exceptionMessage)
+    public function setToFailed(CheckerHasFailed $exception)
     {
-        $this->store([
-            'exception_message'  => $exceptionMessage,
+        $this->store($failedData = [
+            'exception_message'  => $exception->getMessage(),
             'passed_at'          => null,
             'failed_at'          => [now()->getTimestamp()],
             'notifications_sent' => [],
         ]);
+
+        event(new CheckerHasFailedEvent($this->checker, $exception, $failedData));
     }
 
     /**
      * Adds the current timestamp to the failed state.
      *
-     * @return null
+     * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed $exception
      */
-    public function addFailedTimestamp()
+    public function addFailedTimestamp(CheckerHasFailed $exception)
     {
-        $data = $this->data();
+        $failedData = $this->data();
 
-        $data['failed_at'][] = now()->getTimestamp();
+        $failedData['failed_at'][] = now()->getTimestamp();
 
-        $this->store($data);
+        $this->store($failedData);
+
+        event(new CheckerIsStillFailing($this->checker, $exception, $failedData));
     }
 
     /**
@@ -176,11 +184,15 @@ class CheckerState
      */
     public function setToPassing()
     {
+        $failedData = ($this->exists() && $this->isFailing()) ? $this->data() : null;
+
         $this->store([
             'exception_message'  => null,
             'passed_at'          => now()->getTimestamp(),
             'failed_at'          => null,
             'notifications_sent' => [],
         ]);
+
+        $failedData ? event(new CheckerHasRecovered($this->checker, $failedData)) : null;
     }
 }

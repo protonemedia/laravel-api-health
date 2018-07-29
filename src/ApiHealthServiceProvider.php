@@ -2,6 +2,7 @@
 
 namespace Pbmedia\ApiHealth;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Pbmedia\ApiHealth\ApiHealthChecker;
 use Pbmedia\ApiHealth\Console\Check;
@@ -9,6 +10,11 @@ use Pbmedia\ApiHealth\Console\MakeChecker;
 use Pbmedia\ApiHealth\Console\MakeHttpGetChecker;
 use Pbmedia\ApiHealth\Console\MakeSslCertificateChecker;
 use Pbmedia\ApiHealth\Console\RunCheckers;
+use Pbmedia\ApiHealth\Events\CheckerHasFailed;
+use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
+use Pbmedia\ApiHealth\Events\CheckerIsStillFailing;
+use Pbmedia\ApiHealth\Listeners\SendFailedNotification;
+use Pbmedia\ApiHealth\Listeners\SendRecoveredNotification;
 
 class ApiHealthServiceProvider extends ServiceProvider
 {
@@ -28,6 +34,10 @@ class ApiHealthServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(
             __DIR__ . '/../resources/lang/', 'api-health'
         );
+
+        Event::listen(CheckerHasFailed::class, SendFailedNotification::class);
+        Event::listen(CheckerIsStillFailing::class, SendFailedNotification::class);
+        Event::listen(CheckerHasRecovered::class, SendRecoveredNotification::class);
     }
 
     /**

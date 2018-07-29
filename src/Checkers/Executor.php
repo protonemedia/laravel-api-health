@@ -5,7 +5,6 @@ namespace Pbmedia\ApiHealth\Checkers;
 use Illuminate\Notifications\Notification;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
-use Pbmedia\ApiHealth\Checkers\CheckerSendsNotifications;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 
 class Executor
@@ -39,22 +38,14 @@ class Executor
     private $failed;
 
     /**
-     * The instance to be notified
-     *
-     * @var mixed
-     */
-    private $notifiable;
-
-    /**
      * Creates an instance with the given checker
      *
      * @param \Pbmedia\ApiHealth\Checkers\Checker $checker
      */
     public function __construct(Checker $checker)
     {
-        $this->checker    = $checker;
-        $this->state      = new CheckerState($checker);
-        $this->notifiable = app(config('api-health.notifications.notifiable'));
+        $this->checker = $checker;
+        $this->state   = new CheckerState($checker);
     }
 
     /**
@@ -113,7 +104,8 @@ class Executor
     }
 
     /**
-     * Runs the checker, stores the state and sends the notifications if needed.
+     * Runs the checker, stores the state and lets events take
+     * care of sending the notifications.
      *
      * @return $this
      */
@@ -123,7 +115,7 @@ class Executor
 
         try {
             $this->checker->run();
-            $this->handlePassingChecker();
+            $this->state->setToPassing();
         } catch (CheckerHasFailed $exception) {
             $this->exception = $exception;
             $this->failed    = true;
@@ -134,95 +126,17 @@ class Executor
     }
 
     /**
-     * Send the given notification to the notifiable.
-     *
-     * @param  \Illuminate\Notifications\Notification $notification
-     *
-     * @return null|\Illuminate\Notifications\Notification
-     */
-    private function sendNotification(Notification $notification)
-    {
-        if (empty(config('api-health.notifications.via'))) {
-            return;
-        }
-
-        return tap($notification, function ($notification) {
-            $this->notifiable->notify($notification);
-        });
-    }
-
-    /**
-     * Handler for whenever the checker passes. Stores the state and sends
-     * a recovered notification if the checker previously failed.
-     *
-     * @return null
-     */
-    private function handlePassingChecker()
-    {
-        $currentlyFailed = $this->state->exists() && $this->state->isFailing();
-
-        $failedData = $currentlyFailed ? $this->state->data() : null;
-
-        $this->state->setToPassing();
-
-        if ($failedData && $this->checker instanceof CheckerSendsNotifications) {
-            $this->sendRecoveredNotification($failedData);
-        }
-    }
-
-    /**
      * Handler for whenever the checker fails. Stores the state or adds a timestamp
-     * to the state if the checker previously failed, then sends
-     * a notification if needed.
+     * to the state if the checker previously failed.
      *
      * @return null
      */
     private function handleFailedChecker()
     {
         if ($this->state->exists() && $this->state->isFailing()) {
-            $this->state->addFailedTimestamp();
-        } else {
-            $this->state->setToFailed($this->exception->getMessage());
+            return $this->state->addFailedTimestamp($this->exception);
         }
 
-        if ($this->checker instanceof CheckerSendsNotifications) {
-            $this->sendFailedNotification();
-        }
-    }
-
-    /**
-     * Verifies that the failed the notification should be send, then
-     * creates the notification and sends it to the notifiable.
-     *
-     * @return null
-     */
-    private function sendFailedNotification()
-    {
-        if (!$this->state->shouldSentFailedNotification()) {
-            return;
-        }
-
-        $notificationClass = $this->checker->failedNotificationClass();
-
-        $notification = $this->sendNotification(
-            new $notificationClass($this->checker, $this->exception, $this->state->data())
-        );
-
-        $notification ? $this->state->markSentFailedNotification($notification) : null;
-    }
-
-    /**
-     * Creates the recoved notification and sends it to the notifiable.
-     *
-     * @param  array $failedData
-     * @return null
-     */
-    private function sendRecoveredNotification(array $failedData)
-    {
-        $notificationClass = $this->checker->recoveredNotificationClass();
-
-        $this->sendNotification(
-            new $notificationClass($this->checker, $failedData)
-        );
+        $this->state->setToFailed($this->exception);
     }
 }
