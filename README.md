@@ -139,6 +139,48 @@ ApiHealth::fresh()->isFailing(LaravelDocumentationChecker::class);
 ApiHealth::fresh()->isPassing(LaravelDocumentationChecker::class);
 ```
 
+## Create your own checker
+
+Building a checker is quite easy. Run the `make:checker` command and pass the name of your checker as an argument:
+
+```bash
+php artisan make:checker GetIpAddressByHost
+```
+
+There are two methods you need to fill. The `create` method is used as a factory to build and configure an instance of your checker. The `run` methods performs the check and must throw a `\Pbmedia\ApiHealth\Checkers\CheckerHasFailed` exception is something goes wrong. Here is an example:
+
+```php
+<?php
+
+namespace App\Checkers;
+
+use Illuminate\Console\Scheduling\Event;
+use Pbmedia\ApiHealth\Checkers\AbstractChecker;
+use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+
+class GetIpAddressByHost extends AbstractChecker
+{
+    public static function create()
+    {
+        return new static;
+    }
+
+    public function schedule(Event $event)
+    {
+        $event->everyMinute();
+    }
+
+    public function run()
+    {
+        $ip = gethostbyname('www.pascalbaljetmedia.com');
+
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new CheckerHasFailed("Host www.pascalbaljetmedia.com did not return a valid IP Address.");
+        }
+    }
+}
+```
+
 ## Other built-in checkers
 
 * `make:ssl-certificate-checker` - Ssl Certificate validation (which uses [spatie/ssl-certificate](https://github.com/spatie/ssl-certificate)!)
@@ -174,7 +216,7 @@ return [
 ]
 ```
 
-You can also set these notifications options *per checker*. Just modify the properties on a checker and the package will do the rest:
+You can also set these notifications options *per checker*. Just modify these properties on your checker and the package will do the rest:
 
 ```php
 <?php
