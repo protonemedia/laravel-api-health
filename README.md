@@ -139,9 +139,55 @@ ApiHealth::fresh()->isFailing(LaravelDocumentationChecker::class);
 ApiHealth::fresh()->isPassing(LaravelDocumentationChecker::class);
 ```
 
-## Other built-in checkers:
+## Other built-in checkers
 
-* `make:ssl-certificate-checker`: Ssl Certificate validation (which uses [spatie/ssl-certificate](https://github.com/spatie/ssl-certificate)!)
+* `make:ssl-certificate-checker` - Ssl Certificate validation (which uses [spatie/ssl-certificate](https://github.com/spatie/ssl-certificate)!)
+
+## Notification options
+
+The config file has a notifcation section which allows you to configure the channels and change the Notifiable class. There are two default notifications, `CheckerHasFailed` and `CheckerHasRecovered`, you can swap them in the config file for your own notifications. There is also an option to resend the `CheckerHasFailed` notification after a number of minutes:
+
+```php
+<?php
+
+return [
+    //
+
+    'notifications' => [
+        /**
+         *  Number of minutes until send the failed notification again.
+         */
+        'resend_failed_notification_after_minutes' => 60,
+
+        /**
+         * Class name of the failed notification.
+         */
+        'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
+
+        /**
+         * Class name of the recovered notification.
+         */
+        'default_recovered_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasRecovered::class,
+    ],
+
+    //
+]
+```
+
+You can also set these notifications options *per checker*. Just modify the properties on a checker and the package will do the rest:
+
+```php
+<?php
+
+class MyChecker extends AbstractChecker
+{
+    protected $resendFailedNotificationAfterMinutes = 30;
+
+    protected $failedNotificationClass = \App\Notifications\Whoops::class;
+
+    protected $recoveredNotificationClass \App\Notifications\Yay::class;
+}
+```
 
 ### Testing
 

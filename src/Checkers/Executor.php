@@ -179,10 +179,10 @@ class Executor
      */
     private function handleFailedChecker()
     {
-        if (!$this->state->exists() || $this->state->isPassing()) {
-            $this->state->setToFailed($this->exception->getMessage());
-        } elseif ($this->state->exists() && $this->state->isFailing()) {
+        if ($this->state->exists() && $this->state->isFailing()) {
             $this->state->addFailedTimestamp();
+        } else {
+            $this->state->setToFailed($this->exception->getMessage());
         }
 
         if ($this->checker instanceof CheckerSendsNotifications) {

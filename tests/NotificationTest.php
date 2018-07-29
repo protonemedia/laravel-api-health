@@ -159,26 +159,6 @@ class NotificationTest extends TestCase
     }
 
     /** @test */
-    public function it_can_postpone_a_failed_notification_with_a_threshold()
-    {
-        Notification::fake();
-
-        config()->set('api-health.notifications.only_send_failed_notification_after_successive_failures', 3);
-
-        app(Runner::class)->handle();
-        $this->assertNotSent();
-
-        app(Runner::class)->handle();
-        $this->assertNotSent();
-
-        app(Runner::class)->handle();
-        $this->assertSentFailedTimes(1);
-
-        app(Runner::class)->handle();
-        $this->assertSentFailedTimes(1);
-    }
-
-    /** @test */
     public function it_notifies_if_it_recovers_after_it_has_failed()
     {
         Notification::fake();

@@ -12,14 +12,6 @@ trait SendsNotifications
     protected $resendFailedNotificationAfterMinutes;
 
     /**
-     * Number of times the checker must fail in succession before
-     * the first notification is sent.
-     *
-     * @var int
-     */
-    protected $onlySendFailedNotificationAfterSuccessiveFailures;
-
-    /**
      * Class name of the failed notification.
      *
      * @var string
@@ -41,17 +33,6 @@ trait SendsNotifications
     public function resendFailedNotificationAfterMinutes(): int
     {
         return $this->resendFailedNotificationAfterMinutes ?: config('api-health.notifications.resend_failed_notification_after_minutes');
-    }
-
-    /**
-     * Number of times the checker must fail in succession before
-     * the first notification is sent.
-     *
-     * @return int
-     */
-    public function onlySendFailedNotificationAfterSuccessiveFailures(): int
-    {
-        return $this->onlySendFailedNotificationAfterSuccessiveFailures ?: config('api-health.notifications.only_send_failed_notification_after_successive_failures');
     }
 
     /**

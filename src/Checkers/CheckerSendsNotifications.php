@@ -12,14 +12,6 @@ interface CheckerSendsNotifications
     public function resendFailedNotificationAfterMinutes(): int;
 
     /**
-     * Number of times the checker must fail in succession before
-     * the first notification is sent.
-     *
-     * @return int
-     */
-    public function onlySendFailedNotificationAfterSuccessiveFailures(): int;
-
-    /**
      * Class name of the failed notification.
      *
      * @return string

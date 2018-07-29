@@ -21,11 +21,6 @@ return [
         'resend_failed_notification_after_minutes' => 60,
 
         /**
-         * Number of times the checker must fail in succession before the first notification is sent.
-         */
-        'only_send_failed_notification_after_successive_failures' => 0,
-
-        /**
          * Class name of the failed notification.
          */
         'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
