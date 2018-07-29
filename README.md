@@ -9,7 +9,7 @@ This is a package to monitor first and third party services that your app uses. 
 
 ## Requirements
 
-* Laravel 5.5+ only, 7.1 and 7.2 supported.
+* Laravel 5.6 only, 7.1 and 7.2 supported.
 * Support for [Package Discovery](https://laravel.com/docs/5.6/packages#package-discovery).
 
 ## Installation
