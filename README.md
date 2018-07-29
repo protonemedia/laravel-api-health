@@ -1,4 +1,4 @@
-# [WIP] Laravel API Health
+# Laravel API Health
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
 [![Build Status](https://img.shields.io/travis/pascalbaljetmedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/pascalbaljetmedia/laravel-api-health)
@@ -11,6 +11,18 @@ This is a package to monitor first and third party services that your app uses. 
 
 * Laravel 5.6 only, 7.1 and 7.2 supported.
 * Support for [Package Discovery](https://laravel.com/docs/5.6/packages#package-discovery).
+
+## Features
+
+* Built-in HTTP and Ssl Certificate checkers
+* You can build your own checkers
+* It can schedule checkers
+* Sends notifications about failed checkers
+* Sends notifications when a failed checker recovers
+* Caches the status of checkers
+* You can fetch the status of checkers in your code
+* It can print the status of the checkers in the console
+* Customize notifications per checker (optionally)
 
 ## Installation
 
