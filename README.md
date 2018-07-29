@@ -139,6 +139,10 @@ ApiHealth::fresh()->isFailing(LaravelDocumentationChecker::class);
 ApiHealth::fresh()->isPassing(LaravelDocumentationChecker::class);
 ```
 
+## Other built-in checkers:
+
+* Ssl Certificate validation (which uses [spatie/ssl-certificate](https://github.com/spatie/ssl-certificate)!)
+
 ### Testing
 
 ``` bash

@@ -4,6 +4,7 @@ namespace Pbmedia\ApiHealth\Checkers;
 
 use Spatie\SslCertificate\Downloader;
 use Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate;
+use Spatie\SslCertificate\Exceptions\InvalidUrl;
 
 abstract class AbstractSslCertificateChecker extends AbstractChecker
 {
