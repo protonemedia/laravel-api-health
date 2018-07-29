@@ -159,7 +159,7 @@ Building a checker is quite easy. Run the `make:checker` command and pass the na
 php artisan make:checker GetIpAddressByHost
 ```
 
-There are two methods you need to fill. The `create` method is used as a factory to build and configure an instance of your checker. The `run` methods performs the check and must throw a `\Pbmedia\ApiHealth\Checkers\CheckerHasFailed` exception is something goes wrong. Here is an example:
+There are two methods you need to fill. The `create` method is used as a factory to build and configure an instance of your checker. In this case it's quite simple but this the place to gather and configure your dependencies. The `run` methods performs the actual check and must throw a `\Pbmedia\ApiHealth\Checkers\CheckerHasFailed` exception if something goes wrong. Here is an example:
 
 ```php
 <?php
