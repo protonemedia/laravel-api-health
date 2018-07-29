@@ -193,6 +193,14 @@ class GetIpAddressByHost extends AbstractChecker
 }
 ```
 
+## Events
+
+This package dispatches there different events:
+
+* `Pbmedia\ApiHealth\Events\CheckerHasFailed`
+* `Pbmedia\ApiHealth\Events\CheckerHasRecovered`
+* `Pbmedia\ApiHealth\Events\CheckerIsStillFailing`
+
 ## Other built-in checkers
 
 * `make:ssl-certificate-checker` - Ssl Certificate validation (which uses [spatie/ssl-certificate](https://github.com/spatie/ssl-certificate)!)

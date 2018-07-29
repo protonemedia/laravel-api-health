@@ -31,7 +31,7 @@ class CheckerIsStillFailing extends CheckerHasFailed
     /**
      * Creates a new instance of this event.
      *
-     * @param Pbmedia\ApiHealth\Checkers\Checker  $checker
+     * @param \Pbmedia\ApiHealth\Checkers\Checker  $checker
      * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed  $exception
      * @param array  $failedData
      */

@@ -23,7 +23,7 @@ class CheckerHasRecovered
     /**
      * Creates a new instance of this event.
      *
-     * @param Pbmedia\ApiHealth\Checkers\Checker  $checker
+     * @param \Pbmedia\ApiHealth\Checkers\Checker  $checker
      * @param array  $failedData
      */
     public function __construct(Checker $checker, array $failedData)
