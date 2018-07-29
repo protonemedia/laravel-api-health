@@ -22,7 +22,6 @@ class CheckerHasRecovered extends Notification
     /**
      * Get the notification's channels from the configuration file.
      *
-     * @param  mixed  $notifiable
      * @return array|string
      */
     public function via(): array

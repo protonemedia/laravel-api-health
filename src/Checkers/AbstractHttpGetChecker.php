@@ -82,7 +82,7 @@ abstract class AbstractHttpGetChecker extends AbstractChecker
     /**
      * Maps a Response into a CheckerHasFailed exception and throws it.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $exception
+     * @param  \Psr\Http\Message\ResponseInterface $response
      *
      * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
      * @return null
