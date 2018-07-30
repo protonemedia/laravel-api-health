@@ -23,6 +23,7 @@ This is a package to monitor first and third party services that your app uses. 
 * You can fetch the status of checkers in your code
 * It can print the status of the checkers in the console
 * Customize notifications per checker (optionally)
+* Ability to fake the ApiHealth facade to test your app
 
 ## Installation
 
@@ -264,7 +265,7 @@ class MyChecker extends AbstractChecker
 
 The `ApiHealth` facade has a `fake` method which swaps the bound instance with a fake one. This allows you to force the state of a checker. Mind that this only works on the facade, the checker itself will be untouched.
 
-```
+```php
 <?php
 
 namespace App\Tests;
