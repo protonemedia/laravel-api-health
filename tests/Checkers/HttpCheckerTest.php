@@ -6,13 +6,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Mockery;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
+use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class HttpGetCheckerTest extends TestCase
+class HttpCheckerTest extends TestCase
 {
     /** @test */
     public function it_doesnt_throw_an_exception_whenever_the_status_code_is_in_the_200_range()
@@ -28,7 +28,7 @@ class HttpGetCheckerTest extends TestCase
             ->andReturn($httpResponse)
             ->getMock();
 
-        $checker = new class($http) extends AbstractHttpGetChecker
+        $checker = new class($http) extends AbstractHttpChecker
         {
             protected $url = 'https://pascalbaljetmedia.com';
 
@@ -61,7 +61,7 @@ class HttpGetCheckerTest extends TestCase
             ->andThrow($httpException)
             ->getMock();
 
-        $checker = new class($http) extends AbstractHttpGetChecker
+        $checker = new class($http) extends AbstractHttpChecker
         {
             protected $url = 'https://pascalbaljetmedia.com/invalid-url';
 
@@ -94,7 +94,7 @@ class HttpGetCheckerTest extends TestCase
             ->andThrow($httpException)
             ->getMock();
 
-        $checker = new class($http) extends AbstractHttpGetChecker
+        $checker = new class($http) extends AbstractHttpChecker
         {
             protected $url = 'https://pascalbaljetmedia.be';
 

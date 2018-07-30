@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Psr\Http\Message\ResponseInterface;
 
-abstract class AbstractHttpGetChecker extends AbstractChecker
+abstract class AbstractHttpChecker extends AbstractChecker
 {
     /**
      * The Guzzle HTTP client
@@ -31,6 +31,13 @@ abstract class AbstractHttpGetChecker extends AbstractChecker
     protected $url;
 
     /**
+     * The method of the request.
+     *
+     * @var string
+     */
+    protected $method = 'GET';
+
+    /**
      * Creates a new instance of this checker with a Guzzle HTTP client and options.
      *
      * @param \GuzzleHttp\Client $httpClient
@@ -49,8 +56,10 @@ abstract class AbstractHttpGetChecker extends AbstractChecker
      */
     public function run()
     {
+        $method = strtolower($this->method);
+
         try {
-            $response = $this->httpClient->get($this->url, $this->guzzleOptions);
+            $response = $this->httpClient->{$method}($this->url, $this->guzzleOptions);
         } catch (ClientException $exception) {
             $this->throwExceptionByResponse($exception->getResponse());
         } catch (ConnectException $exception) {

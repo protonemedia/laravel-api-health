@@ -4,9 +4,9 @@ namespace DummyNamespace;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
+use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
 
-class DummyClass extends AbstractHttpGetChecker
+class DummyClass extends AbstractHttpChecker
 {
     /*
      * The URL you want to request.
@@ -14,14 +14,23 @@ class DummyClass extends AbstractHttpGetChecker
     protected $url = 'https://yourwebsite.com';
 
     /*
+     * The method you want to use.
+     */
+    protected $method = 'GET';
+
+    /*
      * Here you can specify the Guzzle HTTP options.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker
+     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpChecker
      */
     public static function create()
     {
         return new static(new Client, [
-            'timeout' => 5,
+            // 'headers' => [
+            //     'X-Foo' => ['Bar', 'Baz'],
+            // ],
+            // 'json'    => ['foo' => 'bar'],
+            // 'timeout' => 5,
         ]);
     }
 

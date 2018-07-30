@@ -4,14 +4,14 @@ namespace Pbmedia\ApiHealth\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
-class MakeHttpGetChecker extends GeneratorCommand
+class MakeHttpChecker extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:http-get-checker';
+    protected $name = 'make:http-checker';
 
     /**
      * The console command description.
@@ -34,7 +34,7 @@ class MakeHttpGetChecker extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/../../stubs/http-get-checker.stub';
+        return __DIR__ . '/../../stubs/http-checker.stub';
     }
 
     /**

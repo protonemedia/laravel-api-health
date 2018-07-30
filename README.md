@@ -43,7 +43,7 @@ php artisan vendor:publish --provider="Pbmedia\ApiHealth\ApiHealthServiceProvide
 So let's create our first checker. Assume you want to request an URL and verify that the status code of the response is in the 200 range. You can build this checker on your own using the `make:checker` command, but this one we've pre-built for you. Open up the terminal and let's make a HTTP checker!
 
 ```bash
-php artisan make:http-get-checker LaravelDocumentationChecker
+php artisan make:http-checker LaravelDocumentationChecker
 ```
 
 In your `app` folder you'll find a new `Checkers` folder with the newly created checker. The only thing you have to do is adjust the `$url` property to your needs:
@@ -55,9 +55,9 @@ namespace App\Checkers;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker;
+use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
 
-class LaravelDocumentationChecker extends AbstractHttpGetChecker
+class LaravelDocumentationChecker extends AbstractHttpChecker
 {
     /*
      * The URL you want to request.
@@ -67,7 +67,7 @@ class LaravelDocumentationChecker extends AbstractHttpGetChecker
     /*
      * Here you can specify the Guzzle HTTP options.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpGetChecker
+     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpChecker
      */
     public static function create()
     {
