@@ -65,6 +65,11 @@ class LaravelDocumentationChecker extends AbstractHttpChecker
     protected $url = 'https://laravel.com/docs/5.6';
 
     /*
+     * The method you want to use.
+     */
+    protected $method = 'GET';
+
+    /*
      * Here you can specify the Guzzle HTTP options.
      *
      * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpChecker
@@ -72,7 +77,11 @@ class LaravelDocumentationChecker extends AbstractHttpChecker
     public static function create()
     {
         return new static(new Client, [
-            'timeout' => 5,
+            // 'headers' => [
+            //     'X-Foo' => ['Bar', 'Baz'],
+            // ],
+            // 'json'    => ['foo' => 'bar'],
+            // 'timeout' => 5,
         ]);
     }
 
