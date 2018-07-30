@@ -265,7 +265,7 @@ class MyChecker extends AbstractChecker
 
 The `ApiHealth` facade has a `fake` method which swaps the bound instance with a fake one. This allows you to force the state of a checker. Mind that this only works on the facade, the checker itself will be untouched.
 
-```
+```php
 <?php
 
 namespace App\Tests;
