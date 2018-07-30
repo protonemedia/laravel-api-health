@@ -85,7 +85,7 @@ abstract class AbstractHttpChecker extends AbstractChecker
      */
     private function throwConnectException(ConnectException $exception)
     {
-        throw new CheckerHasFailed("GET request to \"{$this->url}\" failed, client message: {$exception->getMessage()}");
+        throw new CheckerHasFailed("{$this->method} request to \"{$this->url}\" failed, client message: {$exception->getMessage()}");
     }
 
     /**
@@ -98,6 +98,6 @@ abstract class AbstractHttpChecker extends AbstractChecker
      */
     private function throwExceptionByResponse(ResponseInterface $response)
     {
-        throw new CheckerHasFailed("GET request to \"{$this->url}\" failed, returned status code {$response->getStatusCode()} and reason phrase: \"{$response->getReasonPhrase()}\"");
+        throw new CheckerHasFailed("{$this->method} request to \"{$this->url}\" failed, returned status code {$response->getStatusCode()} and reason phrase: \"{$response->getReasonPhrase()}\"");
     }
 }
