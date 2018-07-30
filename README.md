@@ -103,7 +103,7 @@ class LaravelDocumentationChecker extends AbstractHttpChecker
 
 Now we can run this checker in the console with the following command:
 ```bash
-php artisan api-health:check App\Checkers\LaravelDocumentationChecker
+php artisan api-health:check App\\Checkers\\LaravelDocumentationChecker
 ```
 
 ## Schedule your checkers
