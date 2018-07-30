@@ -23,6 +23,7 @@ This is a package to monitor first and third party services that your app uses. 
 * You can fetch the status of checkers in your code
 * It can print the status of the checkers in the console
 * Customize notifications per checker (optionally)
+* Ability to fake the ApiHealth facade to test your app
 
 ## Installation
 
