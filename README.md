@@ -260,6 +260,35 @@ class MyChecker extends AbstractChecker
 }
 ```
 
+## Writing tests
+
+The `ApiHealth` facade has a `fake` method which swaps the bound instance with a fake one. This allows you to force the state of a checker. Mind that this only works on the facade, the checker itself will be untouched.
+
+```
+<?php
+
+namespace App\Tests;
+
+use App\Checkers\FailingChecker;
+use App\Checkers\PassingChecker;
+use Pbmedia\ApiHealth\Facades\ApiHealth;
+
+class MyTest extends TestCase
+{
+    /** @test */
+    public function it_can_make_the_passing_checker_fail()
+    {
+        ApiHealth::fake();
+
+        ApiHealth::mustFail(PassingChecker::class);
+        ApiHealth::mustPass(FailingChecker::class);
+
+        $this->assertTrue(ApiHealth::isFailing(PassingChecker::class));
+        $this->assertTrue(ApiHealth::isPassing(FailingChecker::class));
+    }
+}
+```
+
 ### Testing
 
 ``` bash
