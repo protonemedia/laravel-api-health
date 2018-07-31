@@ -2,8 +2,6 @@
 
 namespace Pbmedia\ApiHealth\Checkers;
 
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Queue;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Storage\CheckerState;
