@@ -16,5 +16,5 @@ interface CheckerAllowsForRetries
      *
      * @return null|string
      */
-    public function retryCheckerJob():  ? string;
+    public function retryJob():  ? string;
 }

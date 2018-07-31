@@ -20,8 +20,8 @@ class AllowedRetriesTest extends TestCase
     /** @test */
     public function it_allows_for_retries()
     {
-        config()->set('api-health.allowed_retries', 2);
-        config()->set('api-health.default_retry_checker_job', null);
+        config()->set('api-health.retries.allowed_retries', 2);
+        config()->set('api-health.retries.job.job', null);
 
         $runner = app(Runner::class);
         $this->assertCount(1, $runner->passes());
@@ -39,8 +39,8 @@ class AllowedRetriesTest extends TestCase
     /** @test */
     public function it_keeps_failing_once_the_state_is_failed()
     {
-        config()->set('api-health.allowed_retries', 1);
-        config()->set('api-health.default_retry_checker_job', null);
+        config()->set('api-health.retries.allowed_retries', 1);
+        config()->set('api-health.retries.job.job', null);
 
         $runner = app(Runner::class);
         $this->assertCount(1, $runner->passes());
@@ -58,8 +58,8 @@ class AllowedRetriesTest extends TestCase
     /** @test */
     public function it_has_a_default_job_that_retries_the_checker()
     {
-        config()->set('api-health.allowed_retries', 1);
-        config()->set('api-health.default_retry_checker_job', RetryChecker::class);
+        config()->set('api-health.retries.allowed_retries', 1);
+        config()->set('api-health.retries.job.job', RetryChecker::class);
 
         app(Runner::class)->handle();
 
@@ -69,8 +69,8 @@ class AllowedRetriesTest extends TestCase
     /** @test */
     public function it_has_a_callback_method_for_the_retry_job()
     {
-        config()->set('api-health.allowed_retries', 1);
-        config()->set('api-health.default_retry_checker_job', RetryChecker::class);
+        config()->set('api-health.retries.allowed_retries', 1);
+        config()->set('api-health.retries.job.job', RetryChecker::class);
         config()->set('api-health.checkers', [FailingCheckerWithJobCallback::class]);
 
         $this->assertNull(FailingCheckerWithJobCallback::$job);
@@ -78,6 +78,26 @@ class AllowedRetriesTest extends TestCase
         app(Runner::class)->handle();
 
         $this->assertNotNull($job = FailingCheckerWithJobCallback::$job);
+    }
+
+    /** @test */
+    public function it_can_set_connection_delay_and_queue_defaults()
+    {
+        config()->set('api-health.retries.allowed_retries', 1);
+        config()->set('api-health.retries.job.job', RetryChecker::class);
+
+        config()->set('api-health.retries.job.connection', 'sync');
+        config()->set('api-health.retries.job.delay', 10);
+        config()->set('api-health.retries.job.queue', 'api-queue');
+
+        config()->set('api-health.checkers', [FailingCheckerWithJobCallback::class]);
+
+        app(Runner::class)->handle();
+
+        $this->assertNotNull($job = FailingCheckerWithJobCallback::$job);
+
+        $this->assertEquals('sync', $job->connection);
         $this->assertEquals(10, $job->delay);
+        $this->assertEquals('api-queue', $job->queue);
     }
 }

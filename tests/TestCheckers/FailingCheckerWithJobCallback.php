@@ -26,8 +26,6 @@ class FailingCheckerWithJobCallback extends AbstractChecker
 
     public function withRetryJob($job)
     {
-        $job->delay(10);
-
         static::$job = $job;
     }
 };

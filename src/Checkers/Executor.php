@@ -158,7 +158,7 @@ class Executor
             $this->state->setToPassing();
         }
 
-        if (!$jobClass = $this->checker->retryCheckerJob()) {
+        if (!$jobClass = $this->checker->retryJob()) {
             return $this->state->addRetryTimestamp();
         }
 
@@ -166,11 +166,35 @@ class Executor
 
         $job = new $jobClass(get_class($this->checker));
 
+        $this->configureRetryJobDefaults($job, config('api-health.retries.job'));
+
         if (method_exists($this->checker, 'withRetryJob')) {
             $this->checker->withRetryJob($job);
         }
 
         dispatch($job);
+    }
+
+    /**
+     * Sets the default connection, delay and queue
+     * on the retry job.
+     *
+     * @param  mixed $job
+     * @param  array  $config
+     */
+    private function configureRetryJobDefaults($job, array $config)
+    {
+        if ($connection = $config['connection'] ?? null) {
+            $job->onConnection($connection);
+        }
+
+        if ($delay = $config['delay'] ?? null) {
+            $job->delay($delay);
+        }
+
+        if ($queue = $config['queue'] ?? null) {
+            $job->onQueue($queue);
+        }
     }
 
     /**

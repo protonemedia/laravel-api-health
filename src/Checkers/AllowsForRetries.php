@@ -16,7 +16,7 @@ trait AllowsForRetries
      *
      * @var string
      */
-    protected $retryCheckerJob;
+    protected $retryJob;
 
     /**
      * Returns the number of allowed retries.
@@ -25,7 +25,7 @@ trait AllowsForRetries
      */
     public function allowedRetries(): int
     {
-        return !is_null($this->allowedRetries) ? $this->allowedRetries : config('api-health.allowed_retries');
+        return !is_null($this->allowedRetries) ? $this->allowedRetries : config('api-health.retries.allowed_retries');
     }
 
     /**
@@ -33,9 +33,9 @@ trait AllowsForRetries
      *
      * @return null|string
      */
-    public function retryCheckerJob():  ? string
+    public function retryJob():  ? string
     {
-        return $this->retryCheckerJob ?: config('api-health.default_retry_checker_job');
+        return $this->retryJob ?: config('api-health.retries.job.job');
     }
 
     /**

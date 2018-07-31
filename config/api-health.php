@@ -14,9 +14,25 @@ return [
      */
     'cache_driver' => 'file',
 
-    'allowed_retries' => 0,
+    'retries' => [
+        /**
+         * The number of allowed retries.
+         */
+        'allowed_retries' => 0,
 
-    'default_retry_checker_job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+        /**
+         * Here you can specify the configuration of the retry job.
+         */
+        'job' => [
+            'job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+
+            'connection' => null,
+
+            'delay' => null,
+
+            'queue' => null,
+        ],
+    ],
 
     'notifications' => [
         /**
