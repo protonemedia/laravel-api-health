@@ -17,6 +17,7 @@ This is a package to monitor first and third party services that your app uses. 
 * Built-in HTTP and Ssl Certificate checkers
 * You can build your own checkers
 * It can schedule checkers
+* Automatic retries of failed checkers
 * Sends notifications about failed checkers
 * Sends notifications when a failed checker recovers
 * Caches the status of checkers
@@ -263,7 +264,9 @@ class MyChecker extends AbstractChecker
 
 ## Automatic retries
 
-It is possible to specify a number of retries to perform before your checker gets in a failed state. When a retry occurs, a job is sent to the [queue](https://laravel.com/docs/5.6/queues) which will run the checker again. In the config file you can set the number of retries, the job to dispatch (we've created one for you!) and the configuration of the *retry job* such as the connection, delay and queue. For example, if you set `allowed_retries` to `3` and `delay` to `20`, the checker will run four times in total and will fail after a minute.
+It is possible to specify a number of retries to perform before your checker gets in a failed state. When a retry occurs, a job is sent to the [queue](https://laravel.com/docs/5.6/queues) which will run the checker again. In the config file you can set the number of retries, the job to dispatch (we've created one for you!) and the configuration of the *retry job* such as the connection, delay and queue.
+
+For example, if you set `allowed_retries` to `3` and `delay` to `20`, the checker will run four times in total and will fail after a minute (measured from the first time you ran the checker).
 
 ```php
 <?php
@@ -297,7 +300,7 @@ return [
 ]
 ```
 
-Just as the notification configuration, you can set the number of *allowed retries* and the class of the job on the checker itself:
+Just as the notification options, you can set the number of *allowed retries* and the class of the job on the checker itself. If you would like to interact with the job before it is sent to the queue, you could use the `withRetryJob` method. This method receives the job, allowing you to call any of its methods before the job is actually dispatched:
 
 ```php
 <?php
@@ -307,8 +310,15 @@ class MyChecker extends AbstractChecker
     protected $allowedRetries = 2;
 
     protected $retryJob = \App\Jobs\RetryChecker::class;
+
+    public function withRetryJob($job)
+    {
+        $job->delay(now()->addMinutes(3));
+    }
 }
 ```
+
+
 
 ## Writing tests
 
