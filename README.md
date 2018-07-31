@@ -300,7 +300,7 @@ return [
 ]
 ```
 
-Just as the notification options, you can set the number of *allowed retries* and the class of the job on the checker itself. If you would like to interact with the job before it is sent to the queue, you could use the `withRetryJob` method. This method receives the job, allowing you to call any of its methods before the job is actually dispatched:
+Just as the notification options, you can set the number of *allowed retries* and the class of the job *per checker*. If you would like to interact with the job before it is sent to the queue, you could use the `withRetryJob` method. This method receives the job, allowing you to call any of its methods before the job is actually dispatched:
 
 ```php
 <?php
@@ -317,8 +317,6 @@ class MyChecker extends AbstractChecker
     }
 }
 ```
-
-
 
 ## Writing tests
 
