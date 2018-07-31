@@ -3,6 +3,8 @@
 namespace Pbmedia\ApiHealth\Checkers;
 
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Support\Facades\Queue;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Storage\CheckerState;
@@ -117,9 +119,13 @@ class Executor
             $this->checker->run();
             $this->state->setToPassing();
         } catch (CheckerHasFailed $exception) {
-            $this->exception = $exception;
-            $this->failed    = true;
-            $this->handleFailedChecker();
+            if ($this->state->retryIsAllowed()) {
+                $this->handleAllowedRetry();
+            } else {
+                $this->exception = $exception;
+                $this->failed    = true;
+                $this->handleFailedChecker();
+            }
         }
 
         return $this;
@@ -138,5 +144,53 @@ class Executor
         }
 
         $this->state->setToFailed($this->exception);
+    }
+
+    /**
+     * Adds a retry timestamp to the state of checker or dispaches
+     * the retry job.
+     *
+     * @return null
+     */
+    private function handleAllowedRetry()
+    {
+        if (!$this->state->exists()) {
+            $this->state->setToPassing();
+        }
+
+        if (!$jobClass = $this->checker->retryCheckerJob()) {
+            return $this->state->addRetryTimestamp();
+        }
+
+        $this->addCallbackBeforeRetryCheckerJob($jobClass);
+
+        $job = new $jobClass(get_class($this->checker));
+
+        if (method_exists($this->checker, 'withRetryJob')) {
+            $this->checker->withRetryJob($job);
+        }
+
+        dispatch($job);
+    }
+
+    /**
+     * Adds a callback before the retry job is executed which
+     * will add a retry timestamp on the checker's state.
+     *
+     * @param string $job
+     */
+    private function addCallbackBeforeRetryCheckerJob(string $job)
+    {
+        Queue::before(function (JobProcessing $event) use ($job) {
+            $resolvedName = $event->job->resolveName();
+
+            $checkerClass = unserialize(
+                $event->job->payload()['data']['command']
+            )->checkerClass;
+
+            if ($resolvedName === $job && $checkerClass === get_class($this->checker)) {
+                $this->state->addRetryTimestamp();
+            }
+        });
     }
 }

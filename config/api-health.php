@@ -14,6 +14,10 @@ return [
      */
     'cache_driver' => 'file',
 
+    'allowed_retries' => 0,
+
+    'default_retry_checker_job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+
     'notifications' => [
         /**
          *  Number of minutes until send the failed notification again.

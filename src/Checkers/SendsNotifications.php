@@ -32,7 +32,7 @@ trait SendsNotifications
      */
     public function resendFailedNotificationAfterMinutes(): int
     {
-        return $this->resendFailedNotificationAfterMinutes ?: config('api-health.notifications.resend_failed_notification_after_minutes');
+        return !is_null($this->resendFailedNotificationAfterMinutes) ? $this->resendFailedNotificationAfterMinutes : config('api-health.notifications.resend_failed_notification_after_minutes');
     }
 
     /**

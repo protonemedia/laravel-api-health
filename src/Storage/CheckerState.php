@@ -5,6 +5,7 @@ namespace Pbmedia\ApiHealth\Storage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 use Pbmedia\ApiHealth\Checkers\Checker;
+use Pbmedia\ApiHealth\Checkers\CheckerAllowsForRetries;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 use Pbmedia\ApiHealth\Events\CheckerHasFailed as CheckerHasFailedEvent;
 use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
@@ -128,6 +129,34 @@ class CheckerState
     }
 
     /**
+     * Determinates wether the checker is allowed to do another retry.
+     *
+     * @return bool
+     */
+    public function retryIsAllowed(): bool
+    {
+        if (!$this->checker instanceof CheckerAllowsForRetries) {
+            return false;
+        }
+
+        if ($this->exists() && $this->isFailing()) {
+            return false;
+        }
+
+        if (!$allowedRetries = $this->checker->allowedRetries()) {
+            return false;
+        }
+
+        if (!$this->exists()) {
+            return true;
+        }
+
+        $retries = $this->data()['retried_at'];
+
+        return $allowedRetries > count($retries);
+    }
+
+    /**
      * Set the state to failed with the given exception message.
      *
      * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed $exception
@@ -161,6 +190,20 @@ class CheckerState
     }
 
     /**
+     * Adds the current timestamp to the retry array.
+     *
+     * @return null
+     */
+    public function addRetryTimestamp()
+    {
+        $data = $this->data();
+
+        $data['retried_at'][] = now()->getTimestamp();
+
+        $this->store($data);
+    }
+
+    /**
      * Adds the current timestamp to the array of sent notifications.
      *
      * @param  \Illuminate\Notifications\Notification $notification
@@ -191,6 +234,7 @@ class CheckerState
             'passed_at'          => now()->getTimestamp(),
             'failed_at'          => null,
             'notifications_sent' => [],
+            'retried_at'         => [],
         ]);
 
         $failedData ? event(new CheckerHasRecovered($this->checker, $failedData)) : null;

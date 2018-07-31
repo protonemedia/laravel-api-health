@@ -2,7 +2,7 @@
 
 namespace Pbmedia\ApiHealth\Checkers;
 
-abstract class AbstractChecker implements Checker, CheckerIsScheduled, CheckerSendsNotifications
+abstract class AbstractChecker implements Checker, CheckerAllowsForRetries, CheckerIsScheduled, CheckerSendsNotifications
 {
-    use IsScheduled, SendsNotifications;
+    use AllowsForRetries, IsScheduled, SendsNotifications;
 }
