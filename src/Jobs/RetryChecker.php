@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Pbmedia\ApiHealth\Checkers\Executor;
+use Pbmedia\ApiHealth\Storage\CheckerState;
 
 class RetryChecker implements ShouldQueue
 {
@@ -32,6 +33,8 @@ class RetryChecker implements ShouldQueue
      */
     public function handle()
     {
+        CheckerState::make($this->checkerClass)->addRetryTimestamp();
+
         Executor::make($this->checkerClass)->handle();
     }
 }

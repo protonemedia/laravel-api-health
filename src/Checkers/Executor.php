@@ -3,7 +3,6 @@
 namespace Pbmedia\ApiHealth\Checkers;
 
 use Illuminate\Notifications\Notification;
-use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Queue;
 use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
@@ -162,8 +161,6 @@ class Executor
             return $this->state->addRetryTimestamp();
         }
 
-        $this->addCallbackBeforeRetryCheckerJob($jobClass);
-
         $job = new $jobClass(get_class($this->checker));
 
         $this->configureRetryJobDefaults($job, config('api-health.retries.job'));
@@ -195,26 +192,5 @@ class Executor
         if ($queue = $config['queue'] ?? null) {
             $job->onQueue($queue);
         }
-    }
-
-    /**
-     * Adds a callback before the retry job is executed which
-     * will add a retry timestamp on the checker's state.
-     *
-     * @param string $job
-     */
-    private function addCallbackBeforeRetryCheckerJob(string $job)
-    {
-        Queue::before(function (JobProcessing $event) use ($job) {
-            $resolvedName = $event->job->resolveName();
-
-            $checkerClass = unserialize(
-                $event->job->payload()['data']['command']
-            )->checkerClass;
-
-            if ($resolvedName === $job && $checkerClass === get_class($this->checker)) {
-                $this->state->addRetryTimestamp();
-            }
-        });
     }
 }
