@@ -261,6 +261,55 @@ class MyChecker extends AbstractChecker
 }
 ```
 
+## Automatic retries
+
+It is possible to specify a number of retries to perform before your checker gets in a failed state. When a retry occurs, a job is sent to the [queue](https://laravel.com/docs/5.6/queues) which will run the checker again. In the config file you can set the number of retries, the job to dispatch (we've created one for you!) and the configuration of the *retry job* such as the connection, delay and queue. For example, if you set `allowed_retries` to `3` and `delay` to `20`, the checker will run four times in total and will fail after a minute.
+
+```php
+<?php
+
+// config/api-health.php
+
+return [
+    //
+
+    'retries' => [
+        /**
+         * The number of allowed retries.
+         */
+        'allowed_retries' => 0,
+
+        /**
+         * Here you can specify the configuration of the retry job.
+         */
+        'job' => [
+            'job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+
+            'connection' => null,
+
+            'delay' => null,
+
+            'queue' => null,
+        ],
+    ],
+
+    //
+]
+```
+
+Just as the notification configuration, you can set the number of *allowed retries* and the class of the job on the checker itself:
+
+```php
+<?php
+
+class MyChecker extends AbstractChecker
+{
+    protected $allowedRetries = 2;
+
+    protected $retryJob = \App\Jobs\RetryChecker::class;
+}
+```
+
 ## Writing tests
 
 The `ApiHealth` facade has a `fake` method which swaps the bound instance with a fake one. This allows you to force the state of a checker. Mind that this only works on the facade, the checker itself will be untouched.
