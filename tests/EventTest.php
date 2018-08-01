@@ -31,8 +31,8 @@ class EventTest extends TestCase
     {
         Event::fake();
 
-        app(Runner::class)->handle();
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
+        Runner::fromConfig()->handle();
 
         Event::assertDispatchedTimes(CheckerHasFailed::class, 1);
     }
@@ -42,8 +42,8 @@ class EventTest extends TestCase
     {
         Event::fake();
 
-        app(Runner::class)->handle();
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
+        Runner::fromConfig()->handle();
 
         Event::assertDispatchedTimes(CheckerHasFailed::class, 1);
         Event::assertDispatchedTimes(CheckerIsStillFailing::class, 1);
@@ -56,8 +56,8 @@ class EventTest extends TestCase
 
         config()->set('api-health.checkers', [FailingAtEvenTimesChecker::class]);
 
-        app(Runner::class)->handle();
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
+        Runner::fromConfig()->handle();
 
         Event::assertDispatchedTimes(CheckerHasFailed::class, 1);
         Event::assertDispatchedTimes(CheckerHasRecovered::class, 1);

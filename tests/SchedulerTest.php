@@ -31,7 +31,7 @@ class SchedulerTest extends TestCase
     /** @test */
     public function it_can_determinate_if_a_checker_should_run()
     {
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
 
         Carbon::setTestNow('2018-07-07 10:00:00');
         $this->assertCount(2, $runner->handle()->passes());
@@ -46,7 +46,7 @@ class SchedulerTest extends TestCase
     /** @test */
     public function it_can_ignore_the_scheduling()
     {
-        $runner = app(Runner::class)->ignoreScheduling();
+        $runner = Runner::fromConfig()->ignoreScheduling();
 
         Carbon::setTestNow('2018-07-07 10:00:00');
         $this->assertCount(2, $runner->handle()->passes());
@@ -62,7 +62,7 @@ class SchedulerTest extends TestCase
             SchedulessChecker::class,
         ]);
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
 
         $this->assertCount(1, $runner->handle()->passes());
     }

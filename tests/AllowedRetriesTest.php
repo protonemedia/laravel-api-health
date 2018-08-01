@@ -23,15 +23,15 @@ class AllowedRetriesTest extends TestCase
         config()->set('api-health.retries.allowed_retries', 2);
         config()->set('api-health.retries.job.job', null);
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(1, $runner->passes());
         $this->assertCount(0, $runner->failed());
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(1, $runner->passes());
         $this->assertCount(0, $runner->failed());
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(0, $runner->passes());
         $this->assertCount(1, $runner->failed());
     }
@@ -42,15 +42,15 @@ class AllowedRetriesTest extends TestCase
         config()->set('api-health.retries.allowed_retries', 1);
         config()->set('api-health.retries.job.job', null);
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(1, $runner->passes());
         $this->assertCount(0, $runner->failed());
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(0, $runner->passes());
         $this->assertCount(1, $runner->failed());
 
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
         $this->assertCount(0, $runner->passes());
         $this->assertCount(1, $runner->failed());
     }
@@ -61,7 +61,7 @@ class AllowedRetriesTest extends TestCase
         config()->set('api-health.retries.allowed_retries', 1);
         config()->set('api-health.retries.job.job', RetryChecker::class);
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertTrue(CheckerState::make(FailingChecker::class)->isFailing());
     }
@@ -75,7 +75,7 @@ class AllowedRetriesTest extends TestCase
 
         $this->assertNull(FailingCheckerWithJobCallback::$job);
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertNotNull($job = FailingCheckerWithJobCallback::$job);
     }
@@ -92,7 +92,7 @@ class AllowedRetriesTest extends TestCase
 
         config()->set('api-health.checkers', [FailingCheckerWithJobCallback::class]);
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertNotNull($job = FailingCheckerWithJobCallback::$job);
 

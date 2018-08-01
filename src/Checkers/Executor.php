@@ -65,9 +65,7 @@ class Executor
      */
     public function passes(): bool
     {
-        if (is_null($this->failed)) {
-            $this->handle();
-        }
+        $this->handle();
 
         return !$this->failed;
     }

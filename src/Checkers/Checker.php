@@ -5,6 +5,13 @@ namespace Pbmedia\ApiHealth\Checkers;
 interface Checker
 {
     /**
+     * A unique identifier to store the state with.
+     *
+     * @return string
+     */
+    public function id(): string;
+
+    /**
      * Execute the checker.
      *
      * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed

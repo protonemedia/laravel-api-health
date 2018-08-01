@@ -7,6 +7,11 @@ use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
 
 class NotificationlessChecker implements Checker
 {
+    public function id(): string
+    {
+        return md5(static::class);
+    }
+
     public function run()
     {
         throw new CheckerHasFailed("TestChecker fails!");

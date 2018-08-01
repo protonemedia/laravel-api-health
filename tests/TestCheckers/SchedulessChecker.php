@@ -6,6 +6,11 @@ use Pbmedia\ApiHealth\Checkers\Checker;
 
 class SchedulessChecker implements Checker
 {
+    public function id(): string
+    {
+        return md5(static::class);
+    }
+
     public function run()
     {
         return;

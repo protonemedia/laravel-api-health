@@ -26,11 +26,12 @@ class RunCheckers extends Command
      * Gets the passing and failing checkers from the Runner
      * and presents them in a table.
      *
-     * @param  \Pbmedia\ApiHealth\Runner $runner
      * @return null
      */
-    public function handle(Runner $runner)
+    public function handle()
     {
+        $runner = Runner::fromConfig();
+
         if ($this->option('force')) {
             $runner->ignoreScheduling();
         }

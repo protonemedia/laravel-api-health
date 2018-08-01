@@ -52,7 +52,7 @@ class CheckerState
      */
     private function key(): string
     {
-        return 'laravel-api-checker.' . md5(get_class($this->checker));
+        return 'laravel-api-checker.' . $this->checker->id();
     }
 
     /**

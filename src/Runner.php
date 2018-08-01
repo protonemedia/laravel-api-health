@@ -30,6 +30,39 @@ class Runner
     private $scheduled = true;
 
     /**
+     * Collection of executors.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    private $executors;
+
+    /**
+     * Creates an instance with the given executors.
+     *
+     * @param array|\Illuminate\Support\Collection $executors
+     */
+    public function __construct($executors)
+    {
+        $this->executors = Collection::wrap($executors);
+    }
+
+    /**
+     * Creates an instance of this class with the configured checkers.
+     *
+     * @return \Pbmedia\ApiHealth\Runner
+     */
+    public static function fromConfig(): Runner
+    {
+        return Collection::make(config('api-health.checkers'))
+            ->map(function ($checker): Executor {
+                return Executor::make($checker);
+            })
+            ->pipe(function ($executors) {
+                return new static($executors);
+            });
+    }
+
+    /**
      * Disables the scheduling.
      *
      * @return $this
@@ -82,24 +115,19 @@ class Runner
 
         $this->passes = new Collection;
 
-        Collection::make(config('api-health.checkers'))
-            ->map(function ($checker): Executor {
-                return Executor::make($checker);
-            })
-            ->filter(function (Executor $executor) {
-                if (!$this->scheduled) {
-                    return true;
-                }
+        $this->executors->filter(function (Executor $executor) {
+            if (!$this->scheduled) {
+                return true;
+            }
 
-                if (!$executor->getChecker() instanceof CheckerIsScheduled) {
-                    return true;
-                }
+            if (!$executor->getChecker() instanceof CheckerIsScheduled) {
+                return true;
+            }
 
-                return $executor->getChecker()->isDue();
-            })
-            ->each(function (Executor $executor) {
-                ($executor->fails() ? $this->failed : $this->passes)->push($executor);
-            });
+            return $executor->getChecker()->isDue();
+        })->each(function (Executor $executor) {
+            ($executor->fails() ? $this->failed : $this->passes)->push($executor);
+        });
 
         return $this;
     }

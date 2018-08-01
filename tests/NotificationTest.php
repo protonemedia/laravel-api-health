@@ -62,7 +62,7 @@ class NotificationTest extends TestCase
 
         Notification::fake();
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertNotSent();
     }
@@ -74,7 +74,7 @@ class NotificationTest extends TestCase
 
         config()->set('api-health.checkers', [NotificationlessChecker::class]);
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertNotSent();
     }
@@ -88,7 +88,7 @@ class NotificationTest extends TestCase
 
         Carbon::setTestNow('2018-07-01 14:00:00');
 
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
 
         $failedNotification = null;
 
@@ -114,23 +114,23 @@ class NotificationTest extends TestCase
         Notification::fake();
 
         Carbon::setTestNow('2018-07-01 10:00:00');
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
         $this->assertSentFailedTimes(1);
 
         Carbon::setTestNow('2018-07-01 10:59:00');
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
         $this->assertSentFailedTimes(1);
 
         Carbon::setTestNow('2018-07-01 11:00:00');
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
         $this->assertSentFailedTimes(2);
 
         Carbon::setTestNow('2018-07-01 11:59:59');
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
         $this->assertSentFailedTimes(2);
 
         Carbon::setTestNow('2018-07-01 12:00:00');
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
         $this->assertSentFailedTimes(3);
     }
 
@@ -139,8 +139,8 @@ class NotificationTest extends TestCase
     {
         Notification::fake();
 
-        app(Runner::class)->handle();
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertSentFailedTimes(1);
     }
@@ -152,8 +152,8 @@ class NotificationTest extends TestCase
 
         config()->set('api-health.notifications.resend_failed_notification_after_minutes', 0);
 
-        app(Runner::class)->handle();
-        app(Runner::class)->handle();
+        Runner::fromConfig()->handle();
+        Runner::fromConfig()->handle();
 
         $this->assertSentFailedTimes(1);
     }
@@ -168,7 +168,7 @@ class NotificationTest extends TestCase
 
         Carbon::setTestNow('2018-07-01 14:00:00');
 
-        $runner = app(Runner::class)->handle();
+        $runner = Runner::fromConfig()->handle();
 
         $state = new CheckerState(FailingAtOddTimesChecker::create());
         $this->assertFalse($state->isFailing());
@@ -217,7 +217,7 @@ class NotificationTest extends TestCase
         config()->set('api-health.checkers', [FailingAtEvenTimesChecker::class]);
 
         $state  = new CheckerState(FailingAtEvenTimesChecker::create());
-        $runner = app(Runner::class);
+        $runner = Runner::fromConfig();
 
         $runner->handle();
         $this->assertTrue($state->isFailing());
