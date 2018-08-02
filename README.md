@@ -318,6 +318,77 @@ class MyChecker extends AbstractChecker
 }
 ```
 
+## Advanced
+
+Every checker should be able to identify itself so the state can be stored. The `AbstractChecker` has an `id` method which simply returns the name of the class, in most cases you don't have to worry about the identifier but there is a scenario in which you need to override this method. Say you want to reuse a checker with different arguments. In this example there is a `Server` model which has an `isOnline` method which returns a boolean wether the server is online.
+
+```php
+class Server extends Model
+{
+    public function isOnline(): bool
+    {
+        //
+    }
+}
+```
+
+We've generated this checker with the `make:checker ServerChecker` command and added a custom `id` method.
+
+```php
+<?php
+
+namespace App\Checkers;
+
+use App\Models\Server;
+use Pbmedia\ApiHealth\Checkers\AbstractChecker;
+use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+
+class ServerChecker extends AbstractChecker
+{
+    public $server;
+
+    public function __construct(Server $server)
+    {
+        $this->server = $server;
+    }
+
+    public static function create(Server $server)
+    {
+        return new static($server);
+    }
+
+    public function id(): string
+    {
+        return 'server_' . $this->server->id;
+    }
+
+    public function run()
+    {
+        if (!$this->server->isOnline()) {
+            throw new CheckerHasFailed("Server {$this->server->name} is offline.");
+        }
+    }
+}
+```
+
+Now if you want to verify the status of multiple server, you could easily do something like this:
+
+```php
+<?php
+
+use App\Models\Server;
+use Pbmedia\ApiHealth\Runner;
+
+$serverA = Server::whereIpAddress('1.1.1.1')->first();
+$serverB = Server::whereIpAddress('8.8.8.8')->first();
+
+$runner = new Runner([$serverA, $serverB]);
+
+$onlineServers = $runner->passes();
+$offlineServers = $runner->failed();
+
+```
+
 ## Writing tests
 
 The `ApiHealth` facade has a `fake` method which swaps the bound instance with a fake one. This allows you to force the state of a checker. Mind that this only works on the facade, the checker itself will be untouched.
