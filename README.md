@@ -320,7 +320,7 @@ class MyChecker extends AbstractChecker
 
 ## Advanced
 
-Every checker should be able to identify itself so the state can be stored. The `AbstractChecker` has an `id` method which simply returns the name of the class, in most cases you don't have to worry about the identifier but there is a scenario in which you need to override this method. Say you want to reuse a checker with different arguments. In this example there is a `Server` model which has an `isOnline` method which returns a boolean wether the server is online.
+Every checker should be able to identify itself so the state can be stored. The `AbstractChecker` has an `id` method which simply returns the name of the class, in most cases you don't have to worry about the identifier but there is a scenario in which you need to override this method. Say you want to reuse a checker with different arguments. In this example there is a `Server` model which has an `isOnline` method.
 
 ```php
 class Server extends Model
@@ -383,6 +383,10 @@ $serverA = Server::whereIpAddress('1.1.1.1')->first();
 $serverB = Server::whereIpAddress('8.8.8.8')->first();
 
 $runner = new Runner([$serverA, $serverB]);
+
+// or 
+
+$runner = new Runner(Server::all());
 
 $onlineServers = $runner->passes();
 $offlineServers = $runner->failed();
