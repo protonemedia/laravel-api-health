@@ -9,6 +9,13 @@ use Spatie\SslCertificate\Exceptions\InvalidUrl;
 abstract class AbstractSslCertificateChecker extends AbstractChecker
 {
     /**
+     * The Spatie SSL downloader.
+     *
+     * @var \Spatie\SslCertificate\Downloader $downloader
+     */
+    protected $downloader;
+
+    /**
      * The hostname that must be checked.
      *
      * @var string
