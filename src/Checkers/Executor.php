@@ -157,7 +157,7 @@ class Executor
             return $this->state->addRetryTimestamp();
         }
 
-        $job = new $jobClass(get_class($this->checker));
+        $job = new $jobClass($this->checker);
 
         $this->configureRetryJobDefaults($job, config('api-health.retries.job'));
 

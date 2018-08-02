@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Pbmedia\ApiHealth\Checkers\Checker;
 use Pbmedia\ApiHealth\Checkers\Executor;
 use Pbmedia\ApiHealth\Storage\CheckerState;
 
@@ -14,16 +15,16 @@ class RetryChecker implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $checkerClass;
+    public $checker;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(string $checkerClass)
+    public function __construct(Checker $checker)
     {
-        $this->checkerClass = $checkerClass;
+        $this->checker = $checker;
     }
 
     /**
@@ -33,8 +34,8 @@ class RetryChecker implements ShouldQueue
      */
     public function handle()
     {
-        CheckerState::make($this->checkerClass)->addRetryTimestamp();
+        (new CheckerState($this->checker))->addRetryTimestamp();
 
-        Executor::make($this->checkerClass)->handle();
+        (new Executor($this->checker))->handle();
     }
 }
