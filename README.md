@@ -9,8 +9,8 @@ This is a package to monitor first and third party services that your app uses. 
 
 ## Requirements
 
-* Laravel 5.6 only, PHP 7.1 and 7.2 supported.
-* Support for [Package Discovery](https://laravel.com/docs/5.6/packages#package-discovery).
+* Laravel 5.7 only, PHP 7.1 and 7.2 supported.
+* Support for [Package Discovery](https://laravel.com/docs/5.7/packages#package-discovery).
 
 ## Features
 
@@ -33,6 +33,8 @@ You can install the package via composer:
 ```bash
 composer require pbmedia/laravel-api-health
 ```
+
+If you're still using Laravel 5.6, please use version 1.2.3 (which is not maintained anymore).
 
 Publish the translation resources and config file using the Artisan CLI tool.
 
@@ -64,7 +66,7 @@ class LaravelDocumentationChecker extends AbstractHttpChecker
     /*
      * The URL you want to request.
      */
-    protected $url = 'https://laravel.com/docs/5.6';
+    protected $url = 'https://laravel.com/docs/5.7';
 
     /*
      * The method you want to use.
@@ -110,7 +112,7 @@ php artisan api-health:check App\\Checkers\\LaravelDocumentationChecker
 
 ## Schedule your checkers
 
-You can fill the `checkers` array in the `config/api-health.php` file with all the checkers you want to schedule. By default every checker will run every minute. The `schedule` method on the checker allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.6/scheduling#schedule-frequency-options).
+You can fill the `checkers` array in the `config/api-health.php` file with all the checkers you want to schedule. By default every checker will run every minute. The `schedule` method on the checker allows you to set a frequency similair to the [Laravel Task Scheduler](https://laravel.com/docs/5.7/scheduling#schedule-frequency-options).
 
 ```php
 <?php
@@ -264,7 +266,7 @@ class MyChecker extends AbstractChecker
 
 ## Automatic retries
 
-It is possible to specify a number of retries to perform before your checker gets in a failed state. When a retry occurs, a job is sent to the [queue](https://laravel.com/docs/5.6/queues) which will run the checker again. In the config file you can set the number of retries, the job to dispatch (we've created one for you!) and the configuration of the *retry job* such as the connection, delay and queue.
+It is possible to specify a number of retries to perform before your checker gets in a failed state. When a retry occurs, a job is sent to the [queue](https://laravel.com/docs/5.7/queues) which will run the checker again. In the config file you can set the number of retries, the job to dispatch (we've created one for you!) and the configuration of the *retry job* such as the connection, delay and queue.
 
 For example, if you set `allowed_retries` to `3` and `delay` to `20`, the checker will run four times in total and will fail after a minute (measured from the first time you ran the checker).
 
@@ -384,7 +386,7 @@ $serverB = Server::whereIpAddress('8.8.8.8')->first();
 
 $runner = new Runner([$serverA, $serverB]);
 
-// or 
+// or
 
 $runner = new Runner(Server::all());
 

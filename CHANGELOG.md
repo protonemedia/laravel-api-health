@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-api-health` will be documented in this file
 
+## 2.0.0 - 2018-09-06
+
+- Support for Laravel 5.7
+
 ## 1.2.3 - 2018-08-03
 
 - Added docblock
