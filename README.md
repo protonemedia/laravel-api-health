@@ -7,6 +7,10 @@
 
 This is a package to monitor first and third party services that your app uses. It can send a notification if a service goes down (or up!) and supports scheduling. You can create *checkers* for whatever API or service you want to monitor but it also comes with some built-in checkers so you can fire up some checkers really quickly.
 
+## We are looking for beta testers!
+
+We are currently building a *sophisticated health checker for your Laravel applications* called [Upserver.online](https://upserver.online). We will launch a private beta in the coming weeks so please join the mailing list to get **early access**! If you want to know more, you can also read the [official announcement](https://mailchi.mp/upserver/this-is-upserver-online) or follow us on [Twitter](https://twitter.com/UpserverOnline).
+
 ## Requirements
 
 * Laravel 6.0 only, PHP 7.2 and 7.3 supported.
