@@ -1,8 +1,8 @@
 # Laravel API Health
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
-[![Build Status](https://img.shields.io/travis/pascalbaljetmedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/pascalbaljetmedia/laravel-api-health)
-[![Quality Score](https://img.shields.io/scrutinizer/g/pascalbaljetmedia/laravel-api-health.svg?style=flat-square)](https://scrutinizer-ci.com/g/pascalbaljetmedia/laravel-api-health)
+[![Build Status](https://img.shields.io/travis/protonemedia/laravel-api-health/master.svg?style=flat-square)](https://travis-ci.org/protonemedia/laravel-api-health)
+[![Quality Score](https://img.shields.io/scrutinizer/g/protonemedia/laravel-api-health.svg?style=flat-square)](https://scrutinizer-ci.com/g/protonemedia/laravel-api-health)
 [![Total Downloads](https://img.shields.io/packagist/dt/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
 
 This is a package to monitor first and third party services that your app uses. It can send a notification if a service goes down (or up!) and supports scheduling. You can create *checkers* for whatever API or service you want to monitor but it also comes with some built-in checkers so you can fire up some checkers really quickly.
