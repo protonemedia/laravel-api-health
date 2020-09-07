@@ -4,17 +4,16 @@ namespace ProtoneMedia\ApiHealth;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Pbmedia\ApiHealth\ApiHealthChecker;
-use Pbmedia\ApiHealth\Console\Check;
-use Pbmedia\ApiHealth\Console\MakeChecker;
-use Pbmedia\ApiHealth\Console\MakeHttpChecker;
-use Pbmedia\ApiHealth\Console\MakeSslCertificateChecker;
-use Pbmedia\ApiHealth\Console\RunCheckers;
-use Pbmedia\ApiHealth\Events\CheckerHasFailed;
-use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
-use Pbmedia\ApiHealth\Events\CheckerIsStillFailing;
-use Pbmedia\ApiHealth\Listeners\SendFailedNotification;
-use Pbmedia\ApiHealth\Listeners\SendRecoveredNotification;
+use ProtoneMedia\ApiHealth\Console\Check;
+use ProtoneMedia\ApiHealth\Console\MakeChecker;
+use ProtoneMedia\ApiHealth\Console\MakeHttpChecker;
+use ProtoneMedia\ApiHealth\Console\MakeSslCertificateChecker;
+use ProtoneMedia\ApiHealth\Console\RunCheckers;
+use ProtoneMedia\ApiHealth\Events\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Events\CheckerHasRecovered;
+use ProtoneMedia\ApiHealth\Events\CheckerIsStillFailing;
+use ProtoneMedia\ApiHealth\Listeners\SendFailedNotification;
+use ProtoneMedia\ApiHealth\Listeners\SendRecoveredNotification;
 
 class ApiHealthServiceProvider extends ServiceProvider
 {
@@ -32,7 +31,8 @@ class ApiHealthServiceProvider extends ServiceProvider
         ]);
 
         $this->loadTranslationsFrom(
-            __DIR__ . '/../resources/lang/', 'api-health'
+            __DIR__ . '/../resources/lang/',
+            'api-health'
         );
 
         Event::listen(CheckerHasFailed::class, SendFailedNotification::class);

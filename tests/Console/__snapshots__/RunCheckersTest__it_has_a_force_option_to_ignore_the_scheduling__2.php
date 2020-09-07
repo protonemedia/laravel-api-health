@@ -4,7 +4,7 @@ Passing checkers:
 +--------------------------------------------------------------+
 | Checker                                                      |
 +--------------------------------------------------------------+
-| Pbmedia\\ApiHealth\\Tests\\TestCheckers\\EveryMinuteChecker      |
-| Pbmedia\\ApiHealth\\Tests\\TestCheckers\\EveryFiveMinutesChecker |
+| ProtoneMedia\\ApiHealth\\Tests\\TestCheckers\\EveryMinuteChecker      |
+| ProtoneMedia\\ApiHealth\\Tests\\TestCheckers\\EveryFiveMinutesChecker |
 +--------------------------------------------------------------+
 ';

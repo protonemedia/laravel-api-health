@@ -2,14 +2,14 @@
 
 namespace ProtoneMedia\ApiHealth\Events;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
 
 class CheckerHasRecovered
 {
     /**
      * The checker.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\Checker
+     * @var \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     public $checker;
 
@@ -23,7 +23,7 @@ class CheckerHasRecovered
     /**
      * Creates a new instance of this event.
      *
-     * @param \Pbmedia\ApiHealth\Checkers\Checker  $checker
+     * @param \ProtoneMedia\ApiHealth\Checkers\Checker  $checker
      * @param array  $failedData
      */
     public function __construct(Checker $checker, array $failedData)

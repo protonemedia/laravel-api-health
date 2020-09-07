@@ -4,7 +4,7 @@ namespace DummyNamespace;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractHttpChecker;
 
 class DummyClass extends AbstractHttpChecker
 {
@@ -21,7 +21,7 @@ class DummyClass extends AbstractHttpChecker
     /*
      * Here you can specify the Guzzle HTTP options.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpChecker
+     * @return \ProtoneMedia\ApiHealth\Checkers\AbstractHttpChecker
      */
     public static function create()
     {

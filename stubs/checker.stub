@@ -3,8 +3,8 @@
 namespace DummyNamespace;
 
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
 
 class DummyClass extends AbstractChecker
 {
@@ -19,7 +19,7 @@ class DummyClass extends AbstractChecker
     /**
      * Returns a fresh configured instance of the checker.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\Checker
+     * @return \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     public static function create()
     {
@@ -43,7 +43,7 @@ class DummyClass extends AbstractChecker
     /**
      * Execute the checker.
      *
-     * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @throws \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      * @return mixed
      */
     public function run()

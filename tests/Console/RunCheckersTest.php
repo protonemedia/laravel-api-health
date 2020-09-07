@@ -5,10 +5,10 @@ namespace ProtoneMedia\ApiHealth\Tests\Console;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Tests\TestCheckers\EveryFiveMinutesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\EveryMinuteChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\EveryFiveMinutesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\EveryMinuteChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class RunCheckersTest extends TestCase
@@ -18,7 +18,7 @@ class RunCheckersTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

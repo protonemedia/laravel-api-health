@@ -2,8 +2,8 @@
 
 namespace ProtoneMedia\ApiHealth\Tests\TestCheckers;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 
 class NotificationlessChecker implements Checker
 {

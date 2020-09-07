@@ -80,7 +80,7 @@ abstract class AbstractHttpChecker extends AbstractChecker
      *
      * @param  \GuzzleHttp\Exception\ConnectException $exception
      *
-     * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @throws \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      * @return null
      */
     private function throwConnectException(ConnectException $exception)
@@ -93,7 +93,7 @@ abstract class AbstractHttpChecker extends AbstractChecker
      *
      * @param  \Psr\Http\Message\ResponseInterface $response
      *
-     * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @throws \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      * @return null
      */
     private function throwExceptionByResponse(ResponseInterface $response)

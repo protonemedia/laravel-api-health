@@ -3,7 +3,7 @@
 namespace ProtoneMedia\ApiHealth\Tests\TestCheckers;
 
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
 
 class EveryFiveMinutesChecker extends AbstractChecker
 {

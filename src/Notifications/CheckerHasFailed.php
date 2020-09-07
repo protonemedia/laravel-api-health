@@ -6,8 +6,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed as CheckerHasFailedException;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed as CheckerHasFailedException;
 
 class CheckerHasFailed extends Notification
 {

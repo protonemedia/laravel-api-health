@@ -1,3 +1,3 @@
-<?php return 'Running checker: Pbmedia\\ApiHealth\\Tests\\TestCheckers\\PassingChecker
+<?php return 'Running checker: ProtoneMedia\\ApiHealth\\Tests\\TestCheckers\\PassingChecker
 Passes!
 ';

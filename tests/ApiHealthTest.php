@@ -3,12 +3,12 @@
 namespace ProtoneMedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Facades\ApiHealth;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailOnceChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassOnceChecker;
+use ProtoneMedia\ApiHealth\Facades\ApiHealth;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailOnceChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassOnceChecker;
 
 class ApiHealthTest extends TestCase
 {
@@ -20,7 +20,7 @@ class ApiHealthTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

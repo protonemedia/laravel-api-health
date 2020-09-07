@@ -4,10 +4,10 @@ namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Carbon;
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Runner;
-use Pbmedia\ApiHealth\Tests\TestCheckers\EveryFiveMinutesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\EveryMinuteChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\SchedulessChecker;
+use ProtoneMedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\EveryFiveMinutesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\EveryMinuteChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\SchedulessChecker;
 
 class SchedulerTest extends TestCase
 {
@@ -24,7 +24,7 @@ class SchedulerTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

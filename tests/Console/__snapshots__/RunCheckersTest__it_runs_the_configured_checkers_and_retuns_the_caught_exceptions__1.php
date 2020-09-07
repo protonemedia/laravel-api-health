@@ -4,13 +4,13 @@ Passing checkers:
 +-----------------------------------------------------+
 | Checker                                             |
 +-----------------------------------------------------+
-| Pbmedia\\ApiHealth\\Tests\\TestCheckers\\PassingChecker |
+| ProtoneMedia\\ApiHealth\\Tests\\TestCheckers\\PassingChecker |
 +-----------------------------------------------------+
 
 Failed checkers:
 +-----------------------------------------------------+--------------------+
 | Checker                                             | Exception          |
 +-----------------------------------------------------+--------------------+
-| Pbmedia\\ApiHealth\\Tests\\TestCheckers\\FailingChecker | TestChecker fails! |
+| ProtoneMedia\\ApiHealth\\Tests\\TestCheckers\\FailingChecker | TestChecker fails! |
 +-----------------------------------------------------+--------------------+
 ';

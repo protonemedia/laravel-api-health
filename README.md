@@ -43,7 +43,7 @@ If you're still using Laravel 5.6, please use version 1.2, for Laravel 5.7 use v
 Publish the translation resources and config file using the Artisan CLI tool.
 
 ```bash
-php artisan vendor:publish --provider="Pbmedia\ApiHealth\ApiHealthServiceProvider"
+php artisan vendor:publish --provider="ProtoneMedia\ApiHealth\ApiHealthServiceProvider"
 ```
 
 ## Build your first checker
@@ -63,7 +63,7 @@ namespace App\Checkers;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractHttpChecker;
 
 class LaravelDocumentationChecker extends AbstractHttpChecker
 {
@@ -80,7 +80,7 @@ class LaravelDocumentationChecker extends AbstractHttpChecker
     /*
      * Here you can specify the Guzzle HTTP options.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\AbstractHttpChecker
+     * @return \ProtoneMedia\ApiHealth\Checkers\AbstractHttpChecker
      */
     public static function create()
     {
@@ -159,7 +159,7 @@ For example, you might use a payment gateway in your app. If you check the statu
 
 ```php
 use App\Checkers\LaravelDocumentationChecker;
-use Pbmedia\ApiHealth\Facades\ApiHealth;
+use ProtoneMedia\ApiHealth\Facades\ApiHealth;
 
 ApiHealth::isFailing(LaravelDocumentationChecker::class);
 ApiHealth::isPassing(LaravelDocumentationChecker::class);
@@ -176,7 +176,7 @@ Building a checker is quite easy. Run the `make:checker` command and pass the na
 php artisan make:checker GetIpAddressByHost
 ```
 
-There are two methods you need to fill. The `create` method is used as a factory to build and configure an instance of your checker. In this case it's quite simple but this the place to gather and configure your dependencies. The `run` methods performs the actual check and must throw a `\Pbmedia\ApiHealth\Checkers\CheckerHasFailed` exception if something goes wrong. Here is an example:
+There are two methods you need to fill. The `create` method is used as a factory to build and configure an instance of your checker. In this case it's quite simple but this the place to gather and configure your dependencies. The `run` methods performs the actual check and must throw a `\ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed` exception if something goes wrong. Here is an example:
 
 ```php
 <?php
@@ -184,8 +184,8 @@ There are two methods you need to fill. The `create` method is used as a factory
 namespace App\Checkers;
 
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 
 class GetIpAddressByHost extends AbstractChecker
 {
@@ -214,9 +214,9 @@ class GetIpAddressByHost extends AbstractChecker
 
 This package dispatches there different events:
 
-* `Pbmedia\ApiHealth\Events\CheckerHasFailed`
-* `Pbmedia\ApiHealth\Events\CheckerHasRecovered`
-* `Pbmedia\ApiHealth\Events\CheckerIsStillFailing`
+* `ProtoneMedia\ApiHealth\Events\CheckerHasFailed`
+* `ProtoneMedia\ApiHealth\Events\CheckerHasRecovered`
+* `ProtoneMedia\ApiHealth\Events\CheckerIsStillFailing`
 
 ## Other built-in checkers
 
@@ -241,12 +241,12 @@ return [
         /**
          * Class name of the failed notification.
          */
-        'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
+        'default_failed_notification' => \ProtoneMedia\ApiHealth\Notifications\CheckerHasFailed::class,
 
         /**
          * Class name of the recovered notification.
          */
-        'default_recovered_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasRecovered::class,
+        'default_recovered_notification' => \ProtoneMedia\ApiHealth\Notifications\CheckerHasRecovered::class,
     ],
 
     //
@@ -292,7 +292,7 @@ return [
          * Here you can specify the configuration of the retry job.
          */
         'job' => [
-            'job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+            'job' => \ProtoneMedia\ApiHealth\Jobs\RetryChecker::class,
 
             'connection' => null,
 
@@ -346,8 +346,8 @@ We've generated this checker with the `make:checker ServerChecker` command and a
 namespace App\Checkers;
 
 use App\Models\Server;
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 
 class ServerChecker extends AbstractChecker
 {
@@ -383,7 +383,7 @@ Now if you want to verify the status of multiple server, you could easily do som
 <?php
 
 use App\Models\Server;
-use Pbmedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Runner;
 
 $serverA = Server::whereIpAddress('1.1.1.1')->first();
 $serverB = Server::whereIpAddress('8.8.8.8')->first();
@@ -410,7 +410,7 @@ namespace App\Tests;
 
 use App\Checkers\FailingChecker;
 use App\Checkers\PassingChecker;
-use Pbmedia\ApiHealth\Facades\ApiHealth;
+use ProtoneMedia\ApiHealth\Facades\ApiHealth;
 
 class MyTest extends TestCase
 {

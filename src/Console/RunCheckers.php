@@ -3,8 +3,8 @@
 namespace ProtoneMedia\ApiHealth\Console;
 
 use Illuminate\Console\Command;
-use Pbmedia\ApiHealth\Checkers\Executor;
-use Pbmedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Runner;
 
 class RunCheckers extends Command
 {

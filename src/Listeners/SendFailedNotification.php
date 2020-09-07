@@ -2,9 +2,9 @@
 
 namespace ProtoneMedia\ApiHealth\Listeners;
 
-use Pbmedia\ApiHealth\Checkers\CheckerSendsNotifications;
-use Pbmedia\ApiHealth\Events\CheckerHasFailed;
-use Pbmedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Checkers\CheckerSendsNotifications;
+use ProtoneMedia\ApiHealth\Events\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
 
 class SendFailedNotification
 {
@@ -13,7 +13,7 @@ class SendFailedNotification
     /**
      * Sends the failed notification if needed.
      *
-     * @param  \Pbmedia\ApiHealth\Events\CheckerHasFailed $event
+     * @param  \ProtoneMedia\ApiHealth\Events\CheckerHasFailed $event
      */
     public function handle($event)
     {

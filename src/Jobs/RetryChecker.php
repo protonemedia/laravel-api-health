@@ -7,9 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\Executor;
-use Pbmedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
 
 class RetryChecker implements ShouldQueue
 {

@@ -2,8 +2,8 @@
 
 namespace ProtoneMedia\ApiHealth\Listeners;
 
-use Pbmedia\ApiHealth\Checkers\CheckerSendsNotifications;
-use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
+use ProtoneMedia\ApiHealth\Checkers\CheckerSendsNotifications;
+use ProtoneMedia\ApiHealth\Events\CheckerHasRecovered;
 
 class SendRecoveredNotification
 {
@@ -12,7 +12,7 @@ class SendRecoveredNotification
     /**
      * Sends the recovered notification if needed.
      *
-     * @param  \Pbmedia\ApiHealth\Events\CheckerHasRecovered $event
+     * @param  \ProtoneMedia\ApiHealth\Events\CheckerHasRecovered $event
      */
     public function handle(CheckerHasRecovered $event)
     {

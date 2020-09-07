@@ -3,7 +3,7 @@
 namespace ProtoneMedia\ApiHealth\Console;
 
 use Illuminate\Console\Command;
-use Pbmedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
 
 class Check extends Command
 {

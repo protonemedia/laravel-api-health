@@ -2,8 +2,8 @@
 
 namespace ProtoneMedia\ApiHealth;
 
-use Pbmedia\ApiHealth\Checkers\Executor;
-use Pbmedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
 
 class ApiHealthChecker
 {
