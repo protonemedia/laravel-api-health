@@ -1,22 +1,22 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Storage;
+namespace ProtoneMedia\ApiHealth\Storage;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\CheckerAllowsForRetries;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
-use Pbmedia\ApiHealth\Events\CheckerHasFailed as CheckerHasFailedEvent;
-use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
-use Pbmedia\ApiHealth\Events\CheckerIsStillFailing;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerAllowsForRetries;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Events\CheckerHasFailed as CheckerHasFailedEvent;
+use ProtoneMedia\ApiHealth\Events\CheckerHasRecovered;
+use ProtoneMedia\ApiHealth\Events\CheckerIsStillFailing;
 
 class CheckerState
 {
     /**
      * The checker.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\Checker
+     * @var \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     private $checker;
 
@@ -38,7 +38,7 @@ class CheckerState
      * Shortcut for creating an instance with the given checker class.
      *
      * @param  string $checkerClass
-     * @return \Pbmedia\ApiHealth\Storage\CheckerState
+     * @return \ProtoneMedia\ApiHealth\Storage\CheckerState
      */
     public static function make(string $checkerClass)
     {
@@ -159,7 +159,7 @@ class CheckerState
     /**
      * Set the state to failed with the given exception message.
      *
-     * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed $exception
+     * @param \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed $exception
      */
     public function setToFailed(CheckerHasFailed $exception)
     {
@@ -176,7 +176,7 @@ class CheckerState
     /**
      * Adds the current timestamp to the failed state.
      *
-     * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed $exception
+     * @param \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed $exception
      */
     public function addFailedTimestamp(CheckerHasFailed $exception)
     {

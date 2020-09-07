@@ -1,12 +1,12 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
-use Pbmedia\ApiHealth\Runner;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 
 class RunnerTest extends TestCase
 {
@@ -23,7 +23,7 @@ class RunnerTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

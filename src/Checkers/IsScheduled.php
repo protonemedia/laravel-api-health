@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
 use Illuminate\Console\Scheduling\CacheEventMutex;
 use Illuminate\Console\Scheduling\Event;

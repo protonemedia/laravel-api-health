@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
 interface Checker
 {
@@ -14,7 +14,7 @@ interface Checker
     /**
      * Execute the checker.
      *
-     * @throws \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @throws \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      * @return mixed
      */
     public function run();
@@ -22,7 +22,7 @@ interface Checker
     /**
      * Returns a fresh configured instance of the checker.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\Checker
+     * @return \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     public static function create();
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Pbmedia\ApiHealth;
+namespace ProtoneMedia\ApiHealth;
 
 use Illuminate\Support\Collection;
-use Pbmedia\ApiHealth\Checkers\CheckerIsScheduled;
-use Pbmedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Checkers\CheckerIsScheduled;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
 
 class Runner
 {
@@ -49,7 +49,7 @@ class Runner
     /**
      * Creates an instance of this class with the configured checkers.
      *
-     * @return \Pbmedia\ApiHealth\Runner
+     * @return \ProtoneMedia\ApiHealth\Runner
      */
     public static function fromConfig(): Runner
     {

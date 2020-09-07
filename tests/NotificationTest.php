@@ -1,19 +1,19 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
-use Pbmedia\ApiHealth\Notifications\CheckerHasRecovered;
-use Pbmedia\ApiHealth\Runner;
-use Pbmedia\ApiHealth\Storage\CheckerState;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtOddTimesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\NotificationlessChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use ProtoneMedia\ApiHealth\Notifications\CheckerHasFailed as CheckerHasFailedNotification;
+use ProtoneMedia\ApiHealth\Notifications\CheckerHasRecovered;
+use ProtoneMedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingAtOddTimesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\NotificationlessChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class NotificationTest extends TestCase
@@ -34,7 +34,7 @@ class NotificationTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

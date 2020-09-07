@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Testing;
+namespace ProtoneMedia\ApiHealth\Testing;
 
 class ApiHealthFake
 {

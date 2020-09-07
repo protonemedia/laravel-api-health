@@ -1,9 +1,9 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests\TestCheckers;
+namespace ProtoneMedia\ApiHealth\Tests\TestCheckers;
 
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 
 class FailingCheckerWithJobCallback extends AbstractChecker
 {

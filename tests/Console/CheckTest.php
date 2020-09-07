@@ -1,11 +1,11 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests\Console;
+namespace ProtoneMedia\ApiHealth\Tests\Console;
 
 use Illuminate\Support\Facades\Artisan;
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\PassingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\PassingChecker;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class CheckTest extends TestCase
@@ -15,7 +15,7 @@ class CheckTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

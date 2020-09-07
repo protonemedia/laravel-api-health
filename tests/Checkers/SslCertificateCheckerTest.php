@@ -1,11 +1,11 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Carbon;
 use Mockery;
-use Pbmedia\ApiHealth\Checkers\AbstractSslCertificateChecker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\AbstractSslCertificateChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 use PHPUnit\Framework\TestCase;
 use Spatie\SslCertificate\Downloader;
 use Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate;

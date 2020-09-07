@@ -1,13 +1,13 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Jobs\RetryChecker;
-use Pbmedia\ApiHealth\Runner;
-use Pbmedia\ApiHealth\Storage\CheckerState;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingCheckerWithJobCallback;
+use ProtoneMedia\ApiHealth\Jobs\RetryChecker;
+use ProtoneMedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingCheckerWithJobCallback;
 
 class AllowedRetriesTest extends TestCase
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Events\CheckerHasFailed;
-use Pbmedia\ApiHealth\Events\CheckerHasRecovered;
-use Pbmedia\ApiHealth\Events\CheckerIsStillFailing;
-use Pbmedia\ApiHealth\Runner;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
-use Pbmedia\ApiHealth\Tests\TestCheckers\FailingChecker;
+use ProtoneMedia\ApiHealth\Events\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Events\CheckerHasRecovered;
+use ProtoneMedia\ApiHealth\Events\CheckerIsStillFailing;
+use ProtoneMedia\ApiHealth\Runner;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingAtEvenTimesChecker;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\FailingChecker;
 
 class EventTest extends TestCase
 {
@@ -22,7 +22,7 @@ class EventTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

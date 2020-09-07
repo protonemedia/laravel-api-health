@@ -1,12 +1,12 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Notifications;
+namespace ProtoneMedia\ApiHealth\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
-use Pbmedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
 
 class CheckerHasRecovered extends Notification
 {
@@ -73,10 +73,10 @@ class CheckerHasRecovered extends Notification
             ->success()
             ->from(config('api-health.notifications.slack.username'), config('api-health.notifications.slack.icon'))
             ->to(config('api-health.notifications.slack.channel'))
-            ->content(implode([
+            ->content(implode(PHP_EOL, [
                 trans('api-health::notifications.checker_recovered_type', $replace),
                 trans('api-health::notifications.checker_recovered_failed_at', $replace),
                 trans('api-health::notifications.checker_recovered_exception', $replace),
-            ], PHP_EOL));
+            ]));
     }
 }

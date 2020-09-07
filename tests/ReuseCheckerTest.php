@@ -1,11 +1,11 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Pbmedia\ApiHealth\Checkers\Executor;
-use Pbmedia\ApiHealth\Storage\CheckerState;
-use Pbmedia\ApiHealth\Tests\TestCheckers\BasedOnIdChecker;
+use ProtoneMedia\ApiHealth\Checkers\Executor;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Tests\TestCheckers\BasedOnIdChecker;
 
 class ReuseCheckerTest extends TestCase
 {
@@ -17,7 +17,7 @@ class ReuseCheckerTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Pbmedia\ApiHealth\ApiHealthServiceProvider::class,
+            \ProtoneMedia\ApiHealth\ApiHealthServiceProvider::class,
         ];
     }
 

@@ -1,23 +1,23 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Events;
+namespace ProtoneMedia\ApiHealth\Events;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed as CheckerHasFailedException;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed as CheckerHasFailedException;
 
 class CheckerHasFailed
 {
     /**
      * The checker.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\Checker
+     * @var \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     public $checker;
 
     /**
      * The exception.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @var \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      */
     public $exception;
 
@@ -31,8 +31,8 @@ class CheckerHasFailed
     /**
      * Creates a new instance of this event.
      *
-     * @param \Pbmedia\ApiHealth\Checkers\Checker  $checker
-     * @param \Pbmedia\ApiHealth\Checkers\CheckerHasFailed  $exception
+     * @param \ProtoneMedia\ApiHealth\Checkers\Checker  $checker
+     * @param \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed  $exception
      * @param array  $failedData
      */
     public function __construct(Checker $checker, CheckerHasFailedException $exception, array $failedData)

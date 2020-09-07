@@ -1,9 +1,9 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests\TestCheckers;
+namespace ProtoneMedia\ApiHealth\Tests\TestCheckers;
 
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractChecker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractChecker;
 
 class EveryMinuteChecker extends AbstractChecker
 {

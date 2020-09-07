@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
 abstract class AbstractChecker implements Checker, CheckerAllowsForRetries, CheckerIsScheduled, CheckerSendsNotifications
 {

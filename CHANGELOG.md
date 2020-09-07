@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-api-health` will be documented in this file
 
+## 5.0.0 - 2019-09-07
+
+- Support for PHP 7.4
+- Support for Laravel 7.0 and 8.0
+
 ## 4.0.0 - 2019-09-04
 
 - Support for Laravel 6.0

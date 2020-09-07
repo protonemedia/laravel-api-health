@@ -5,7 +5,7 @@ namespace DummyNamespace;
 use GuzzleHttp\Client;
 use Spatie\SslCertificate\Downloader;
 use Illuminate\Console\Scheduling\Event;
-use Pbmedia\ApiHealth\Checkers\AbstractSslCertificateChecker;
+use ProtoneMedia\ApiHealth\Checkers\AbstractSslCertificateChecker;
 
 class DummyClass extends AbstractSslCertificateChecker
 {
@@ -22,7 +22,7 @@ class DummyClass extends AbstractSslCertificateChecker
     /*
      * Here you can apply options to the downloader.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\AbstractSslCertificateChecker
+     * @return \ProtoneMedia\ApiHealth\Checkers\AbstractSslCertificateChecker
      */
     public static function create()
     {

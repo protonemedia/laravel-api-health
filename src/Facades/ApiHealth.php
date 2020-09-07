@@ -1,12 +1,12 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Facades;
+namespace ProtoneMedia\ApiHealth\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Pbmedia\ApiHealth\Testing\ApiHealthFake;
+use ProtoneMedia\ApiHealth\Testing\ApiHealthFake;
 
 /**
- * @see \Pbmedia\ApiHealth\LaravelFacade
+ * @see \ProtoneMedia\ApiHealth\LaravelFacade
  */
 class ApiHealth extends Facade
 {
@@ -23,7 +23,7 @@ class ApiHealth extends Facade
     /**
      * Replace the bound instance with a fake.
      *
-     * @return \Pbmedia\ApiHealth\Testing\ApiHealthFake
+     * @return \ProtoneMedia\ApiHealth\Testing\ApiHealthFake
      */
     public static function fake()
     {

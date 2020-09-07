@@ -1,31 +1,31 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
-use Pbmedia\ApiHealth\Storage\CheckerState;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Storage\CheckerState;
 
 class Executor
 {
     /**
      * The checker.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\Checker
+     * @var \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     private $checker;
 
     /**
      * The state of the checker.
      *
-     * @var \Pbmedia\ApiHealth\Storage\CheckerState
+     * @var \ProtoneMedia\ApiHealth\Storage\CheckerState
      */
     private $state;
 
     /**
      * The caught exception if the checker fails.
      *
-     * @var \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @var \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      */
     private $exception;
 
@@ -39,7 +39,7 @@ class Executor
     /**
      * Creates an instance with the given checker
      *
-     * @param \Pbmedia\ApiHealth\Checkers\Checker $checker
+     * @param \ProtoneMedia\ApiHealth\Checkers\Checker $checker
      */
     public function __construct(Checker $checker)
     {
@@ -51,7 +51,7 @@ class Executor
      * Shortcut for creating an instance for a checker class.
      *
      * @param  string $checkerClass
-     * @return \Pbmedia\ApiHealth\Checkers\Executor
+     * @return \ProtoneMedia\ApiHealth\Checkers\Executor
      */
     public static function make(string $checkerClass)
     {
@@ -83,7 +83,7 @@ class Executor
     /**
      * Returns the checker.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\Checker
+     * @return \ProtoneMedia\ApiHealth\Checkers\Checker
      */
     public function getChecker(): Checker
     {
@@ -93,7 +93,7 @@ class Executor
     /**
      * Returns the caught exception.
      *
-     * @return \Pbmedia\ApiHealth\Checkers\CheckerHasFailed
+     * @return \ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed
      */
     public function getException(): CheckerHasFailed
     {

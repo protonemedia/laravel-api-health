@@ -1,8 +1,8 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests\TestCheckers;
+namespace ProtoneMedia\ApiHealth\Tests\TestCheckers;
 
-use Pbmedia\ApiHealth\Checkers\Checker;
+use ProtoneMedia\ApiHealth\Checkers\Checker;
 
 class SchedulessChecker implements Checker
 {

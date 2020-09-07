@@ -2,63 +2,64 @@
     "name": "pbmedia/laravel-api-health",
     "description": "Monitor first and third party services and get notified when something goed wrong!",
     "keywords": [
-        "pascalbaljetmedia",
+        "protonemedia",
         "laravel-api-health",
         "laravel",
         "api-health"
     ],
-    "homepage": "https://github.com/pascalbaljetmedia/laravel-api-health",
+    "homepage": "https://github.com/protonemedia/laravel-api-health",
     "license": "MIT",
     "authors": [
         {
             "name": "Pascal Baljet",
-            "email": "info@pascalbaljetmedia.com",
-            "homepage": "https://pascalbaljetmedia.com",
+            "email": "pascal@protone.media",
+            "homepage": "https://protone.media",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.2",
-        "guzzlehttp/guzzle": "^6.3",
-        "illuminate/console": "^6.0",
-        "illuminate/contracts": "^6.0",
-        "illuminate/events": "^6.0",
-        "illuminate/notifications": "^6.0",
-        "laravel/slack-notification-channel": "^1.0",
-        "illuminate/support": "^6.0",
+        "guzzlehttp/guzzle": "^6.3 || ^7.0",
+        "illuminate/console": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/contracts": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/events": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/notifications": "^6.0 || ^7.0 || ^8.0",
+        "laravel/slack-notification-channel": "^2.0",
+        "illuminate/support": "^6.0 || ^7.0 || ^8.0",
         "spatie/ssl-certificate": "^1.12"
     },
     "require-dev": {
         "mockery/mockery": "^1.2.3",
-        "orchestra/testbench": "^4.0",
+        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
         "phpunit/phpunit": "^8.0",
         "spatie/phpunit-snapshot-assertions": "^2.1.3"
     },
     "autoload": {
         "psr-4": {
-            "Pbmedia\\ApiHealth\\": "src"
+            "ProtoneMedia\\ApiHealth\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Pbmedia\\ApiHealth\\Tests\\": "tests"
+            "ProtoneMedia\\ApiHealth\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "laravel": {
             "providers": [
-                "Pbmedia\\ApiHealth\\ApiHealthServiceProvider"
+                "ProtoneMedia\\ApiHealth\\ApiHealthServiceProvider"
             ],
             "aliases": {
-                "ApiHealth": "Pbmedia\\ApiHealth\\Facades\\ApiHealth"
+                "ApiHealth": "ProtoneMedia\\ApiHealth\\Facades\\ApiHealth"
             }
         }
     }

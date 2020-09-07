@@ -1,13 +1,13 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use Mockery;
-use Pbmedia\ApiHealth\Checkers\AbstractHttpChecker;
-use Pbmedia\ApiHealth\Checkers\CheckerHasFailed;
+use ProtoneMedia\ApiHealth\Checkers\AbstractHttpChecker;
+use ProtoneMedia\ApiHealth\Checkers\CheckerHasFailed;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
