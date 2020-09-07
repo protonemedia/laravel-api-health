@@ -7,13 +7,14 @@
 
 This is a package to monitor first and third party services that your app uses. It can send a notification if a service goes down (or up!) and supports scheduling. You can create *checkers* for whatever API or service you want to monitor but it also comes with some built-in checkers so you can fire up some checkers really quickly.
 
-## We are looking for beta testers!
+## Looking for next-level Laravel monitoring?
 
-We are currently building a *sophisticated health checker for your Laravel applications* called [Upserver.online](https://upserver.online). We will launch a private beta in the coming weeks so please join the mailing list to get **early access**! If you want to know more, you can also read the [official announcement](https://mailchi.mp/upserver/this-is-upserver-online) or follow us on [Twitter](https://twitter.com/UpserverOnline).
+We've built a *sophisticated health checker for your Laravel applications* called [Upserver.online](https://upserver.online). Read the [official announcement](https://mailchi.mp/upserver/this-is-upserver-online) or follow us on [Twitter](https://twitter.com/UpserverOnline).
 
 ## Requirements
 
-* Laravel 6.0 only, PHP 7.2 and 7.3 supported.
+* Laravel 6.0 and higher supported.
+* PHP 7.2 or higher required.
 * Support for [Package Discovery](https://laravel.com/docs/6.0/packages#package-discovery).
 
 ## Features
@@ -45,6 +46,10 @@ Publish the translation resources and config file using the Artisan CLI tool.
 ```bash
 php artisan vendor:publish --provider="ProtoneMedia\ApiHealth\ApiHealthServiceProvider"
 ```
+
+## Upgrading to v5
+
+* The namespace has changed to `ProtoneMedia\ApiHealth`. Please update your code accordingly.
 
 ## Build your first checker
 
