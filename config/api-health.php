@@ -24,7 +24,7 @@ return [
          * Here you can specify the configuration of the retry job.
          */
         'job' => [
-            'job' => \Pbmedia\ApiHealth\Jobs\RetryChecker::class,
+            'job' => \ProtoneMedia\ApiHealth\Jobs\RetryChecker::class,
 
             'connection' => null,
 
@@ -43,12 +43,12 @@ return [
         /**
          * Class name of the failed notification.
          */
-        'default_failed_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasFailed::class,
+        'default_failed_notification' => \ProtoneMedia\ApiHealth\Notifications\CheckerHasFailed::class,
 
         /**
          * Class name of the recovered notification.
          */
-        'default_recovered_notification' => \Pbmedia\ApiHealth\Notifications\CheckerHasRecovered::class,
+        'default_recovered_notification' => \ProtoneMedia\ApiHealth\Notifications\CheckerHasRecovered::class,
 
         /**
          * Deliver the notifications through these channels.
@@ -60,7 +60,7 @@ return [
         /**
          * Class name of the notifiable.
          */
-        'notifiable' => \Pbmedia\ApiHealth\Notifications\Notifiable::class,
+        'notifiable' => \ProtoneMedia\ApiHealth\Notifications\Notifiable::class,
 
         /**
          * Notifiable mail settings.

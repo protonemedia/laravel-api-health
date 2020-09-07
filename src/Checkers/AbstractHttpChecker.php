@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;

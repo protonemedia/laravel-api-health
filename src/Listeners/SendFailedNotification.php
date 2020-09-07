@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Listeners;
+namespace ProtoneMedia\ApiHealth\Listeners;
 
 use Pbmedia\ApiHealth\Checkers\CheckerSendsNotifications;
 use Pbmedia\ApiHealth\Events\CheckerHasFailed;

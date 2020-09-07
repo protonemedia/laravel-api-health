@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Facades;
+namespace ProtoneMedia\ApiHealth\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Pbmedia\ApiHealth\Testing\ApiHealthFake;

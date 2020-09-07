@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;

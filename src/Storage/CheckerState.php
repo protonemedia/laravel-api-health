@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Storage;
+namespace ProtoneMedia\ApiHealth\Storage;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;

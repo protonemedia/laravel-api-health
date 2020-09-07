@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests\Console;
+namespace ProtoneMedia\ApiHealth\Tests\Console;
 
 use Illuminate\Support\Facades\Artisan;
 use Orchestra\Testbench\TestCase;

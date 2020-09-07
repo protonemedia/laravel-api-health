@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Notifications;
+namespace ProtoneMedia\ApiHealth\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;

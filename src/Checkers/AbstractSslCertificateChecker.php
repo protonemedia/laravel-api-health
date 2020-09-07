@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Checkers;
+namespace ProtoneMedia\ApiHealth\Checkers;
 
 use Spatie\SslCertificate\Downloader;
 use Spatie\SslCertificate\Exceptions\CouldNotDownloadCertificate;

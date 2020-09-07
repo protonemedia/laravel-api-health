@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Pbmedia\ApiHealth\Jobs\RetryChecker;

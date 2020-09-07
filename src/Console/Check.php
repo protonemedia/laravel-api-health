@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Console;
+namespace ProtoneMedia\ApiHealth\Console;
 
 use Illuminate\Console\Command;
 use Pbmedia\ApiHealth\Checkers\Executor;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth;
+namespace ProtoneMedia\ApiHealth;
 
 use Illuminate\Support\Collection;
 use Pbmedia\ApiHealth\Checkers\CheckerIsScheduled;

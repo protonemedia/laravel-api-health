@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth;
+namespace ProtoneMedia\ApiHealth;
 
 use Pbmedia\ApiHealth\Checkers\Executor;
 use Pbmedia\ApiHealth\Storage\CheckerState;

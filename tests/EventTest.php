@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Testbench\TestCase;

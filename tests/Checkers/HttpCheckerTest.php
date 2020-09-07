@@ -1,6 +1,6 @@
 <?php
 
-namespace Pbmedia\ApiHealth\Tests;
+namespace ProtoneMedia\ApiHealth\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
