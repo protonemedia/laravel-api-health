@@ -9,7 +9,7 @@ This is a package to monitor first and third party services that your app uses. 
 
 ## Looking for next-level Laravel monitoring?
 
-We've built a *sophisticated health checker for your Laravel applications* called [Upserver.online](https://upserver.online). Read the [official announcement](https://mailchi.mp/upserver/this-is-upserver-online) or follow us on [Twitter](https://twitter.com/UpserverOnline).
+We've built a *sophisticated health checker for your Laravel applications* called [Upserver.online](https://upserver.online). In addition to uptime checks, we verify database connections, your broadcasting and queueing systems, mail drivers, notification channels, storage availability, and much more! We also have tools to view failed queue jobs, retry them instantly, find mixed content and security vulnerabilities in dependencies. We monitor SSL certificates and DNS changes.
 
 ## Requirements
 
