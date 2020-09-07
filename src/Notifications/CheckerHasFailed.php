@@ -78,10 +78,10 @@ class CheckerHasFailed extends Notification
             ->error()
             ->from(config('api-health.notifications.slack.username'), config('api-health.notifications.slack.icon'))
             ->to(config('api-health.notifications.slack.channel'))
-            ->content(implode([
+            ->content(implode(PHP_EOL, [
                 trans('api-health::notifications.checker_failed_type', $replace),
                 trans('api-health::notifications.checker_failed_at', $replace),
                 trans('api-health::notifications.checker_failed_exception', $replace),
-            ], PHP_EOL));
+            ]));
     }
 }

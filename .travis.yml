@@ -41,7 +41,6 @@ matrix:
   fast_finish: true
 
 before_install:
-  - sudo apt-get update
   - travis_retry composer self-update
   - composer config discard-changes true
   - travis_retry composer self-update
