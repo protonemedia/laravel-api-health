@@ -16,7 +16,7 @@ In addition to uptime checks, we verify **database connections, your broadcastin
 ## Requirements
 
 * Laravel 6.0 and higher supported.
-* PHP 7.2 or higher required.
+* PHP 7.3 or higher required.
 * Support for [Package Discovery](https://laravel.com/docs/6.0/packages#package-discovery).
 
 ## Features
