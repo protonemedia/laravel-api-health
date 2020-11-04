@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3 || ^8.0",
         "guzzlehttp/guzzle": "^6.3 || ^7.0",
         "illuminate/console": "^6.0 || ^7.0 || ^8.0",
         "illuminate/contracts": "^6.0 || ^7.0 || ^8.0",
@@ -29,10 +29,10 @@
         "spatie/ssl-certificate": "^1.12"
     },
     "require-dev": {
-        "mockery/mockery": "^1.2.3",
+        "mockery/mockery": "^1.3.3",
         "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-        "phpunit/phpunit": "^8.0",
-        "spatie/phpunit-snapshot-assertions": "^2.1.3"
+        "phpunit/phpunit": "^8.0 || ^9.0",
+        "spatie/phpunit-snapshot-assertions": "^3.0 || ^4.0"
     },
     "autoload": {
         "psr-4": {
