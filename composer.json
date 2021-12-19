@@ -18,20 +18,20 @@
         }
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
-        "guzzlehttp/guzzle": "^6.3 || ^7.0",
-        "illuminate/console": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/contracts": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/events": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/notifications": "^6.0 || ^7.0 || ^8.0",
+        "php": "^7.4 || ^8.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/console": "^8.67",
+        "illuminate/contracts": "^8.67",
+        "illuminate/events": "^8.67",
+        "illuminate/notifications": "^8.67",
         "laravel/slack-notification-channel": "^2.0",
-        "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/support": "^8.67",
         "spatie/ssl-certificate": "^1.12"
     },
     "require-dev": {
         "mockery/mockery": "^1.3.3",
-        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
-        "phpunit/phpunit": "^8.0 || ^9.0",
+        "orchestra/testbench": "^6.23",
+        "phpunit/phpunit": "^9.4",
         "spatie/phpunit-snapshot-assertions": "^3.0 || ^4.0"
     },
     "autoload": {
