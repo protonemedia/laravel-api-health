@@ -18,9 +18,9 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^7.4 || ^8.0 || ^8.1",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/console": " ^9.0",
+        "illuminate/console": "^8.67 || ^9.0",
         "illuminate/contracts": "^8.67 || ^9.0",
         "illuminate/events": "^8.67 || ^9.0",
         "illuminate/notifications": "^8.67 || ^9.0",
