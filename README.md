@@ -13,7 +13,7 @@ We proudly support the community by developing Laravel packages and giving them 
 
 ## Requirements
 
-* Laravel 8.0 supported.
+* Laravel 8.0 and 9.0 supported.
 * PHP 7.4 or higher required.
 * Support for [Package Discovery](https://laravel.com/docs/6.0/packages#package-discovery).
 

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-api-health` will be documented in this file
 
+## 5.3.0 - 2022-02-04
+
+- Support for Laravel 9
+
 ## 5.2.0 - 2021-12-19
 
 - Support for PHP 8.1
