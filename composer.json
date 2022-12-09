@@ -18,21 +18,22 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0 || ^8.1",
+        "php": "^8.0 || ^8.1 || ^8.2",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/console": "^8.67 || ^9.0",
-        "illuminate/contracts": "^8.67 || ^9.0",
-        "illuminate/events": "^8.67 || ^9.0",
-        "illuminate/notifications": "^8.67 || ^9.0",
+        "illuminate/console": "^9.0",
+        "illuminate/contracts": "^9.0",
+        "illuminate/events": "^9.0",
+        "illuminate/notifications": "^9.0",
         "laravel/slack-notification-channel": "^2.0",
-        "illuminate/support": "^8.67 || ^9.0",
+        "illuminate/support": "^9.0",
         "spatie/ssl-certificate": "^1.12"
     },
     "require-dev": {
         "mockery/mockery": "^1.3.3",
-        "orchestra/testbench": "^6.23 || ^7.0",
+        "nesbot/carbon": "^2.63",
+        "orchestra/testbench": "^7.0",
         "phpunit/phpunit": "^9.4",
-        "spatie/phpunit-snapshot-assertions": "^3.0 || ^4.0"
+        "spatie/phpunit-snapshot-assertions": "^4.0"
     },
     "autoload": {
         "psr-4": {
