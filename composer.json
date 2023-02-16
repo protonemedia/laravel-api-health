@@ -20,12 +20,12 @@
     "require": {
         "php": "^8.0 || ^8.1 || ^8.2",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/console": "^9.0",
-        "illuminate/contracts": "^9.0",
-        "illuminate/events": "^9.0",
-        "illuminate/notifications": "^9.0",
+        "illuminate/console": "^9.0|^10.0",
+        "illuminate/contracts": "^9.0|^10.0",
+        "illuminate/events": "^9.0|^10.0",
+        "illuminate/notifications": "^9.0|^10.0",
         "laravel/slack-notification-channel": "^2.0",
-        "illuminate/support": "^9.0",
+        "illuminate/support": "^9.0|^10.0",
         "spatie/ssl-certificate": "^1.12"
     },
     "require-dev": {
