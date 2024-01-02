@@ -1,3 +1,5 @@
+> :warning: This package is unmaintained. Consider using [Oh Dear](https://ohdear.app/?via=pascal).
+
 # Laravel API Health
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pbmedia/laravel-api-health.svg?style=flat-square)](https://packagist.org/packages/pbmedia/laravel-api-health)
